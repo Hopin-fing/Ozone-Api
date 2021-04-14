@@ -52,7 +52,7 @@ function App() {
 
     function sendRequestGet(url) {
 
-        return fetch(`https://api-seller.ozon.ru${url}`, {
+        return fetch(url, {
             method: "GET",
             headers
         })
@@ -65,7 +65,7 @@ function App() {
     function sendRequestPost( url, body = null) {
 
 
-        return fetch(`https://api-seller.ozon.ru${url}`, {
+        return fetch(url, {
             method: "POST",
             body :JSON.stringify(body),
             headers
@@ -75,7 +75,7 @@ function App() {
             })
     }
 
-    const requestUrl = '/v1/category/tree'
+    const requestUrl = 'https://api-seller.ozon.ru/v2/category/attribute'
 
     const body = {
         "attribute_type": "required",
@@ -84,13 +84,13 @@ function App() {
     }
 
 
-    sendRequestGet( requestUrl )
-        .then(data => console.log('GET :',  data))
-        .catch(err => console.log(err))
-
-    // sendRequestPost( requestUrl, body )
-    //     .then(data => console.log('POST :',  data))
+    // sendRequestGet( requestUrl )
+    //     .then(data => console.log('GET :',  data))
     //     .catch(err => console.log(err))
+
+    sendRequestPost( requestUrl, body )
+        .then(data => console.log('POST :',  data))
+        .catch(err => console.log(err))
 
 
     // const getMethod = async requestUrl => {
