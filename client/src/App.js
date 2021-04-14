@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import 'materialize-css'
 import {useHttp} from "./hooks/http.hook";
 import {useMessage} from "./hooks/message.hook";
+import axios from "axios";
 
 function App() {
 
@@ -30,6 +31,78 @@ function App() {
         }
     }
 
+    // -------------------------------------
+
+    // fetch('http://example.com/movies.json')
+    //     .then((response) => {
+    //         return response.json();
+    //     })
+    //     .then((data) => {
+    //         console.log(data);
+    //     });
+
+
+
+
+    const headers = {
+        "Client-Id": 52496,
+        "Api-Key":"4d9d2744-e2c4-4e6d-900a-a0f54b0af790",
+        "Content-Type":"application/json"
+    }
+
+    function sendRequestGet(url) {
+
+        return fetch(`https://api-seller.ozon.ru${url}`, {
+            method: "GET",
+            headers
+        })
+            .then(response => {
+                return response.json()
+            })
+    }
+
+
+    function sendRequestPost( url, body = null) {
+
+
+        return fetch(`https://api-seller.ozon.ru${url}`, {
+            method: "POST",
+            body :JSON.stringify(body),
+            headers
+        })
+            .then(response => {
+                return response.json()
+            })
+    }
+
+    const requestUrl = '/v1/category/tree'
+
+    const body = {
+        "attribute_type": "required",
+        "category_id": 17035115,
+        "language": "RU"
+    }
+
+
+    sendRequestGet( requestUrl )
+        .then(data => console.log('GET :',  data))
+        .catch(err => console.log(err))
+
+    // sendRequestPost( requestUrl, body )
+    //     .then(data => console.log('POST :',  data))
+    //     .catch(err => console.log(err))
+
+
+    // const getMethod = async requestUrl => {
+    //
+    //     const response = await axios.get(
+    //         requestUrl
+    //     ).then(data => console.log('GET :',  data))
+    // };
+
+    // -------------------------------------------
+
+
   return (
     <div className="container">
       <div className="row">
@@ -38,27 +111,27 @@ function App() {
                   <div className="card-content white-text">
                       <span className="card-title">Отзыв</span>
                       <div>
-                          <div className="input-field">
-                              <input
-                                  className="white-text"
-                                  placeholder="Введите имя"
-                                  id="name"
-                                  type="text"
-                                  name="name"
-                                  onChange={changeHandler}
-                              />
-                              <label htmlFor="name " >Имя</label>
-                          </div>
-                          <div className="input-field">
-                              <textarea
-                                  className="materialize-textarea white-text"
-                                  placeholder="Ваш отзыв"
-                                  id="name"
-                                  name="message"
-                                  onChange={changeHandler}
-                              />
-                              <label htmlFor="name">Текст отзыва</label>
-                          </div>
+                          {/*<div className="input-field">*/}
+                          {/*    <input*/}
+                          {/*        className="white-text"*/}
+                          {/*        placeholder="Введите имя"*/}
+                          {/*        id="name"*/}
+                          {/*        type="text"*/}
+                          {/*        name="name"*/}
+                          {/*        onChange={changeHandler}*/}
+                          {/*    />*/}
+                          {/*    <label htmlFor="name " >Имя</label>*/}
+                          {/*</div>*/}
+                          {/*<div className="input-field">*/}
+                          {/*    <textarea*/}
+                          {/*        className="materialize-textarea white-text"*/}
+                          {/*        placeholder="Ваш отзыв"*/}
+                          {/*        id="name"*/}
+                          {/*        name="message"*/}
+                          {/*        onChange={changeHandler}*/}
+                          {/*    />*/}
+                          {/*    <label htmlFor="name">Текст отзыва</label>*/}
+                          {/*</div>*/}
                       </div>
 
                   </div>
