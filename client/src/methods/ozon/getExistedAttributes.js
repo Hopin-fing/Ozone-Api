@@ -25,7 +25,7 @@ const GetExistedAttributes = (indexItem) => {
         const equipment = searchAttr( 'Комплектация', 0);
         const oxyCof = Math.floor(searchAttr( 'Коэффициент пропускания кислорода', 0, "count")).toString();
         const diameter = Math.floor(searchAttr( 'Диаметр МКЛ', 0, "count"));
-        const optPwr = searchAttr( 'Оптическая сила', 0).replace(/[.5]$/ , "50" ).replace(/[.5]$/ , "00" ); //Добавлял перед значением тавара id-шник для поиска списочных аттребутов
+        const optPwr = searchAttr( 'Оптическая сила', 0).replace(/([.5]{2}$)/ , ".50" ).replace(/([.0]{2}$)/ , ".00" ); //Добавлял перед значением тавара id-шник для поиска списочных аттребутов
         const radCurvature = searchAttr( 'Радиус кривизны', 0);
 
         const packWidth = searchAttr( 'Ширина упаковки', 0, "count");
