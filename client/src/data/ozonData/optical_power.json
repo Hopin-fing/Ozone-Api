@@ -1,0 +1,678 @@
+{
+  "result": [
+    {
+      "id": 81563,
+      "value": "+0.25",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81564,
+      "value": "+0.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81565,
+      "value": "+0.75",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81566,
+      "value": "+1.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81567,
+      "value": "+1.25",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81568,
+      "value": "+1.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81569,
+      "value": "+1.75",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81570,
+      "value": "+10.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81571,
+      "value": "+10.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81572,
+      "value": "+11.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81573,
+      "value": "+11.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81574,
+      "value": "+12.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81575,
+      "value": "+12.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81576,
+      "value": "+13.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81577,
+      "value": "+13.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81578,
+      "value": "+14.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81579,
+      "value": "+14.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81580,
+      "value": "+15.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81581,
+      "value": "+15.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81582,
+      "value": "+16.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81583,
+      "value": "+16.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81584,
+      "value": "+17.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81585,
+      "value": "+17.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81586,
+      "value": "+18.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81587,
+      "value": "+18.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81588,
+      "value": "+19.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81589,
+      "value": "+19.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81590,
+      "value": "+2.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81591,
+      "value": "+2.25",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81592,
+      "value": "+2.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81593,
+      "value": "+20.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81594,
+      "value": "+3.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81595,
+      "value": "+3.25",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81596,
+      "value": "+3.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81597,
+      "value": "+3.75",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81598,
+      "value": "+4.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81599,
+      "value": "+4.25",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81600,
+      "value": "+4.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81601,
+      "value": "+4.75",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81602,
+      "value": "+5.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81603,
+      "value": "+5.25",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81604,
+      "value": "+5.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81605,
+      "value": "+5.75",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81606,
+      "value": "+6.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81607,
+      "value": "+6.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81608,
+      "value": "+7.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81609,
+      "value": "+7.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81610,
+      "value": "+8.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81611,
+      "value": "+8.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81612,
+      "value": "+9.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81613,
+      "value": "+9.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81614,
+      "value": "0.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81615,
+      "value": "-0.25",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81616,
+      "value": "-0.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81617,
+      "value": "-0.75",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81618,
+      "value": "-1.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81619,
+      "value": "-1.25",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81620,
+      "value": "-1.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81621,
+      "value": "-1.75",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81622,
+      "value": "-10.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81623,
+      "value": "-10.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81624,
+      "value": "-11.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81625,
+      "value": "-11.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81626,
+      "value": "-12.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81627,
+      "value": "-12.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81628,
+      "value": "-13.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81629,
+      "value": "-13.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81630,
+      "value": "-14.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81631,
+      "value": "-14.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81632,
+      "value": "-15.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81633,
+      "value": "-15.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81634,
+      "value": "-16.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81635,
+      "value": "-16.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81636,
+      "value": "-17.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81637,
+      "value": "-17.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81638,
+      "value": "-18.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81639,
+      "value": "-18.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81640,
+      "value": "-19.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81641,
+      "value": "-19.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81642,
+      "value": "-2.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81643,
+      "value": "-2.25",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81644,
+      "value": "-2.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81645,
+      "value": "-2.75",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81646,
+      "value": "-20.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81647,
+      "value": "-3.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81648,
+      "value": "-3.25",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81649,
+      "value": "-3.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81650,
+      "value": "-3.75",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81651,
+      "value": "-4.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81652,
+      "value": "-4.25",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81653,
+      "value": "-4.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81654,
+      "value": "-4.75",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81655,
+      "value": "-5.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81656,
+      "value": "-5.25",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81657,
+      "value": "-5.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81658,
+      "value": "-5.75",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81659,
+      "value": "-6.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81660,
+      "value": "-6.25",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81661,
+      "value": "-6.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81662,
+      "value": "-6.75",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81663,
+      "value": "-7.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81664,
+      "value": "-7.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81665,
+      "value": "-8.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81666,
+      "value": "-8.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81667,
+      "value": "-9.00",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81668,
+      "value": "-9.50",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81669,
+      "value": "#Asp#",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81670,
+      "value": "+2.75",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 81671,
+      "value": "-7.25",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 30499861,
+      "value": "-7.75",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 35046987,
+      "value": "-8.25",
+      "info": "",
+      "picture": ""
+    },
+    {
+      "id": 35046988,
+      "value": "-8.75",
+      "info": "",
+      "picture": ""
+    }
+  ]
+}
+
+

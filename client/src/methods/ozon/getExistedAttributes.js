@@ -1,6 +1,6 @@
 import React from 'react';
 
-const GetAttributes = (indexItem) => {
+const GetExistedAttributes = (indexItem) => {
     const sourceData  = require('../../data/maxima.json');
 
     // const [objectRequest, setObjectRequest] = useState(null)
@@ -23,9 +23,9 @@ const GetAttributes = (indexItem) => {
         const name = searchAttr( 'Наименование', 0);
         const description = searchAttr( 'Описание', 0);
         const equipment = searchAttr( 'Комплектация', 0);
-        const oxyCof = Math.round(searchAttr( 'Коэффициент пропускания кислорода', 0, "count"));
-        const diameter = Math.round(searchAttr( 'Диаметр МКЛ', 0, "count"));
-        const optPwr = searchAttr( 'Оптическая сила', 0);
+        const oxyCof = Math.floor(searchAttr( 'Коэффициент пропускания кислорода', 0, "count")).toString();
+        const diameter = Math.floor(searchAttr( 'Диаметр МКЛ', 0, "count"));
+        const optPwr = searchAttr( 'Оптическая сила', 0).replace(/[.5]$/ , "50" ).replace(/[.5]$/ , "00" ); //Добавлял перед значением тавара id-шник для поиска списочных аттребутов
         const radCurvature = searchAttr( 'Радиус кривизны', 0);
 
         const packWidth = searchAttr( 'Ширина упаковки', 0, "count");
@@ -39,6 +39,7 @@ const GetAttributes = (indexItem) => {
 
         const packAmount  = searchAttr('Количество предметов в упаковке', 0).replace(/\D/g,'');
         const wearMode  = searchAttr( 'Режим ношения', 0);
+        const timeDay  = 'Дневной';
         const packWeight  = searchAttr( 'Вес товара с упаковкой (г)', 0, "count");
         const moistureCont  = searchAttr( 'Влагосодержание', 0, "count");
         const barcode  = sourceData[index].nomenclatures[0].variations[0].barcodes[0];
@@ -68,6 +69,7 @@ const GetAttributes = (indexItem) => {
             list : {
                 oxyCof,
                 optPwr,
+                timeDay,
                 radCurvature,
                 packAmount,
                 wearMode
@@ -89,4 +91,4 @@ const GetAttributes = (indexItem) => {
 
 };
 
-export default GetAttributes;
+export default GetExistedAttributes;
