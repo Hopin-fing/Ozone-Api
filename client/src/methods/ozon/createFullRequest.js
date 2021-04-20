@@ -4,120 +4,126 @@ import _ from "lodash";
 import RequestAttributes from "./requestAttributes";
 
 
-
 const CreateFullRequest = () => {
 
 
-    const example  = require('./data/exampleRequestMonth.json')
-    const sourceData  = require('../../data/maxima.json')
+    const example = require('./data/exampleRequestMonth.json')
+    const sourceData = require('../../data/maxima.json')
     const oxyCofData = require('../../data/ozonData/oxygen_transmission.json')
     const optPwrData = require('../../data/ozonData/optical_power.json')
     const radCurvatureData = require('../../data/ozonData/radius_curvature.json')
     const packAmountData = require('../../data/ozonData/pack_amount.json')
+    const wearModeData = require('../../data/ozonData/wear_mode.json')
+    const daysReplaceData = require('../../data/ozonData/days_replace.json')
 
-    let fullRequest = {items: []}
+    let fullRequest = {"items": []}
 
     const newData = GetExistedAttributes(sourceData.length)
 
-    const arrAttrId = {
-        oxyCof : 7709,
-        optPwr : 7701,
-        radCurvature : 7702,
-        packAmount : 7704,
-        // wearMode : 7696
-        // timeDay : 7696
-    }
+    // const arrAttrId = {      Id для запросов по атрибутам оставил для справочной информации
+    //     oxyCof : 7709,
+    //     optPwr : 7701,
+    //     radCurvature : 7702,
+    //     packAmount : 7704,
+    //     wearMode : 7696,
+    //     daysReplace : 7694
+    // }
 
-    // console.log(newData)
-    // console.log('Value',  newData[0].list.oxyCof)
-
-
-    // console.log( newData[0].list.oxyCof)
-    // console.log(newData[0].list.optPwr, typeof newData[0].list.optPwr)
-    // console.log(optPwrData.result.find(x => x.value === newData[0].list.optPwr).id)
-
-    let newIndex = 0
+    let newIndex = 0 // добавил новый индекс для того чтобы обнулять его при достижении итемов в запросе до сотки, а исходный индекс будет с того же место перебирать элементы бд
     let numberItem = 100;
 
     sourceData.map((sourceItem, index) => {
 
-            if (numberItem > index) {
-                fullRequest.items.push(_.cloneDeep(example.items[0]))
+        if (numberItem > newIndex) {
+            fullRequest.items.push(_.cloneDeep(example.items[0]))
 
-                let newItem = newData[newIndex].variable,
-                    itemFinal = fullRequest.items[newIndex]
+            let newItem = newData[index].variable,
+                itemFinal = fullRequest.items[newIndex]
 
-                const searchAttrById = idValue => {
-                    return itemFinal.attributes.find(x => x.id === idValue).values[0]
+            const searchAttrById = idValue => {
+                return itemFinal.attributes.find(x => x.id === idValue).values[0]
+            }
+
+            const searchAttrByIdList = (item, source) => {
+                if (item === "wearMode") {  //Из вайлдбериса приходит строка с мелкими буквами и мы тут делаем с первой большой буквой
+                    return source.result.find(x => capitalize(x.value) === newData[newIndex].list[item])
                 }
-
-                const searchAttrByIdList = (item, source) => {
+                if (item !== "wearMode") {
                     return source.result.find(x => x.value === newData[newIndex].list[item]).id
                 }
-
-                const addItemsFinal = () => {
-
-                    itemFinal.barcode = newItem.barcode.toString()
-                    itemFinal.depth = newItem.packDepth
-                    itemFinal["dimension_unit"] = newItem.packDepthUnit
-                    itemFinal.height = newItem.packHeight
-                    itemFinal.name = newItem.name
-                    itemFinal.price = newItem.price.toString()
-                    itemFinal.weight = newItem.packWeight
-                    itemFinal.width = newItem.packWidth
-                    itemFinal["offer_id"] = newItem.id
-                    searchAttrById(85).value = newItem.brand
-                    searchAttrById(4191).value = newItem.description
-                    searchAttrById(4194).value = newItem.image
-                    searchAttrById(4384).value = newItem.equipment
-                    searchAttrById(7703).value = newItem.diameter
-                    searchAttrById(7706).value = newItem.moistureCont
-
-                    searchAttrById(7709).value = newData[newIndex].list.oxyCof
-                    searchAttrById(7709).dictionary_value_id = searchAttrByIdList('oxyCof', oxyCofData)
-
-                    searchAttrById(7701).value = newData[newIndex].list.optPwr
-                    searchAttrById(7701).dictionary_value_id = searchAttrByIdList('optPwr', optPwrData)
-
-                    searchAttrById(7702).value = newData[newIndex].list.radCurvature
-                    searchAttrById(7702).dictionary_value_id = searchAttrByIdList('radCurvature', radCurvatureData)
-
-                    searchAttrById(7704).value = newData[newIndex].list.packAmount
-                    searchAttrById(7704).dictionary_value_id = searchAttrByIdList('packAmount', packAmountData)
-
-                    // searchAttrById(7696).value = newData[newIndex].list.wearMode
-                    // searchAttrById(7696).dictionary_value_id = searchAttrByIdList('wearMode', packAmountData)
-
-                }
-
-                if (newIndex === 0) {
-                    addItemsFinal()
-                }
-
-                if (newIndex > 0) {
-                    addItemsFinal()
-                }
-                newIndex++
             }
 
-        if (numberItem === index) {
-            console.log(fullRequest)
-            numberItem += 100
-            fullRequest = {items: []}
+            const capitalize = (value) => {
+                if (typeof value !== 'string') return ''
+                return value.charAt(0).toUpperCase() + value.slice(1)
+            }
 
-            newIndex -= 100
+            const addItemsFinal = () => {
 
+                itemFinal.barcode = newItem.barcode
+                itemFinal.depth = newItem.packDepth
+                itemFinal["dimension_unit"] = newItem.packDepthUnit
+                itemFinal.height = newItem.packHeight
+                itemFinal.name = newItem.name
+                itemFinal.price = newItem.price
+                itemFinal.images[0] = newItem.image
+                itemFinal.weight = newItem.packWeight
+                itemFinal.width = newItem.packWidth
+                itemFinal["offer_id"] = newItem.article
+
+
+                searchAttrById(85).value = newItem.brand
+                searchAttrById(4191).value = newItem.description
+                searchAttrById(4194).value = newItem.image
+                searchAttrById(4384).value = newItem.equipment
+                searchAttrById(7703).value = newItem.diameter
+                searchAttrById(7706).value = newItem.moistureCont
+                searchAttrById(10289).value = newItem.flagGroup
+
+                //Добавление в финальный запрос значений требующий как value так и id
+
+                searchAttrById(7709).value = newData[newIndex].list.oxyCof
+                searchAttrById(7709).dictionary_value_id = searchAttrByIdList('oxyCof', oxyCofData)
+
+                searchAttrById(7701).value = newData[newIndex].list.optPwr
+                searchAttrById(7701).dictionary_value_id = searchAttrByIdList('optPwr', optPwrData)
+
+                searchAttrById(7702).value = newData[newIndex].list.radCurvature
+                searchAttrById(7702).dictionary_value_id = searchAttrByIdList('radCurvature', radCurvatureData)
+
+                searchAttrById(7704).value = newData[newIndex].list.packAmount
+                searchAttrById(7704).dictionary_value_id = searchAttrByIdList('packAmount', packAmountData)
+
+                searchAttrById(7696).value = newData[newIndex].list.wearMode
+                searchAttrById(7696).dictionary_value_id = searchAttrByIdList('wearMode', wearModeData)
+
+                searchAttrById(7694).value = newData[newIndex].list.daysReplace
+                searchAttrById(7694).dictionary_value_id = searchAttrByIdList('daysReplace', daysReplaceData)
+            }
+
+            if (index >= 0) {
+                addItemsFinal()
+            }
+            newIndex++
 
         }
-            if(sourceData.length ===  index + 1) {
-                console.log(fullRequest)
-            }
+
+        if (numberItem === index) {
+                // RequestAttributes(fullRequest)
+            console.log(fullRequest)
+
+            numberItem = numberItem + 100
+            fullRequest = {items: []}
+            newIndex -= 100
+
+        }
+        if (sourceData.length === index + 1) {
+            console.log(fullRequest)
+
+            // RequestAttributes(fullRequest)
+        }
 
     })
-
-
-
-
 
 
 };
