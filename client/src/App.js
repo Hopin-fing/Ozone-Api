@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react'
 import 'materialize-css'
 import {useHttp} from "./hooks/http.hook";
 import {useMessage} from "./hooks/message.hook";
-import RequestAttributes from "./methods/ozon/requestAttributes";
 import CreateFullRequest from "./methods/ozon/createFullRequest";
 
 function App() {

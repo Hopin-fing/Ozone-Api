@@ -1,14 +1,14 @@
 import React from 'react';
-import GetExistedAttributes from "./getExistedAttributes";
+import GetAttributes from "./getAttributes";
 import _ from "lodash";
-import RequestAttributes from "./requestAttributes";
+import RequestServer from "./requestServer";
 
 
 const CreateFullRequest = () => {
 
 
-    const example = require('./data/exampleRequestMonth.json')
-    const sourceData = require('../../data/maxima.json')
+    const example = require('./templates/requestImport.json')
+    const sourceData = require('../../data/productDB/maxima.json')
     const oxyCofData = require('../../data/ozonData/oxygen_transmission.json')
     const optPwrData = require('../../data/ozonData/optical_power.json')
     const radCurvatureData = require('../../data/ozonData/radius_curvature.json')
@@ -18,7 +18,7 @@ const CreateFullRequest = () => {
 
     let fullRequest = {"items": []}
 
-    const newData = GetExistedAttributes(sourceData.length)
+    const newData = GetAttributes(sourceData.length , sourceData)
 
     // const arrAttrId = {      Id для запросов по атрибутам оставил для справочной информации
     //     oxyCof : 7709,
@@ -46,7 +46,7 @@ const CreateFullRequest = () => {
 
             const searchAttrByIdList = (item, source) => {
                 if (item === "wearMode") {  //Из вайлдбериса приходит строка с мелкими буквами и мы тут делаем с первой большой буквой
-                    return source.result.find(x => capitalize(x.value) === newData[newIndex].list[item])
+                    return source.result.find(x => capitalize(x.value) === newData[newIndex].list[item]).id
                 }
                 if (item !== "wearMode") {
                     return source.result.find(x => x.value === newData[newIndex].list[item]).id
@@ -70,6 +70,7 @@ const CreateFullRequest = () => {
                 itemFinal.weight = newItem.packWeight
                 itemFinal.width = newItem.packWidth
                 itemFinal["offer_id"] = newItem.article
+                itemFinal["category_id"] = newItem.typeProductId
 
 
                 searchAttrById(85).value = newItem.brand
@@ -105,12 +106,13 @@ const CreateFullRequest = () => {
                 addItemsFinal()
             }
             newIndex++
+            // console.log(itemFinal.typeProductId)
 
         }
 
         if (numberItem === index) {
-                // RequestAttributes(fullRequest)
-            console.log(fullRequest)
+            RequestServer(fullRequest)
+            // console.log(fullRequest)
 
             numberItem = numberItem + 100
             fullRequest = {items: []}
@@ -118,9 +120,9 @@ const CreateFullRequest = () => {
 
         }
         if (sourceData.length === index + 1) {
-            console.log(fullRequest)
+            // console.log(fullRequest)
 
-            // RequestAttributes(fullRequest)
+            RequestServer(fullRequest)
         }
 
     })
