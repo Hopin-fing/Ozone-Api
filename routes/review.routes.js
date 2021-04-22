@@ -6,6 +6,56 @@ const {check, validationResult} = require('express-validator')
 const Review = require('../models/Review')
 const router = Router()
 
+ //TODO: Переписать этот метод в отдельный node.js файлй
+// const fs = require('fs');
+// const originalJson = require('../dataServer/maxima.json')
+// const newJson = require('../dataServer/products.json')
+// const finishJson = require('../dataServer/finish.json')
+//
+// const testRun = () => {
+//     let data = [],
+//     dataRightKey = ["Артикул",
+//         "Ozon Product ID",
+//         "FBO OZON SKU ID",
+//         "FBS OZON SKU ID",
+//         "Barcode",
+//         "Наименование товара",
+//         "Бренд",
+//         "BarcodeOld"
+//     ]
+
+    // console.log("newJson ", typeof newJson)
+    // console.log("newJson[0] ", typeof newJson[0][0])
+
+    // console.log(newJson)
+    // for (let i=0; i < newJson.length ; i++) {
+    //     data.push({})
+    //     dataRightKey.forEach(key => {
+    //         if(key === "BarcodeOld") {
+    //             for (let j=0; j < newJson.length ; j++) {
+    //                if(newJson[i]["Barcode"].slice(-9) === newJson[j]["Barcode"].slice(-9)) {
+    //                    data[i]["BarcodeOld"]  = newJson[j]["Barcode"]
+    //                }
+    //
+    //             }
+    //         }
+    //         if(key !== "BarcodeOld") {
+    //             data[i][key] = newJson[i][key]
+    //         }
+    //     })
+    // }
+    //
+    // console.log(data)
+
+    // fs.writeFile ('./dataServer/finish.json', JSON.stringify(data), function(err) {
+    //         if (err) console.log(err) ;
+    //         console.log('complete');
+    //     }
+    // );
+// }
+
+// testRun()
+
 
 // /api/auth/review
 router.post(

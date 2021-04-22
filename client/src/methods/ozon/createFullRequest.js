@@ -32,13 +32,16 @@ const CreateFullRequest = () => {
     let newIndex = 0 // добавил новый индекс для того чтобы обнулять его при достижении итемов в запросе до сотки, а исходный индекс будет с того же место перебирать элементы бд
     let numberItem = 100;
 
+
+
     sourceData.map((sourceItem, index) => {
 
         if (numberItem > newIndex) {
             fullRequest.items.push(_.cloneDeep(example.items[0]))
 
             let newItem = newData[index].variable,
-                itemFinal = fullRequest.items[newIndex]
+                itemFinal = fullRequest.items[newIndex],
+                isSolutions = newData[index].isSolutions
 
             const searchAttrById = idValue => {
                 return itemFinal.attributes.find(x => x.id === idValue).values[0]
@@ -60,6 +63,10 @@ const CreateFullRequest = () => {
 
             const addItemsFinal = () => {
 
+                // console.log("index ",index)
+                // console.log("isSolutions ",isSolutions)
+                // console.log("isSolutions ",isSolutions)
+
                 itemFinal.barcode = newItem.barcode
                 itemFinal.depth = newItem.packDepth
                 itemFinal["dimension_unit"] = newItem.packDepthUnit
@@ -72,34 +79,43 @@ const CreateFullRequest = () => {
                 itemFinal["offer_id"] = newItem.article
                 itemFinal["category_id"] = newItem.typeProductId
 
-
                 searchAttrById(85).value = newItem.brand
                 searchAttrById(4191).value = newItem.description
                 searchAttrById(4194).value = newItem.image
                 searchAttrById(4384).value = newItem.equipment
-                searchAttrById(7703).value = newItem.diameter
-                searchAttrById(7706).value = newItem.moistureCont
-                searchAttrById(10289).value = newItem.flagGroup
 
-                //Добавление в финальный запрос значений требующий как value так и id
 
-                searchAttrById(7709).value = newData[newIndex].list.oxyCof
-                searchAttrById(7709).dictionary_value_id = searchAttrByIdList('oxyCof', oxyCofData)
+                if (!isSolutions) {
 
-                searchAttrById(7701).value = newData[newIndex].list.optPwr
-                searchAttrById(7701).dictionary_value_id = searchAttrByIdList('optPwr', optPwrData)
+                    searchAttrById(85).value = newItem.brand
+                    searchAttrById(4191).value = newItem.description
+                    searchAttrById(4194).value = newItem.image
+                    searchAttrById(4384).value = newItem.equipment
+                    searchAttrById(7703).value = newItem.diameter
+                    searchAttrById(7706).value = newItem.moistureCont
+                    searchAttrById(10289).value = newItem.flagGroup
 
-                searchAttrById(7702).value = newData[newIndex].list.radCurvature
-                searchAttrById(7702).dictionary_value_id = searchAttrByIdList('radCurvature', radCurvatureData)
+                    //Добавление в финальный запрос значений требующий как value так и id
 
-                searchAttrById(7704).value = newData[newIndex].list.packAmount
-                searchAttrById(7704).dictionary_value_id = searchAttrByIdList('packAmount', packAmountData)
+                    searchAttrById(7709).value = newData[newIndex].list.oxyCof
+                    searchAttrById(7709).dictionary_value_id = searchAttrByIdList('oxyCof', oxyCofData)
 
-                searchAttrById(7696).value = newData[newIndex].list.wearMode
-                searchAttrById(7696).dictionary_value_id = searchAttrByIdList('wearMode', wearModeData)
+                    searchAttrById(7701).value = newData[newIndex].list.optPwr
+                    searchAttrById(7701).dictionary_value_id = searchAttrByIdList('optPwr', optPwrData)
 
-                searchAttrById(7694).value = newData[newIndex].list.daysReplace
-                searchAttrById(7694).dictionary_value_id = searchAttrByIdList('daysReplace', daysReplaceData)
+                    searchAttrById(7702).value = newData[newIndex].list.radCurvature
+                    searchAttrById(7702).dictionary_value_id = searchAttrByIdList('radCurvature', radCurvatureData)
+
+                    searchAttrById(7704).value = newData[newIndex].list.packAmount
+                    searchAttrById(7704).dictionary_value_id = searchAttrByIdList('packAmount', packAmountData)
+
+                    searchAttrById(7696).value = newData[newIndex].list.wearMode
+                    searchAttrById(7696).dictionary_value_id = searchAttrByIdList('wearMode', wearModeData)
+
+                    searchAttrById(7694).value = newData[newIndex].list.daysReplace
+                    searchAttrById(7694).dictionary_value_id = searchAttrByIdList('daysReplace', daysReplaceData)
+                }
+
             }
 
             if (index >= 0) {

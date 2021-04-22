@@ -3,6 +3,7 @@ import 'materialize-css'
 import {useHttp} from "./hooks/http.hook";
 import {useMessage} from "./hooks/message.hook";
 import CreateFullRequest from "./methods/ozon/createFullRequest";
+// import UpdateResponseJson from "./methods/ozon/updateResponseJson";
 
 function App() {
 
@@ -140,6 +141,12 @@ function App() {
                           disabled={loading}
 
                       >Отправить запрос</button>
+
+                      <button
+                          className="green btn darken-3"
+                          disabled={loading}
+
+                      >Изменить Json</button>
                   </div>
               </div>
           </div>
