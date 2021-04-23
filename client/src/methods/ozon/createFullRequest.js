@@ -40,7 +40,8 @@ const CreateFullRequest = () => {
 
             let newItem = newData[index].variable,
                 itemFinal = fullRequest.items[newIndex],
-                isSolutions = newData[index].isSolutions
+                isSolutions = newData[index].isSolutions,
+                isColored = newData[index].isColored
 
             const searchAttrById = idValue => {
                 return itemFinal.attributes.find(x => x.id === idValue).values[0]
@@ -63,8 +64,6 @@ const CreateFullRequest = () => {
 
             const addItemsFinal = () => {
 
-                console.log('itemFinal.barcode: ', itemFinal.barcode)
-
                 itemFinal.barcode = newItem.barcode
                 itemFinal.depth = newItem.packDepth
                 itemFinal["dimension_unit"] = newItem.packDepthUnit
@@ -82,9 +81,23 @@ const CreateFullRequest = () => {
                 searchAttrById(4194).value = newItem.image
                 searchAttrById(4384).value = newItem.equipment
 
+                let createAttrObj = (idCategory, dictionaryValueId, value) => {
+                    return {
+                        "complex_id": 0,
+                        "id": idCategory,
+                        "values": [
+                            {
+                                "dictionary_value_id": dictionaryValueId,
+                                "value": value
+                            }
+                        ]
+                    }
+                }
+
+
+
 
                 if (!isSolutions) {
-
 
                     searchAttrById(7703).value = newItem.diameter
                     searchAttrById(7706).value = newItem.moistureCont
@@ -113,6 +126,10 @@ const CreateFullRequest = () => {
                     searchAttrById(7694).dictionary_value_id = searchAttrByIdList('daysReplace', daysReplaceData)
                 }
 
+                if (isColored) {
+                    itemFinal.attributes.push(createAttrObj(59,newItem.colorId, newItem.colorName ))
+                }
+
             }
             if (index >= 0) {
                 addItemsFinal()
@@ -121,14 +138,13 @@ const CreateFullRequest = () => {
         }
 
         if (numberItem === index) {
-            // RequestServer(fullRequest)
-            console.log(fullRequest)
+            RequestServer(fullRequest)
+            // console.log(fullRequest)
 
             numberItem = numberItem + 100
             fullRequest = {items: []}
             newIndex -= 100
 
-            // createNewProduct()
 
         }
 
@@ -138,9 +154,9 @@ const CreateFullRequest = () => {
 
 
         if (sourceData.length === index + 1) {
-            console.log(fullRequest)
+            // console.log(fullRequest)
 
-            // RequestServer(fullRequest)
+            RequestServer(fullRequest)
         }
 
     })

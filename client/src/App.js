@@ -142,11 +142,7 @@ function App() {
 
                       >Отправить запрос</button>
 
-                      <button
-                          className="green btn darken-3"
-                          disabled={loading}
 
-                      >Изменить Json</button>
                   </div>
               </div>
           </div>

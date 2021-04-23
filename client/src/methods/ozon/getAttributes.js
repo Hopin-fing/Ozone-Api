@@ -1,24 +1,11 @@
 import React from 'react';
-import AttributesLens from "./typeProduct/attributesLens";
 
 const GetAttributes = (indexItem, sourceData) => {
 
-    // const [objectRequest, setObjectRequest] = useState(null)
+    const arrModels = require("./dataTransferAttributes/modelsInfo.json")
+    const arrColors = require("./dataTransferAttributes/modelsColor.json")
 
     const arrAllAttr = []
-
-    const arrModels = [
-        {flag : "Maxima 55 Comfort Plus", type : "прозрачные", id: "17035115", img : "http://images.vfl.ru/ii/1619076159/b194471e/34175967.jpg"},
-        {flag : "Maxima 55 UV", type : "прозрачные", id: "17035115",  img : "http://images.vfl.ru/ii/1619076251/0074008c/34175979.jpg"},
-        {flag : "Soflens Natural Colors", type : "цветные", id : "17035114",  img : "http://images.vfl.ru/ii/1619076251/0074008c/34175979.jpg"},
-        {flag : "Optima FW", type : "прозрачные", id: "17035115",  img : "http://images.vfl.ru/ii/1619076251/0074008c/34175979.jpg"},
-        {flag : "BioTrue Oneday", type : "однодневные", id : "17035118",  img : "http://images.vfl.ru/ii/1619076251/0074008c/34175979.jpg"},
-        {flag : "Soflens 59", type : "прозрачные", id : "17035115",  img : "http://images.vfl.ru/ii/1619076251/0074008c/34175979.jpg"},
-        {flag : "PureVision", type : "прозрачные", id : "17035115",  img : "http://images.vfl.ru/ii/1619076251/0074008c/34175979.jpg"},
-        {flag : "ULTRA", type : "прозрачные", id : "17035115",  img : "http://images.vfl.ru/ii/1619076251/0074008c/34175979.jpg"},
-        {flag : "SofLens Daily Disposable", type : "однодневные", id: "17035118",  img : "http://images.vfl.ru/ii/1619076251/0074008c/34175979.jpg"},
-        {flag : "ReNu Multipurpose Solution", type : "раствор", id: "17035116",  img : "http://images.vfl.ru/ii/1619076251/0074008c/34175979.jpg"}
-    ]
 
     // const arrIdType = [
     //     {name : "прозрачные", id : "17035115"},
@@ -36,7 +23,16 @@ const GetAttributes = (indexItem, sourceData) => {
                 return arrModels[i].flag
             }
         }
+    }
 
+    const searchColor = (string) => {
+        for (let i = 0; arrColors.length > i; i++) {
+
+            if(string.includes(arrColors[i].color)) return {
+                    color: arrColors[i].colorOzon,
+                    id: arrColors[i].id
+            }
+        }
     }
 
     const capitalizeFirstLetter = (string) => {
@@ -53,7 +49,6 @@ const GetAttributes = (indexItem, sourceData) => {
 
 
     for (let index = 0; indexItem > index; index++) {
-
 
         const searchAttr = (
             typeAttr,
@@ -101,7 +96,7 @@ const GetAttributes = (indexItem, sourceData) => {
         // let name = searchAttr( 'Ключевые слова').params;
 
 
-        const brand = searchAttr( 'Бренд');
+        const brand = searchAttr( 'Бренд').replace(/\+/ , " + " );
         const description = searchAttr( 'Описание');
         const equipment = searchAttr( 'Комплектация');
 
@@ -140,8 +135,6 @@ const GetAttributes = (indexItem, sourceData) => {
                     name,
                     description,
                     equipment,
-                    // packWidth,
-                    // packWidthUnit,
                     packHeight,
                     packHeightUnit,
                     packDepth,
@@ -160,7 +153,7 @@ const GetAttributes = (indexItem, sourceData) => {
         if (!isSolutions) {
             const nameOriginal = searchAttr( 'Наименование');
             const flagGroup = searchGlobalFlag(nameOriginal);
-            const name = flagGroup;
+            let name = flagGroup;
             const image  = searchValue(flagGroup,"flag", "img");
             const typeProductId = searchValue(flagGroup,"flag", "id");
 
@@ -181,13 +174,13 @@ const GetAttributes = (indexItem, sourceData) => {
             const moistureCont  = searchAttr( 'Влагосодержание', 0, "count").toString();
             const modelProduct = `Контактные линзы ${brand} ${name}`
 
+            name += ` / ${optPwr}/ ${radCurvature}/` // Дополнительная информация к названию
+
             const isColored = searchValue(flagGroup,"flag", "type") === "цветные"
-
-
-            // console.log(isColored)
 
             const objRequest = {
                 isSolutions,
+                isColored,
                 variable : {
                     article,
                     brand,
@@ -221,7 +214,14 @@ const GetAttributes = (indexItem, sourceData) => {
                 }
 
             }
-            // if(isColored)
+            if(isColored) {
+                const colorInfo = searchColor(nameOriginal);
+                const colorName = colorInfo.color
+                const colorId = colorInfo.id
+                objRequest.variable.colorName = colorName
+                objRequest.variable.colorId = colorId
+            }
+
             arrAllAttr.push(objRequest)
         }
 
