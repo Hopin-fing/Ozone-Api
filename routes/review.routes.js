@@ -7,54 +7,56 @@ const Review = require('../models/Review')
 const router = Router()
 
  //TODO: Переписать этот метод в отдельный node.js файлй
-// const fs = require('fs');
-// const originalJson = require('../dataServer/maxima.json')
-// const newJson = require('../dataServer/products.json')
-// const finishJson = require('../dataServer/finish.json')
+const fs = require('fs');
+const productJson = require('../dataServer/products.json')
+const finishJson = require('../dataServer/finish.json')
+const newJson = require('../dataServer/new.json')
+
+
+const maximaJson = require('../dataServer/maxima.json')
+
+// const rewriteJson = () => {
+//     const data = finishJson
 //
-// const testRun = () => {
-//     let data = [],
-//     dataRightKey = ["Артикул",
-//         "Ozon Product ID",
-//         "FBO OZON SKU ID",
-//         "FBS OZON SKU ID",
-//         "Barcode",
-//         "Наименование товара",
-//         "Бренд",
-//         "BarcodeOld"
-//     ]
+//
+//     for (let i=0; i < finishJson.length ; i++) {
+//         const finishArticle = finishJson[i]["Артикул"]
+//         const currentCard = finishJson.find(x => x["Артикул"] === finishArticle)
+//         const barcodeOld = currentCard["Barcode"]
+//         const barcodeNew =  productJson.find(x => x["Артикул"] === finishArticle)["Barcode"]
+//         currentCard["BarcodeOld"] =  barcodeOld
+//         currentCard["Barcode"] =  barcodeNew
+//     }
+//
+//     fs.writeFile ('./dataServer/new.json', JSON.stringify(data), function(err) {
+//             if (err) console.log(err) ;
+//             console.log('complete');
+//         }
+//     );
+// }
 
-    // console.log("newJson ", typeof newJson)
-    // console.log("newJson[0] ", typeof newJson[0][0])
+//889071619393
 
-    // console.log(newJson)
-    // for (let i=0; i < newJson.length ; i++) {
-    //     data.push({})
-    //     dataRightKey.forEach(key => {
-    //         if(key === "BarcodeOld") {
-    //             for (let j=0; j < newJson.length ; j++) {
-    //                if(newJson[i]["Barcode"].slice(-9) === newJson[j]["Barcode"].slice(-9)) {
-    //                    data[i]["BarcodeOld"]  = newJson[j]["Barcode"]
-    //                }
-    //
-    //             }
-    //         }
-    //         if(key !== "BarcodeOld") {
-    //             data[i][key] = newJson[i][key]
-    //         }
-    //     })
-    // }
-    //
-    // console.log(data)
+const rewriteJson = () => {
+    // const data = finishJson
 
-    // fs.writeFile ('./dataServer/finish.json', JSON.stringify(data), function(err) {
+
+    for (let i=0; i < maximaJson.length ; i++) {
+        const maximaBarcode = maximaJson[i]["nomenclatures"][0]["variations"][0]["barcodes"]
+        // const newBarcode = newJson.find(x => x["barcodeOld"] === maximaBarcode)
+        const newBarcode = newJson.find(x => x["barcodeOld"] == maximaBarcode)
+        console.log("maximaBarcode:",  maximaBarcode, "barcodeOld", newBarcode)
+
+    }
+
+    // fs.writeFile ('./dataServer/new.json', JSON.stringify(data), function(err) {
     //         if (err) console.log(err) ;
     //         console.log('complete');
     //     }
     // );
-// }
+}
 
-// testRun()
+// rewriteJson()
 
 
 // /api/auth/review

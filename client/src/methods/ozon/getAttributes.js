@@ -60,8 +60,6 @@ const GetAttributes = (indexItem, sourceData) => {
             secondIndex = 0,
             valueParam = "value") => {
 
-
-
             const attr = sourceData[index].addin.find(x => x.type === typeAttr)
 
             if (( typeof attr === 'undefined') && typeAttr === "Оптическая сила") {
@@ -160,8 +158,9 @@ const GetAttributes = (indexItem, sourceData) => {
         }
 
         if (!isSolutions) {
-            const name = searchAttr( 'Наименование');
-            const flagGroup = searchGlobalFlag(name);
+            const nameOriginal = searchAttr( 'Наименование');
+            const flagGroup = searchGlobalFlag(nameOriginal);
+            const name = flagGroup;
             const image  = searchValue(flagGroup,"flag", "img");
             const typeProductId = searchValue(flagGroup,"flag", "id");
 
@@ -180,7 +179,12 @@ const GetAttributes = (indexItem, sourceData) => {
             const daysReplace  = doOzonFormat("Режим замены", searchAttr( "Режим замены"));
             const packWeight  = searchAttr( 'Вес товара с упаковкой (г)', 0, "count");
             const moistureCont  = searchAttr( 'Влагосодержание', 0, "count").toString();
+            const modelProduct = `Контактные линзы ${brand} ${name}`
 
+            const isColored = searchValue(flagGroup,"flag", "type") === "цветные"
+
+
+            // console.log(isColored)
 
             const objRequest = {
                 isSolutions,
@@ -203,7 +207,8 @@ const GetAttributes = (indexItem, sourceData) => {
                     price,
                     flagGroup,
                     image,
-                    typeProductId
+                    typeProductId,
+                    modelProduct
                 },
                 list : {
                     oxyCof,
@@ -216,6 +221,7 @@ const GetAttributes = (indexItem, sourceData) => {
                 }
 
             }
+            // if(isColored)
             arrAllAttr.push(objRequest)
         }
 

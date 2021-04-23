@@ -1,1 +1,1182 @@
-{}
+[
+  {
+    "art": 100071619317,
+    "Ozon_Product_ID": 70224501,
+    "FBO_OZON_SKU_ID": 257350564,
+    "FBS_OZON_SKU_ID": 257350565,
+    "Barcode": "OZN257350564",
+    "Name": "Контактные линзы, Maxima 55 UV -7.5, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619317
+  },
+  {
+    "art": 100418273254,
+    "Ozon_Product_ID": 70224504,
+    "FBO_OZON_SKU_ID": 257350586,
+    "FBS_OZON_SKU_ID": 257350588,
+    "Barcode": "OZN257350586",
+    "Name": "Контактные линзы, Maxima 55 UV -6.5, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273254
+  },
+  {
+    "art": 100418273452,
+    "Ozon_Product_ID": 70224502,
+    "FBO_OZON_SKU_ID": 257350590,
+    "FBS_OZON_SKU_ID": 257350594,
+    "Barcode": "OZN257350590",
+    "Name": "Контактные линзы, Maxima 55 UV -1.00, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273452
+  },
+  {
+    "art": 100071619379,
+    "Ozon_Product_ID": 70224498,
+    "FBO_OZON_SKU_ID": 257350569,
+    "FBS_OZON_SKU_ID": 257350572,
+    "Barcode": "OZN257350569",
+    "Name": "Контактные линзы, Maxima 55 UV -6.0, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619379
+  },
+  {
+    "art": 100418273407,
+    "Ozon_Product_ID": 70224510,
+    "FBO_OZON_SKU_ID": 257350604,
+    "FBS_OZON_SKU_ID": 257350607,
+    "Barcode": "OZN257350604",
+    "Name": "Контактные линзы, Maxima 55 UV -2.25, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273407
+  },
+  {
+    "art": 100418273261,
+    "Ozon_Product_ID": 70224499,
+    "FBO_OZON_SKU_ID": 257350596,
+    "FBS_OZON_SKU_ID": 257350598,
+    "Barcode": "OZN257350596",
+    "Name": "Контактные линзы, Maxima 55 UV -6.0, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273261
+  },
+  {
+    "art": 100071619683,
+    "Ozon_Product_ID": 70224514,
+    "FBO_OZON_SKU_ID": 257350622,
+    "FBS_OZON_SKU_ID": 257350628,
+    "Barcode": "OZN257350622",
+    "Name": "Контактные линзы, Maxima 55 UV -1.75, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619683
+  },
+  {
+    "art": 100071619720,
+    "Ozon_Product_ID": 70224505,
+    "FBO_OZON_SKU_ID": 257350601,
+    "FBS_OZON_SKU_ID": 257350606,
+    "Barcode": "OZN257350601",
+    "Name": "Контактные линзы, Maxima 55 UV -1.25, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619720
+  },
+  {
+    "art": 100071619706,
+    "Ozon_Product_ID": 70224515,
+    "FBO_OZON_SKU_ID": 257350580,
+    "FBS_OZON_SKU_ID": 257350582,
+    "Barcode": "OZN257350580",
+    "Name": "Контактные линзы, Maxima 55 UV -1.50, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619706
+  },
+  {
+    "art": 100418273445,
+    "Ozon_Product_ID": 70224506,
+    "FBO_OZON_SKU_ID": 257350585,
+    "FBS_OZON_SKU_ID": 257350587,
+    "Barcode": "OZN257350585",
+    "Name": "Контактные линзы, Maxima 55 UV -1.25, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273445
+  },
+  {
+    "art": 100418273438,
+    "Ozon_Product_ID": 70224508,
+    "FBO_OZON_SKU_ID": 257350579,
+    "FBS_OZON_SKU_ID": 257350581,
+    "Barcode": "OZN257350579",
+    "Name": "Контактные линзы, Maxima 55 UV -1.50, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273438
+  },
+  {
+    "art": 100418273421,
+    "Ozon_Product_ID": 70224511,
+    "FBO_OZON_SKU_ID": 257350583,
+    "FBS_OZON_SKU_ID": 257350584,
+    "Barcode": "OZN257350583",
+    "Name": "Контактные линзы, Maxima 55 UV -1.75, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273421
+  },
+  {
+    "art": 100071619331,
+    "Ozon_Product_ID": 70224503,
+    "FBO_OZON_SKU_ID": 257350600,
+    "FBS_OZON_SKU_ID": 257350605,
+    "Barcode": "OZN257350600",
+    "Name": "Контактные линзы, Maxima 55 UV -7.0, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619331
+  },
+  {
+    "art": 100071619645,
+    "Ozon_Product_ID": 70224513,
+    "FBO_OZON_SKU_ID": 257350573,
+    "FBS_OZON_SKU_ID": 257350576,
+    "Barcode": "OZN257350573",
+    "Name": "Контактные линзы, Maxima 55 UV -2.25, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619645
+  },
+  {
+    "art": 100418273247,
+    "Ozon_Product_ID": 70224500,
+    "FBO_OZON_SKU_ID": 257350574,
+    "FBS_OZON_SKU_ID": 257350578,
+    "Barcode": "OZN257350574",
+    "Name": "Контактные линзы, Maxima 55 UV -7.0, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273247
+  },
+  {
+    "art": 100418273414,
+    "Ozon_Product_ID": 70224512,
+    "FBO_OZON_SKU_ID": 257350575,
+    "FBS_OZON_SKU_ID": 257350577,
+    "Barcode": "OZN257350575",
+    "Name": "Контактные линзы, Maxima 55 UV -2.00, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273414
+  },
+  {
+    "art": 100071619669,
+    "Ozon_Product_ID": 70224509,
+    "FBO_OZON_SKU_ID": 257350595,
+    "FBS_OZON_SKU_ID": 257350597,
+    "Barcode": "OZN257350595",
+    "Name": "Контактные линзы, Maxima 55 UV -2.00, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619669
+  },
+  {
+    "art": 100071619355,
+    "Ozon_Product_ID": 70224507,
+    "FBO_OZON_SKU_ID": 257350676,
+    "FBS_OZON_SKU_ID": 257350689,
+    "Barcode": "OZN257350676",
+    "Name": "Контактные линзы, Maxima 55 UV -6.5, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619355
+  },
+  {
+    "art": 100418273070,
+    "Ozon_Product_ID": 70224519,
+    "FBO_OZON_SKU_ID": 257350624,
+    "FBS_OZON_SKU_ID": 257350631,
+    "Barcode": "OZN257350624",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -2.75, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273070
+  },
+  {
+    "art": 100418273148,
+    "Ozon_Product_ID": 70224535,
+    "FBO_OZON_SKU_ID": 257350686,
+    "FBS_OZON_SKU_ID": 257350693,
+    "Barcode": "OZN257350686",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -4.50, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273148
+  },
+  {
+    "art": 100393784930,
+    "Ozon_Product_ID": 70224559,
+    "FBO_OZON_SKU_ID": 257351230,
+    "FBS_OZON_SKU_ID": 257351231,
+    "Barcode": "OZN257351230",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -10.5, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 8886393784930
+  },
+  {
+    "art": 100418273155,
+    "Ozon_Product_ID": 70224534,
+    "FBO_OZON_SKU_ID": 257350717,
+    "FBS_OZON_SKU_ID": 257350721,
+    "Barcode": "OZN257350717",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -4.75, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273155
+  },
+  {
+    "art": 100418273001,
+    "Ozon_Product_ID": 70224524,
+    "FBO_OZON_SKU_ID": 257350618,
+    "FBS_OZON_SKU_ID": 257350633,
+    "Barcode": "OZN257350618",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -1.00, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273001
+  },
+  {
+    "art": 100418273032,
+    "Ozon_Product_ID": 70224526,
+    "FBO_OZON_SKU_ID": 257350599,
+    "FBS_OZON_SKU_ID": 257350610,
+    "Barcode": "OZN257350599",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -1.75, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273032
+  },
+  {
+    "art": 100071618853,
+    "Ozon_Product_ID": 70224564,
+    "FBO_OZON_SKU_ID": 257351430,
+    "FBS_OZON_SKU_ID": 257351445,
+    "Barcode": "OZN257351430",
+    "Name": "Контактные линзы, Maxima 55 UV -0.75, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071618853
+  },
+  {
+    "art": 100393784879,
+    "Ozon_Product_ID": 70224542,
+    "FBO_OZON_SKU_ID": 257350678,
+    "FBS_OZON_SKU_ID": 257350688,
+    "Barcode": "OZN257350678",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -7.5, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 8886393784879
+  },
+  {
+    "art": 100418273209,
+    "Ozon_Product_ID": 70224539,
+    "FBO_OZON_SKU_ID": 257350844,
+    "FBS_OZON_SKU_ID": 257350848,
+    "Barcode": "OZN257350844",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -6.0, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273209
+  },
+  {
+    "art": 100418273124,
+    "Ozon_Product_ID": 70224531,
+    "FBO_OZON_SKU_ID": 257350705,
+    "FBS_OZON_SKU_ID": 257350710,
+    "Barcode": "OZN257350705",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -4.00, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273124
+  },
+  {
+    "art": 100418273223,
+    "Ozon_Product_ID": 70224541,
+    "FBO_OZON_SKU_ID": 257350715,
+    "FBS_OZON_SKU_ID": 257350720,
+    "Barcode": "OZN257350715",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -7.0, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273223
+  },
+  {
+    "art": 100393785692,
+    "Ozon_Product_ID": 70224549,
+    "FBO_OZON_SKU_ID": 257351111,
+    "FBS_OZON_SKU_ID": 257351116,
+    "Barcode": "OZN257351111",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus +2.50, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 8886393785692
+  },
+  {
+    "art": 100393784961,
+    "Ozon_Product_ID": 70224562,
+    "FBO_OZON_SKU_ID": 257351398,
+    "FBS_OZON_SKU_ID": 257351406,
+    "Barcode": "OZN257351398",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -12.0, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 8886393784961
+  },
+  {
+    "art": 100393785630,
+    "Ozon_Product_ID": 70224546,
+    "FBO_OZON_SKU_ID": 257350858,
+    "FBS_OZON_SKU_ID": 257350860,
+    "Barcode": "OZN257350858",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus +1.00, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 8886393785630
+  },
+  {
+    "art": 100418273049,
+    "Ozon_Product_ID": 70224521,
+    "FBO_OZON_SKU_ID": 257350612,
+    "FBS_OZON_SKU_ID": 257350614,
+    "Barcode": "OZN257350612",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -2.00, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273049
+  },
+  {
+    "art": 100418273193,
+    "Ozon_Product_ID": 70224538,
+    "FBO_OZON_SKU_ID": 257350706,
+    "FBS_OZON_SKU_ID": 257350713,
+    "Barcode": "OZN257350706",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -5.75, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273193
+  },
+  {
+    "art": 100418273131,
+    "Ozon_Product_ID": 70224532,
+    "FBO_OZON_SKU_ID": 257350719,
+    "FBS_OZON_SKU_ID": 257350723,
+    "Barcode": "OZN257350719",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -4.25, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273131
+  },
+  {
+    "art": 100071618860,
+    "Ozon_Product_ID": 70224569,
+    "FBO_OZON_SKU_ID": 257351507,
+    "FBS_OZON_SKU_ID": 257351515,
+    "Barcode": "OZN257351507",
+    "Name": "Контактные линзы, Maxima 55 UV -0.75, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071618860
+  },
+  {
+    "art": 100393785791,
+    "Ozon_Product_ID": 70224556,
+    "FBO_OZON_SKU_ID": 257351172,
+    "FBS_OZON_SKU_ID": 257351175,
+    "Barcode": "OZN257351172",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus +6.0, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 8886393785791
+  },
+  {
+    "art": 100071618877,
+    "Ozon_Product_ID": 70224566,
+    "FBO_OZON_SKU_ID": 257351472,
+    "FBS_OZON_SKU_ID": 257351473,
+    "Barcode": "OZN257351472",
+    "Name": "Контактные линзы, Maxima 55 UV -0.50, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071618877
+  },
+  {
+    "art": 100071618969,
+    "Ozon_Product_ID": 70224572,
+    "FBO_OZON_SKU_ID": 257351575,
+    "FBS_OZON_SKU_ID": 257351582,
+    "Barcode": "OZN257351575",
+    "Name": "Контактные линзы, Maxima 55 UV +1.5, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071618969
+  },
+  {
+    "art": 100418273087,
+    "Ozon_Product_ID": 70224527,
+    "FBO_OZON_SKU_ID": 257350682,
+    "FBS_OZON_SKU_ID": 257350695,
+    "Barcode": "OZN257350682",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -3.00, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273087
+  },
+  {
+    "art": 100393785678,
+    "Ozon_Product_ID": 70224548,
+    "FBO_OZON_SKU_ID": 257350879,
+    "FBS_OZON_SKU_ID": 257350882,
+    "Barcode": "OZN257350879",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus +2.00, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 8886393785678
+  },
+  {
+    "art": 100071619218,
+    "Ozon_Product_ID": 70224579,
+    "FBO_OZON_SKU_ID": 257351585,
+    "FBS_OZON_SKU_ID": 257351604,
+    "Barcode": "OZN257351585",
+    "Name": "Контактные линзы, Maxima 55 UV -10.0, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619218
+  },
+  {
+    "art": 100393784633,
+    "Ozon_Product_ID": 70224520,
+    "FBO_OZON_SKU_ID": 257350625,
+    "FBS_OZON_SKU_ID": 257350627,
+    "Barcode": "OZN257350625",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -0.75, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 8886393784633
+  },
+  {
+    "art": 100393785654,
+    "Ozon_Product_ID": 70224550,
+    "FBO_OZON_SKU_ID": 257350938,
+    "FBS_OZON_SKU_ID": 257350939,
+    "Barcode": "OZN257350938",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus +1.50, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 8886393785654
+  },
+  {
+    "art": 100071619089,
+    "Ozon_Product_ID": 70224571,
+    "FBO_OZON_SKU_ID": 257351561,
+    "FBS_OZON_SKU_ID": 257351566,
+    "Barcode": "OZN257351561",
+    "Name": "Контактные линзы, Maxima 55 UV +4.5, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619089
+  },
+  {
+    "art": 100393784923,
+    "Ozon_Product_ID": 70224558,
+    "FBO_OZON_SKU_ID": 257351257,
+    "FBS_OZON_SKU_ID": 257351259,
+    "Barcode": "OZN257351257",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -10.0, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 8886393784923
+  },
+  {
+    "art": 100418273278,
+    "Ozon_Product_ID": 70224614,
+    "FBO_OZON_SKU_ID": 257353173,
+    "FBS_OZON_SKU_ID": 257353174,
+    "Barcode": "OZN257353173",
+    "Name": "Контактные линзы, Maxima 55 UV -5.75, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273278
+  },
+  {
+    "art": 100418273018,
+    "Ozon_Product_ID": 70224523,
+    "FBO_OZON_SKU_ID": 257350641,
+    "FBS_OZON_SKU_ID": 257350647,
+    "Barcode": "OZN257350641",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -1.25, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273018
+  },
+  {
+    "art": 100393784626,
+    "Ozon_Product_ID": 70224525,
+    "FBO_OZON_SKU_ID": 257350637,
+    "FBS_OZON_SKU_ID": 257350639,
+    "Barcode": "OZN257350637",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -0.50, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 8886393784626
+  },
+  {
+    "art": 100071619478,
+    "Ozon_Product_ID": 70224616,
+    "FBO_OZON_SKU_ID": 257350544,
+    "FBS_OZON_SKU_ID": 257350546,
+    "Barcode": "OZN257350544",
+    "Name": "Контактные линзы, Maxima 55 UV -4.75, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619478
+  },
+  {
+    "art": 100071619225,
+    "Ozon_Product_ID": 70224589,
+    "FBO_OZON_SKU_ID": 257350523,
+    "FBS_OZON_SKU_ID": 257350528,
+    "Barcode": "OZN257350523",
+    "Name": "Контактные линзы, Maxima 55 UV -9.5, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619225
+  },
+  {
+    "art": 100393784916,
+    "Ozon_Product_ID": 70224547,
+    "FBO_OZON_SKU_ID": 257350873,
+    "FBS_OZON_SKU_ID": 257350874,
+    "Barcode": "OZN257350873",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -9.5, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 8886393784916
+  },
+  {
+    "art": 100071619003,
+    "Ozon_Product_ID": 70224576,
+    "FBO_OZON_SKU_ID": 257351525,
+    "FBS_OZON_SKU_ID": 257351536,
+    "Barcode": "OZN257351525",
+    "Name": "Контактные линзы, Maxima 55 UV +2.5, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619003
+  },
+  {
+    "art": 100071619249,
+    "Ozon_Product_ID": 70224592,
+    "FBO_OZON_SKU_ID": 257351069,
+    "FBS_OZON_SKU_ID": 257351071,
+    "Barcode": "OZN257351069",
+    "Name": "Контактные линзы, Maxima 55 UV -9.0, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619249
+  },
+  {
+    "art": 100071619621,
+    "Ozon_Product_ID": 70224595,
+    "FBO_OZON_SKU_ID": 257351011,
+    "FBS_OZON_SKU_ID": 257351015,
+    "Barcode": "OZN257351011",
+    "Name": "Контактные линзы, Maxima 55 UV -2.50, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619621
+  },
+  {
+    "art": 100393784893,
+    "Ozon_Product_ID": 70224544,
+    "FBO_OZON_SKU_ID": 257350965,
+    "FBS_OZON_SKU_ID": 257350968,
+    "Barcode": "OZN257350965",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -8.5, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 8886393784893
+  },
+  {
+    "art": 100071619515,
+    "Ozon_Product_ID": 70224605,
+    "FBO_OZON_SKU_ID": 257350529,
+    "FBS_OZON_SKU_ID": 257350533,
+    "Barcode": "OZN257350529",
+    "Name": "Контактные линзы, Maxima 55 UV -4.25, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619515
+  },
+  {
+    "art": 100418273117,
+    "Ozon_Product_ID": 70224529,
+    "FBO_OZON_SKU_ID": 257350621,
+    "FBS_OZON_SKU_ID": 257350630,
+    "Barcode": "OZN257350621",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -3.75, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273117
+  },
+  {
+    "art": 100418273339,
+    "Ozon_Product_ID": 70224604,
+    "FBO_OZON_SKU_ID": 257350506,
+    "FBS_OZON_SKU_ID": 257350516,
+    "Barcode": "OZN257350506",
+    "Name": "Контактные линзы, Maxima 55 UV -4.25, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273339
+  },
+  {
+    "art": 100071619119,
+    "Ozon_Product_ID": 70224577,
+    "FBO_OZON_SKU_ID": 257351631,
+    "FBS_OZON_SKU_ID": 257351637,
+    "Barcode": "OZN257351631",
+    "Name": "Контактные линзы, Maxima 55 UV +5.5, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619119
+  },
+  {
+    "art": 100393785760,
+    "Ozon_Product_ID": 70224557,
+    "FBO_OZON_SKU_ID": 257351102,
+    "FBS_OZON_SKU_ID": 257351106,
+    "Barcode": "OZN257351102",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus +4.50, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 8886393785760
+  },
+  {
+    "art": 100418273377,
+    "Ozon_Product_ID": 70224597,
+    "FBO_OZON_SKU_ID": 257351204,
+    "FBS_OZON_SKU_ID": 257351209,
+    "Barcode": "OZN257351204",
+    "Name": "Контактные линзы, Maxima 55 UV -3.00, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273377
+  },
+  {
+    "art": 100418273285,
+    "Ozon_Product_ID": 70224615,
+    "FBO_OZON_SKU_ID": 257350541,
+    "FBS_OZON_SKU_ID": 257350545,
+    "Barcode": "OZN257350541",
+    "Name": "Контактные линзы, Maxima 55 UV -5.50, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273285
+  },
+  {
+    "art": 100393785777,
+    "Ozon_Product_ID": 70224555,
+    "FBO_OZON_SKU_ID": 257351068,
+    "FBS_OZON_SKU_ID": 257351070,
+    "Barcode": "OZN257351068",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus +5.0, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 8886393785777
+  },
+  {
+    "art": 100393785784,
+    "Ozon_Product_ID": 70224554,
+    "FBO_OZON_SKU_ID": 257351395,
+    "FBS_OZON_SKU_ID": 257351404,
+    "Barcode": "OZN257351395",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus +5.5, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 8886393785784
+  },
+  {
+    "art": 100071619232,
+    "Ozon_Product_ID": 70224591,
+    "FBO_OZON_SKU_ID": 257350525,
+    "FBS_OZON_SKU_ID": 257350527,
+    "Barcode": "OZN257350525",
+    "Name": "Контактные линзы, Maxima 55 UV -9.5, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619232
+  },
+  {
+    "art": 100071619430,
+    "Ozon_Product_ID": 70224611,
+    "FBO_OZON_SKU_ID": 257350542,
+    "FBS_OZON_SKU_ID": 257350548,
+    "Barcode": "OZN257350542",
+    "Name": "Контактные линзы, Maxima 55 UV -5.25, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619430
+  },
+  {
+    "art": 100071619201,
+    "Ozon_Product_ID": 70224580,
+    "FBO_OZON_SKU_ID": 257351120,
+    "FBS_OZON_SKU_ID": 257351127,
+    "Barcode": "OZN257351120",
+    "Name": "Контактные линзы, Maxima 55 UV -10.0, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619201
+  },
+  {
+    "art": 100071618846,
+    "Ozon_Product_ID": 70224563,
+    "FBO_OZON_SKU_ID": 257351160,
+    "FBS_OZON_SKU_ID": 257351161,
+    "Barcode": "OZN257351160",
+    "Name": "Контактные линзы, Maxima 55 UV -1.00, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071618846
+  },
+  {
+    "art": 100071619294,
+    "Ozon_Product_ID": 70224586,
+    "FBO_OZON_SKU_ID": 257350953,
+    "FBS_OZON_SKU_ID": 257350961,
+    "Barcode": "OZN257350953",
+    "Name": "Контактные линзы, Maxima 55 UV -8.0, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619294
+  },
+  {
+    "art": 100418273308,
+    "Ozon_Product_ID": 70224609,
+    "FBO_OZON_SKU_ID": 257350490,
+    "FBS_OZON_SKU_ID": 257350495,
+    "Barcode": "OZN257350490",
+    "Name": "Контактные линзы, Maxima 55 UV -5.00, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273308
+  },
+  {
+    "art": 100418273315,
+    "Ozon_Product_ID": 70224608,
+    "FBO_OZON_SKU_ID": 257350553,
+    "FBS_OZON_SKU_ID": 257350561,
+    "Barcode": "OZN257350553",
+    "Name": "Контактные линзы, Maxima 55 UV -4.75, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273315
+  },
+  {
+    "art": 100393784909,
+    "Ozon_Product_ID": 70224545,
+    "FBO_OZON_SKU_ID": 257350905,
+    "FBS_OZON_SKU_ID": 257350906,
+    "Barcode": "OZN257350905",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -9.0, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 8886393784909
+  },
+  {
+    "art": 100418273162,
+    "Ozon_Product_ID": 70224536,
+    "FBO_OZON_SKU_ID": 257350716,
+    "FBS_OZON_SKU_ID": 257350725,
+    "Barcode": "OZN257350716",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -5.00, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273162
+  },
+  {
+    "art": 100418273384,
+    "Ozon_Product_ID": 70224596,
+    "FBO_OZON_SKU_ID": 257350498,
+    "FBS_OZON_SKU_ID": 257350508,
+    "Barcode": "OZN257350498",
+    "Name": "Контактные линзы, Maxima 55 UV -2.75, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273384
+  },
+  {
+    "art": 100071618945,
+    "Ozon_Product_ID": 70224565,
+    "FBO_OZON_SKU_ID": 257351433,
+    "FBS_OZON_SKU_ID": 257351447,
+    "Barcode": "OZN257351433",
+    "Name": "Контактные линзы, Maxima 55 UV +1.0, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071618945
+  },
+  {
+    "art": 100071619041,
+    "Ozon_Product_ID": 70224568,
+    "FBO_OZON_SKU_ID": 257351576,
+    "FBS_OZON_SKU_ID": 257351579,
+    "Barcode": "OZN257351576",
+    "Name": "Контактные линзы, Maxima 55 UV +3.5, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619041
+  },
+  {
+    "art": 100393784954,
+    "Ozon_Product_ID": 70224561,
+    "FBO_OZON_SKU_ID": 257351234,
+    "FBS_OZON_SKU_ID": 257351236,
+    "Barcode": "OZN257351234",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -11.5, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 8886393784954
+  },
+  {
+    "art": 100418273056,
+    "Ozon_Product_ID": 70224522,
+    "FBO_OZON_SKU_ID": 257350703,
+    "FBS_OZON_SKU_ID": 257350711,
+    "Barcode": "OZN257350703",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -2.25, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273056
+  },
+  {
+    "art": 100393784886,
+    "Ozon_Product_ID": 70224543,
+    "FBO_OZON_SKU_ID": 257350891,
+    "FBS_OZON_SKU_ID": 257350896,
+    "Barcode": "OZN257350891",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -8.0, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 8886393784886
+  },
+  {
+    "art": 100071618983,
+    "Ozon_Product_ID": 70224567,
+    "FBO_OZON_SKU_ID": 257351504,
+    "FBS_OZON_SKU_ID": 257351512,
+    "Barcode": "OZN257351504",
+    "Name": "Контактные линзы, Maxima 55 UV +2.0, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071618983
+  },
+  {
+    "art": 100393785739,
+    "Ozon_Product_ID": 70224551,
+    "FBO_OZON_SKU_ID": 257351009,
+    "FBS_OZON_SKU_ID": 257351012,
+    "Barcode": "OZN257351009",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus +3.50, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 8886393785739
+  },
+  {
+    "art": 100071619539,
+    "Ozon_Product_ID": 70224603,
+    "FBO_OZON_SKU_ID": 257353189,
+    "FBS_OZON_SKU_ID": 257353192,
+    "Barcode": "OZN257353189",
+    "Name": "Контактные линзы, Maxima 55 UV -4.00, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619539
+  },
+  {
+    "art": 100071619416,
+    "Ozon_Product_ID": 70224612,
+    "FBO_OZON_SKU_ID": 257350530,
+    "FBS_OZON_SKU_ID": 257350534,
+    "Barcode": "OZN257350530",
+    "Name": "Контактные линзы, Maxima 55 UV -5.50, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619416
+  },
+  {
+    "art": 100393785753,
+    "Ozon_Product_ID": 70224553,
+    "FBO_OZON_SKU_ID": 0,
+    "FBS_OZON_SKU_ID": 0,
+    "Barcode": "8886393785753",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus +4.00, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 8886393785753
+  },
+  {
+    "art": 100418273292,
+    "Ozon_Product_ID": 70224613,
+    "FBO_OZON_SKU_ID": 257350531,
+    "FBS_OZON_SKU_ID": 257350535,
+    "Barcode": "OZN257350531",
+    "Name": "Контактные линзы, Maxima 55 UV -5.25, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273292
+  },
+  {
+    "art": 100393785715,
+    "Ozon_Product_ID": 70224552,
+    "FBO_OZON_SKU_ID": 257351139,
+    "FBS_OZON_SKU_ID": 257351142,
+    "Barcode": "OZN257351139",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus +3.00, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 8886393785715
+  },
+  {
+    "art": 100418273094,
+    "Ozon_Product_ID": 70224528,
+    "FBO_OZON_SKU_ID": 0,
+    "FBS_OZON_SKU_ID": 0,
+    "Barcode": "2000418273094",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -3.25, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273094
+  },
+  {
+    "art": 100071619263,
+    "Ozon_Product_ID": 70224587,
+    "FBO_OZON_SKU_ID": 257351162,
+    "FBS_OZON_SKU_ID": 257351164,
+    "Barcode": "OZN257351162",
+    "Name": "Контактные линзы, Maxima 55 UV -8.5, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619263
+  },
+  {
+    "art": 100071619256,
+    "Ozon_Product_ID": 70224590,
+    "FBO_OZON_SKU_ID": 257351181,
+    "FBS_OZON_SKU_ID": 257351182,
+    "Barcode": "OZN257351181",
+    "Name": "Контактные линзы, Maxima 55 UV -9.0, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619256
+  },
+  {
+    "art": 100418273346,
+    "Ozon_Product_ID": 70224600,
+    "FBO_OZON_SKU_ID": 257350500,
+    "FBS_OZON_SKU_ID": 257350514,
+    "Barcode": "OZN257350500",
+    "Name": "Контактные линзы, Maxima 55 UV -4.00, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273346
+  },
+  {
+    "art": 100071619126,
+    "Ozon_Product_ID": 70224578,
+    "FBO_OZON_SKU_ID": 257351658,
+    "FBS_OZON_SKU_ID": 257351670,
+    "Barcode": "OZN257351658",
+    "Name": "Контактные линзы, Maxima 55 UV +6.0, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619126
+  },
+  {
+    "art": 100071619102,
+    "Ozon_Product_ID": 70224574,
+    "FBO_OZON_SKU_ID": 257351531,
+    "FBS_OZON_SKU_ID": 257351538,
+    "Barcode": "OZN257351531",
+    "Name": "Контактные линзы, Maxima 55 UV +5.0, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619102
+  },
+  {
+    "art": 100418273025,
+    "Ozon_Product_ID": 70224518,
+    "FBO_OZON_SKU_ID": 257350707,
+    "FBS_OZON_SKU_ID": 257350709,
+    "Barcode": "OZN257350707",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -1.50, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273025
+  },
+  {
+    "art": 100418273063,
+    "Ozon_Product_ID": 70224517,
+    "FBO_OZON_SKU_ID": 257350619,
+    "FBS_OZON_SKU_ID": 257350626,
+    "Barcode": "OZN257350619",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -2.50, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273063
+  },
+  {
+    "art": 100071619065,
+    "Ozon_Product_ID": 70224575,
+    "FBO_OZON_SKU_ID": 0,
+    "FBS_OZON_SKU_ID": 0,
+    "Barcode": "889071619065",
+    "Name": "Контактные линзы, Maxima 55 UV +4.0, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619065
+  },
+  {
+    "art": 100071619607,
+    "Ozon_Product_ID": 70224594,
+    "FBO_OZON_SKU_ID": 257351149,
+    "FBS_OZON_SKU_ID": 257351155,
+    "Barcode": "OZN257351149",
+    "Name": "Контактные линзы, Maxima 55 UV -2.75, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619607
+  },
+  {
+    "art": 100071619287,
+    "Ozon_Product_ID": 70224584,
+    "FBO_OZON_SKU_ID": 257351641,
+    "FBS_OZON_SKU_ID": 257351645,
+    "Barcode": "OZN257351641",
+    "Name": "Контактные линзы, Maxima 55 UV -8.0, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619287
+  },
+  {
+    "art": 100418273186,
+    "Ozon_Product_ID": 70224537,
+    "FBO_OZON_SKU_ID": 257350727,
+    "FBS_OZON_SKU_ID": 257350729,
+    "Barcode": "OZN257350727",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -5.50, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273186
+  },
+  {
+    "art": 100071619171,
+    "Ozon_Product_ID": 70224585,
+    "FBO_OZON_SKU_ID": 257351590,
+    "FBS_OZON_SKU_ID": 257351600,
+    "Barcode": "OZN257351590",
+    "Name": "Контактные линзы, Maxima 55 UV -3.75, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619171
+  },
+  {
+    "art": 100071619195,
+    "Ozon_Product_ID": 70224583,
+    "FBO_OZON_SKU_ID": 257351592,
+    "FBS_OZON_SKU_ID": 257351606,
+    "Barcode": "OZN257351592",
+    "Name": "Контактные линзы, Maxima 55 UV -3.50, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619195
+  },
+  {
+    "art": 100418273100,
+    "Ozon_Product_ID": 70224530,
+    "FBO_OZON_SKU_ID": 257350677,
+    "FBS_OZON_SKU_ID": 257350690,
+    "Barcode": "OZN257350677",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -3.50, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273100
+  },
+  {
+    "art": 100418273353,
+    "Ozon_Product_ID": 70224601,
+    "FBO_OZON_SKU_ID": 257350532,
+    "FBS_OZON_SKU_ID": 257350536,
+    "Barcode": "OZN257350532",
+    "Name": "Контактные линзы, Maxima 55 UV -3.75, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273353
+  },
+  {
+    "art": 100071619560,
+    "Ozon_Product_ID": 70224599,
+    "FBO_OZON_SKU_ID": 257351227,
+    "FBS_OZON_SKU_ID": 257351228,
+    "Barcode": "OZN257351227",
+    "Name": "Контактные линзы, Maxima 55 UV -3.25, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619560
+  },
+  {
+    "art": 100418273216,
+    "Ozon_Product_ID": 70224540,
+    "FBO_OZON_SKU_ID": 257350983,
+    "FBS_OZON_SKU_ID": 257350991,
+    "Barcode": "OZN257350983",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -6.5, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273216
+  },
+  {
+    "art": 100071619300,
+    "Ozon_Product_ID": 70224581,
+    "FBO_OZON_SKU_ID": 257351623,
+    "FBS_OZON_SKU_ID": 257351625,
+    "Barcode": "OZN257351623",
+    "Name": "Контактные линзы, Maxima 55 UV -7.5, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619300
+  },
+  {
+    "art": 100393784947,
+    "Ozon_Product_ID": 70224560,
+    "FBO_OZON_SKU_ID": 0,
+    "FBS_OZON_SKU_ID": 0,
+    "Barcode": "OZN257450740",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -11.0, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 8886393784947
+  },
+  {
+    "art": 100071619492,
+    "Ozon_Product_ID": 70224606,
+    "FBO_OZON_SKU_ID": 257350499,
+    "FBS_OZON_SKU_ID": 257350515,
+    "Barcode": "OZN257350499",
+    "Name": "Контактные линзы, Maxima 55 UV -4.50, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619492
+  },
+  {
+    "art": 100418273230,
+    "Ozon_Product_ID": 70224582,
+    "FBO_OZON_SKU_ID": 257351549,
+    "FBS_OZON_SKU_ID": 257351563,
+    "Barcode": "OZN257351549",
+    "Name": "Контактные линзы, Maxima 55 UV -3.50, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273230
+  },
+  {
+    "art": 100071619584,
+    "Ozon_Product_ID": 70224602,
+    "FBO_OZON_SKU_ID": 257350502,
+    "FBS_OZON_SKU_ID": 257350507,
+    "Barcode": "OZN257350502",
+    "Name": "Контактные линзы, Maxima 55 UV -3.00, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619584
+  },
+  {
+    "art": 100071618884,
+    "Ozon_Product_ID": 70224570,
+    "FBO_OZON_SKU_ID": 257351553,
+    "FBS_OZON_SKU_ID": 257351562,
+    "Barcode": "OZN257351553",
+    "Name": "Контактные линзы, Maxima 55 UV -0.50, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071618884
+  },
+  {
+    "art": 100418273322,
+    "Ozon_Product_ID": 70224607,
+    "FBO_OZON_SKU_ID": 257350501,
+    "FBS_OZON_SKU_ID": 257350511,
+    "Barcode": "OZN257350501",
+    "Name": "Контактные линзы, Maxima 55 UV -4.50, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273322
+  },
+  {
+    "art": 100418273179,
+    "Ozon_Product_ID": 70224533,
+    "FBO_OZON_SKU_ID": 257350704,
+    "FBS_OZON_SKU_ID": 257350708,
+    "Barcode": "OZN257350704",
+    "Name": "Контактные линзы, Maxima 55 Comfort Plus -5.25, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273179
+  },
+  {
+    "art": 100418273360,
+    "Ozon_Product_ID": 70224598,
+    "FBO_OZON_SKU_ID": 257350493,
+    "FBS_OZON_SKU_ID": 257350496,
+    "Barcode": "OZN257350493",
+    "Name": "Контактные линзы, Maxima 55 UV -3.25, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273360
+  },
+  {
+    "art": 100071619270,
+    "Ozon_Product_ID": 70224588,
+    "FBO_OZON_SKU_ID": 257350925,
+    "FBS_OZON_SKU_ID": 257350934,
+    "Barcode": "OZN257350925",
+    "Name": "Контактные линзы, Maxima 55 UV -8.5, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619270
+  },
+  {
+    "art": 100071619454,
+    "Ozon_Product_ID": 70224610,
+    "FBO_OZON_SKU_ID": 257350537,
+    "FBS_OZON_SKU_ID": 257350539,
+    "Barcode": "OZN257350537",
+    "Name": "Контактные линзы, Maxima 55 UV -5.00, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619454
+  },
+  {
+    "art": 100071619027,
+    "Ozon_Product_ID": 70224573,
+    "FBO_OZON_SKU_ID": 257351483,
+    "FBS_OZON_SKU_ID": 257351495,
+    "Barcode": "OZN257351483",
+    "Name": "Контактные линзы, Maxima 55 UV +3.0, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 889071619027
+  },
+  {
+    "art": 100418273391,
+    "Ozon_Product_ID": 70224593,
+    "FBO_OZON_SKU_ID": 257350497,
+    "FBS_OZON_SKU_ID": 257350513,
+    "Barcode": "OZN257350497",
+    "Name": "Контактные линзы, Maxima 55 UV -2.50, 14.2",
+    "Brand": "Maxima Optics",
+    "barcodeOld": 2000418273391
+  }
+]

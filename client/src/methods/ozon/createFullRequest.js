@@ -6,9 +6,8 @@ import RequestServer from "./requestServer";
 
 const CreateFullRequest = () => {
 
-
     const example = require('./templates/requestImport.json')
-    const sourceData = require('../../data/productDB/maxima.json')
+    const sourceData = require('../../data/productDB/allBaush.json')
     const oxyCofData = require('../../data/ozonData/oxygen_transmission.json')
     const optPwrData = require('../../data/ozonData/optical_power.json')
     const radCurvatureData = require('../../data/ozonData/radius_curvature.json')
@@ -36,7 +35,7 @@ const CreateFullRequest = () => {
 
     sourceData.map((sourceItem, index) => {
 
-        if (numberItem > newIndex) {
+        const createNewProduct = () => {
             fullRequest.items.push(_.cloneDeep(example.items[0]))
 
             let newItem = newData[index].variable,
@@ -52,7 +51,8 @@ const CreateFullRequest = () => {
                     return source.result.find(x => capitalize(x.value) === newData[newIndex].list[item]).id
                 }
                 if (item !== "wearMode") {
-                    return source.result.find(x => x.value === newData[newIndex].list[item]).id
+
+                    return source.result.find(x => x.value === newData[newIndex].list[item].trim()).id
                 }
             }
 
@@ -63,9 +63,7 @@ const CreateFullRequest = () => {
 
             const addItemsFinal = () => {
 
-                // console.log("index ",index)
-                // console.log("isSolutions ",isSolutions)
-                // console.log("isSolutions ",isSolutions)
+                console.log('itemFinal.barcode: ', itemFinal.barcode)
 
                 itemFinal.barcode = newItem.barcode
                 itemFinal.depth = newItem.packDepth
@@ -87,58 +85,62 @@ const CreateFullRequest = () => {
 
                 if (!isSolutions) {
 
-                    searchAttrById(85).value = newItem.brand
-                    searchAttrById(4191).value = newItem.description
-                    searchAttrById(4194).value = newItem.image
-                    searchAttrById(4384).value = newItem.equipment
+
                     searchAttrById(7703).value = newItem.diameter
                     searchAttrById(7706).value = newItem.moistureCont
+                    searchAttrById(9048).value = newItem.modelProduct
                     searchAttrById(10289).value = newItem.flagGroup
 
                     //Добавление в финальный запрос значений требующий как value так и id
 
-                    searchAttrById(7709).value = newData[newIndex].list.oxyCof
+                    searchAttrById(7709).value = newData[index].list.oxyCof
                     searchAttrById(7709).dictionary_value_id = searchAttrByIdList('oxyCof', oxyCofData)
 
-                    searchAttrById(7701).value = newData[newIndex].list.optPwr
+
+                    searchAttrById(7701).value = newData[index].list.optPwr
                     searchAttrById(7701).dictionary_value_id = searchAttrByIdList('optPwr', optPwrData)
 
-                    searchAttrById(7702).value = newData[newIndex].list.radCurvature
+                    searchAttrById(7702).value = newData[index].list.radCurvature
                     searchAttrById(7702).dictionary_value_id = searchAttrByIdList('radCurvature', radCurvatureData)
 
-                    searchAttrById(7704).value = newData[newIndex].list.packAmount
+                    searchAttrById(7704).value = newData[index].list.packAmount
                     searchAttrById(7704).dictionary_value_id = searchAttrByIdList('packAmount', packAmountData)
 
-                    searchAttrById(7696).value = newData[newIndex].list.wearMode
+                    searchAttrById(7696).value = newData[index].list.wearMode
                     searchAttrById(7696).dictionary_value_id = searchAttrByIdList('wearMode', wearModeData)
 
-                    searchAttrById(7694).value = newData[newIndex].list.daysReplace
+                    searchAttrById(7694).value = newData[index].list.daysReplace
                     searchAttrById(7694).dictionary_value_id = searchAttrByIdList('daysReplace', daysReplaceData)
                 }
 
             }
-
             if (index >= 0) {
                 addItemsFinal()
             }
             newIndex++
-            // console.log(itemFinal.typeProductId)
-
         }
 
         if (numberItem === index) {
-            RequestServer(fullRequest)
-            // console.log(fullRequest)
+            // RequestServer(fullRequest)
+            console.log(fullRequest)
 
             numberItem = numberItem + 100
             fullRequest = {items: []}
             newIndex -= 100
 
-        }
-        if (sourceData.length === index + 1) {
-            // console.log(fullRequest)
+            // createNewProduct()
 
-            RequestServer(fullRequest)
+        }
+
+        if (numberItem > newIndex) {
+            createNewProduct()
+        }
+
+
+        if (sourceData.length === index + 1) {
+            console.log(fullRequest)
+
+            // RequestServer(fullRequest)
         }
 
     })
