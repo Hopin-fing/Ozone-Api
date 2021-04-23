@@ -128,22 +128,19 @@ const GetAttributes = (indexItem, sourceData) => {
 
             const objRequest = {
                 isSolutions,
-
-                variable : {
-                    article,
-                    brand,
-                    name,
-                    description,
-                    equipment,
-                    packHeight,
-                    packHeightUnit,
-                    packDepth,
-                    packDepthUnit,
-                    barcode,
-                    price,
-                    image,
-                    typeProductId
-                },
+                article,
+                brand,
+                name,
+                description,
+                equipment,
+                packHeight,
+                packHeightUnit,
+                packDepth,
+                packDepthUnit,
+                barcode,
+                price,
+                image,
+                typeProductId
 
             }
 
@@ -181,45 +178,40 @@ const GetAttributes = (indexItem, sourceData) => {
             const objRequest = {
                 isSolutions,
                 isColored,
-                variable : {
-                    article,
-                    brand,
-                    name,
-                    description,
-                    equipment,
-                    diameter,
-                    packWidth,
-                    packWidthUnit,
-                    packHeight,
-                    packHeightUnit,
-                    packDepth,
-                    packDepthUnit,
-                    packWeight,
-                    moistureCont,
-                    barcode,
-                    price,
-                    flagGroup,
-                    image,
-                    typeProductId,
-                    modelProduct
-                },
-                list : {
-                    oxyCof,
-                    optPwr,
-                    daysReplace,
-                    radCurvature,
-                    packAmount,
-                    wearMode
-
-                }
+                article,
+                brand,
+                name,
+                description,
+                equipment,
+                diameter,
+                packWidth,
+                packWidthUnit,
+                packHeight,
+                packHeightUnit,
+                packDepth,
+                packDepthUnit,
+                packWeight,
+                moistureCont,
+                barcode,
+                price,
+                flagGroup,
+                image,
+                typeProductId,
+                modelProduct,
+                oxyCof,
+                optPwr,
+                daysReplace,
+                radCurvature,
+                packAmount,
+                wearMode
 
             }
             if(isColored) {
                 const colorInfo = searchColor(nameOriginal);
                 const colorName = colorInfo.color
                 const colorId = colorInfo.id
-                objRequest.variable.colorName = colorName
-                objRequest.variable.colorId = colorId
+                objRequest.colorName = colorName
+                objRequest.colorId = colorId
             }
 
             arrAllAttr.push(objRequest)

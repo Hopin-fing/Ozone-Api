@@ -38,7 +38,7 @@ const CreateFullRequest = () => {
         const createNewProduct = () => {
             fullRequest.items.push(_.cloneDeep(example.items[0]))
 
-            let newItem = newData[index].variable,
+            let newItem = newData[index],
                 itemFinal = fullRequest.items[newIndex],
                 isSolutions = newData[index].isSolutions,
                 isColored = newData[index].isColored
@@ -49,11 +49,11 @@ const CreateFullRequest = () => {
 
             const searchAttrByIdList = (item, source) => {
                 if (item === "wearMode") {  //Из вайлдбериса приходит строка с мелкими буквами и мы тут делаем с первой большой буквой
-                    return source.result.find(x => capitalize(x.value) === newData[newIndex].list[item]).id
+                    return source.result.find(x => capitalize(x.value) === newData[newIndex][item]).id
                 }
                 if (item !== "wearMode") {
 
-                    return source.result.find(x => x.value === newData[newIndex].list[item].trim()).id
+                    return source.result.find(x => x.value === newData[newIndex][item].trim()).id
                 }
             }
 
@@ -106,23 +106,23 @@ const CreateFullRequest = () => {
 
                     //Добавление в финальный запрос значений требующий как value так и id
 
-                    searchAttrById(7709).value = newData[index].list.oxyCof
+                    searchAttrById(7709).value = newData[index].oxyCof
                     searchAttrById(7709).dictionary_value_id = searchAttrByIdList('oxyCof', oxyCofData)
 
 
-                    searchAttrById(7701).value = newData[index].list.optPwr
+                    searchAttrById(7701).value = newData[index].optPwr
                     searchAttrById(7701).dictionary_value_id = searchAttrByIdList('optPwr', optPwrData)
 
-                    searchAttrById(7702).value = newData[index].list.radCurvature
+                    searchAttrById(7702).value = newData[index].radCurvature
                     searchAttrById(7702).dictionary_value_id = searchAttrByIdList('radCurvature', radCurvatureData)
 
-                    searchAttrById(7704).value = newData[index].list.packAmount
+                    searchAttrById(7704).value = newData[index].packAmount
                     searchAttrById(7704).dictionary_value_id = searchAttrByIdList('packAmount', packAmountData)
 
-                    searchAttrById(7696).value = newData[index].list.wearMode
+                    searchAttrById(7696).value = newData[index].wearMode
                     searchAttrById(7696).dictionary_value_id = searchAttrByIdList('wearMode', wearModeData)
 
-                    searchAttrById(7694).value = newData[index].list.daysReplace
+                    searchAttrById(7694).value = newData[index].daysReplace
                     searchAttrById(7694).dictionary_value_id = searchAttrByIdList('daysReplace', daysReplaceData)
                 }
 
