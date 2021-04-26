@@ -43,8 +43,12 @@ const GetAttributes = (indexItem, sourceData) => {
         return barcode.slice(-9)
     }
 
-    const searchValue = (value, inputKey, outputKey) => {
-        return arrModels.find(x => x[inputKey] === value)[outputKey]
+    const searchValue = (value, inputKey, outputKey, count = false) => {
+        const result = arrModels.find(x => x[inputKey] === value)[outputKey]
+        if(typeof result === "object") {
+            return result[count]
+        }
+        return result
     }
 
 
@@ -122,7 +126,7 @@ const GetAttributes = (indexItem, sourceData) => {
             const name = searchAttr( 'Ключевые слова', 2,);
 
             const flagGroup = searchGlobalFlag(name);
-            const image  = searchValue(flagGroup,"flag", "img");
+            let image  = searchValue(flagGroup,"flag", "img");
 
             const typeProductId = searchValue(flagGroup,"flag", "id");
 
@@ -151,7 +155,7 @@ const GetAttributes = (indexItem, sourceData) => {
             const nameOriginal = searchAttr( 'Наименование');
             const flagGroup = searchGlobalFlag(nameOriginal);
             let name = flagGroup;
-            const image  = searchValue(flagGroup,"flag", "img");
+
             const typeProductId = searchValue(flagGroup,"flag", "id");
 
             const packWidth = searchAttr( 'Ширина упаковки', 0, "count");
@@ -171,7 +175,10 @@ const GetAttributes = (indexItem, sourceData) => {
             const moistureCont  = searchAttr( 'Влагосодержание', 0, "count").toString();
             const modelProduct = `Контактные линзы ${brand} ${name}`
 
-            name += ` / ${optPwr}/ ${radCurvature}/` // Дополнительная информация к названию
+            const image  = searchValue(flagGroup,"flag", "img", packAmount);
+
+            name += `  / ${optPwr}/ ${radCurvature}/` // Дополнительная информация к названию
+
 
             const isColored = searchValue(flagGroup,"flag", "type") === "цветные"
 

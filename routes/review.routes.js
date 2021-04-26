@@ -35,7 +35,6 @@ const maximaJson = require('../dataServer/maxima.json')
 //     );
 // }
 
-//889071619393
 
 const rewriteJson = () => {
     // const data = finishJson

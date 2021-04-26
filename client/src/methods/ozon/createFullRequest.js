@@ -15,6 +15,7 @@ const CreateFullRequest = () => {
     const wearModeData = require('../../data/ozonData/wear_mode.json')
     const daysReplaceData = require('../../data/ozonData/days_replace.json')
 
+
     let fullRequest = {"items": []}
 
     const newData = GetAttributes(sourceData.length , sourceData)
@@ -31,10 +32,7 @@ const CreateFullRequest = () => {
     let newIndex = 0 // добавил новый индекс для того чтобы обнулять его при достижении итемов в запросе до сотки, а исходный индекс будет с того же место перебирать элементы бд
     let numberItem = 100;
 
-
-
     sourceData.map((sourceItem, index) => {
-
         const createNewProduct = () => {
             fullRequest.items.push(_.cloneDeep(example.items[0]))
 
@@ -43,19 +41,7 @@ const CreateFullRequest = () => {
                 isSolutions = newData[index].isSolutions,
                 isColored = newData[index].isColored
 
-            const searchAttrById = idValue => {
-                return itemFinal.attributes.find(x => x.id === idValue).values[0]
-            }
 
-            const searchAttrByIdList = (item, source) => {
-                if (item === "wearMode") {  //Из вайлдбериса приходит строка с мелкими буквами и мы тут делаем с первой большой буквой
-                    return source.result.find(x => capitalize(x.value) === newData[newIndex][item]).id
-                }
-                if (item !== "wearMode") {
-
-                    return source.result.find(x => x.value === newData[newIndex][item].trim()).id
-                }
-            }
 
             const capitalize = (value) => {
                 if (typeof value !== 'string') return ''
@@ -63,6 +49,20 @@ const CreateFullRequest = () => {
             }
 
             const addItemsFinal = () => {
+
+                const searchAttrById = idValue => {
+                    return itemFinal.attributes.find(x => x.id === idValue).values[0]
+                }
+
+                const searchAttrByIdList = (item, source) => {
+                    if (item === "wearMode") {  //Из вайлдбериса приходит строка с мелкими буквами и мы тут делаем с первой большой буквой
+                        return source.result.find(x => capitalize(x.value) === newData[index][item]).id
+                    }
+                    if (item !== "wearMode") {
+
+                        return source.result.find(x => x.value === newData[index][item].trim()).id
+                    }
+                }
 
                 itemFinal.barcode = newItem.barcode
                 itemFinal.depth = newItem.packDepth
@@ -95,12 +95,11 @@ const CreateFullRequest = () => {
                 }
 
 
-
-
                 if (!isSolutions) {
 
                     searchAttrById(7703).value = newItem.diameter
                     searchAttrById(7706).value = newItem.moistureCont
+
                     searchAttrById(9048).value = newItem.modelProduct
                     searchAttrById(10289).value = newItem.flagGroup
 
@@ -113,11 +112,13 @@ const CreateFullRequest = () => {
                     searchAttrById(7701).value = newData[index].optPwr
                     searchAttrById(7701).dictionary_value_id = searchAttrByIdList('optPwr', optPwrData)
 
+
                     searchAttrById(7702).value = newData[index].radCurvature
                     searchAttrById(7702).dictionary_value_id = searchAttrByIdList('radCurvature', radCurvatureData)
 
                     searchAttrById(7704).value = newData[index].packAmount
                     searchAttrById(7704).dictionary_value_id = searchAttrByIdList('packAmount', packAmountData)
+
 
                     searchAttrById(7696).value = newData[index].wearMode
                     searchAttrById(7696).dictionary_value_id = searchAttrByIdList('wearMode', wearModeData)
@@ -127,7 +128,7 @@ const CreateFullRequest = () => {
                 }
 
                 if (isColored) {
-                    itemFinal.attributes.push(createAttrObj(59,newItem.colorId, newItem.colorName ))
+                    itemFinal.attributes.push(createAttrObj(59, newItem.colorId, newItem.colorName))
                 }
 
             }
@@ -138,8 +139,16 @@ const CreateFullRequest = () => {
         }
 
         if (numberItem === index) {
-            RequestServer(fullRequest)
+            // setTimeout((f) => {
+            //     console.log(data)
+            // }, index * 100)
             // console.log(fullRequest)
+
+
+            // setTimeout(() => {
+            RequestServer(fullRequest)
+            // }, index*100)
+
 
             numberItem = numberItem + 100
             fullRequest = {items: []}
@@ -156,8 +165,19 @@ const CreateFullRequest = () => {
         if (sourceData.length === index + 1) {
             // console.log(fullRequest)
 
-            RequestServer(fullRequest)
+            // let data = _.cloneDeep(fullRequest)
+
+            // console.log(data)
+
+
+            // setTimeout(() => {
+            //     console.log(data)
+            // }, index * 50)
+            // setTimeout(() => {
+                RequestServer(fullRequest)
+            // }, index*100)
         }
+
 
     })
 

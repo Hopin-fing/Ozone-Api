@@ -7,8 +7,10 @@ const RequestServer = (bodyRequest = null) => {
         "Client-Id": 52496,
         "Api-Key":"4d9d2744-e2c4-4e6d-900a-a0f54b0af790",
         "Content-Type":"application/json",
-        "Retry-After": 3600
+        "Retry-After": 2000
     }
+
+
 
     const results = {}
 
@@ -37,15 +39,16 @@ const RequestServer = (bodyRequest = null) => {
             bodyRequest,
             {headers})
             .then(answer => console.log(answer.data.result))
-            .catch(err => console.log(err))
+            // .catch(err => console.log(err))
 
 
         return response
     };
 
+    request().catch(err => console.log(err))
 
 
-    request()
+
     return results
 
 };
