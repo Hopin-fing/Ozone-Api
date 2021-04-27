@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const RequestServer = (bodyRequest = null) => {
+const RequestServer = (method, url,bodyRequest = null) => {
 
     const headers = {
         "Client-Id": 52496,
@@ -10,44 +10,32 @@ const RequestServer = (bodyRequest = null) => {
         "Retry-After": 2000
     }
 
-
-
     const results = {}
 
-
-    // const request = async () => {
-    //     const response = await axios.post(
-    //         'https://api-seller.ozon.ru/v2/product/import',
-    //         bodyRequest,
-    //         {headers})
-    //         .then(answer => console.log(answer.templates.result))
-    //         .catch(err => console.log(err))
-    //
-    //
-    //     return response
-    // };
-
-    // const body = {
-    //         "attribute_type": "optional",
-    //         "category_id": 17035116,
-    //         "language": "RU"
-    // }
-
     const request = async () => {
-        const response = await axios.post(
-            'https://api-seller.ozon.ru/v2/product/import',
-            bodyRequest,
-            {headers})
-            .then(answer => console.log(answer.data.result))
+        if (method === "GET") {
+            const response = await axios.get(
+                `https://api-seller.ozon.ru${url}`,
+                {headers})
+                .then(answer => console.log(answer.data.result))
+            return response
+        }
+        if (method === "POST") {
+            const response = await axios.post(
+                `https://api-seller.ozon.ru${url}`,
+                bodyRequest,
+                {headers})
+                .then(answer => console.log(answer.data.result))
+            return response
+        }
+
             // .catch(err => console.log(err))
 
 
-        return response
+
     };
 
     request().catch(err => console.log(err))
-
-
 
     return results
 

@@ -1,39 +1,15 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import 'materialize-css'
-import {useHttp} from "./hooks/http.hook";
-import {useMessage} from "./hooks/message.hook";
-import CreateFullRequest from "./methods/ozon/createFullRequest";
+
+import CommandPanel from "./components/CommandPanel";
+import {useSelector} from "react-redux";
+import Tables from "./components/Tables";
 // import UpdateResponseJson from "./methods/ozon/updateResponseJson";
 
 function App() {
 
-    const message = useMessage()
-    const {loading, error, request, clearError} = useHttp()
-    const [form, setForm] = useState({
-        name: '',
-        message: ''
-    })
+    const isOpen = useSelector(({tables}) => tables.isOpen);
 
-
-
-
-    useEffect( () => {
-        message(error)
-        clearError()
-    }, [error, message, clearError])
-
-    const changeHandler = event => {
-        setForm({ ...form, [event.target.name] : event.target.value})
-    }
-
-    const reviewHandler = async () => {
-        try {
-            const data = await request('api/review/review', 'POST', {...form})
-                message(data.message)
-        }catch (e) {
-            
-        }
-    }
 
     // -------------------------------------
 
@@ -126,27 +102,12 @@ function App() {
 
 
   return (
-    <div className="container">
+    <div className="had-container">
       <div className="row">
-          <div className="col s6 offset-s3">
-              <div className="card blue-grey darken-2">
-                  <div className="card-content white-text">
-                      <span className="card-title">Переформатирование запроса в запрос API OZONE</span>
-
-                  </div>
-                  <div className="card-action">
-                      <button
-                          className="green btn darken-3"
-                          onClick={CreateFullRequest}
-                          disabled={loading}
-
-                      >Отправить запрос</button>
-
-
-                  </div>
-              </div>
-          </div>
+          <CommandPanel/>
       </div>
+        {isOpen ?
+            <Tables/> : null}
     </div>
   );
 }

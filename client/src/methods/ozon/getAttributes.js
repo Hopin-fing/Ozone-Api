@@ -45,7 +45,7 @@ const GetAttributes = (indexItem, sourceData) => {
 
     const searchValue = (value, inputKey, outputKey, count = false) => {
         const result = arrModels.find(x => x[inputKey] === value)[outputKey]
-        if(typeof result === "object" && !"main" in result) {
+        if(typeof result === "object" && !("main" in result)) {
             return result[count]
         }
         return result

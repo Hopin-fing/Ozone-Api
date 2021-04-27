@@ -1,4 +1,3 @@
-import React from 'react';
 import GetAttributes from "./getAttributes";
 import _ from "lodash";
 import RequestServer from "./requestServer";
@@ -14,6 +13,8 @@ const CreateFullRequest = () => {
     const packAmountData = require('../../data/ozonData/pack_amount.json')
     const wearModeData = require('../../data/ozonData/wear_mode.json')
     const daysReplaceData = require('../../data/ozonData/days_replace.json')
+    const urlImport = "/v2/product/import"
+    const requestMethod = "POST"
 
 
     let fullRequest = {"items": []}
@@ -28,11 +29,11 @@ const CreateFullRequest = () => {
     //     wearMode : 7696,
     //     daysReplace : 7694
     // }
-
+    let timerSendRequest  = 0
     let newIndex = 0 // добавил новый индекс для того чтобы обнулять его при достижении итемов в запросе до сотки, а исходный индекс будет с того же место перебирать элементы бд
     let numberItem = 100;
 
-    sourceData.map((sourceItem, index) => {
+    sourceData.forEach((sourceItem, index) => {
         const createNewProduct = () => {
             fullRequest.items.push(_.cloneDeep(example.items[0]))
 
@@ -76,7 +77,6 @@ const CreateFullRequest = () => {
                         itemFinal.images.push(element)
                     })
                     searchAttrById(4194).value = newItem.image["main"]
-
 
                 }
                 if (typeof newItem.image == "object" && "30" in newItem.image) {
@@ -154,22 +154,17 @@ const CreateFullRequest = () => {
         }
 
         if (numberItem === index) {
-            // setTimeout((f) => {
-            //     console.log(fullRequest)
-            // }, index * 100)
-            // console.log(fullRequest)
+            let data = _.cloneDeep(fullRequest)
 
-
-            // setTimeout(() => {
-            RequestServer(fullRequest)
-            // }, index*100)
-
+            setTimeout(() => {
+                RequestServer(requestMethod, urlImport, data)
+                // console.log(data)
+            }, timerSendRequest)
+            timerSendRequest += 2000
 
             numberItem = numberItem + 100
             fullRequest = {items: []}
             newIndex -= 100
-
-
         }
 
         if (numberItem > newIndex) {
@@ -178,19 +173,11 @@ const CreateFullRequest = () => {
 
 
         if (sourceData.length === index + 1) {
-            console.log(fullRequest)
-
-            // let data = _.cloneDeep(fullRequest)
-
-            // console.log(data)
-
-
-            // setTimeout(() => {
-            //     console.log(data)
-            // }, index * 50)
-            // setTimeout(() => {
-            //     RequestServer(fullRequest)
-            // }, index*100)
+            let data = _.cloneDeep(fullRequest)
+            setTimeout(() => {
+                RequestServer(requestMethod, urlImport, data)
+            }, timerSendRequest)
+            timerSendRequest += 2000
         }
 
 
