@@ -28,7 +28,7 @@
           "values": [
             {
               "dictionary_value_id": 0,
-              "value": "https://img1.wildberries.ru/big/new/13730000/13739378-1.jpg"
+              "value": ""
             }
           ]
         },
@@ -205,9 +205,7 @@
       "dimension_unit": "mm",
       "height": 60,
       "image_group_id": "0",
-      "images": [
-        "https://img1.wildberries.ru/big/new/13730000/13739378-1.jpg"
-      ],
+      "images": [],
       "images360": [
         ""
       ],

@@ -1,9 +1,9 @@
 [
   {"flag" : "Maxima 55 Comfort Plus", "type" : "прозрачные", "id": "17035115", "img" : "http://images.vfl.ru/ii/1619076159/b194471e/34175967.jpg"},
   {"flag" : "Maxima 55 UV", "type" : "прозрачные", "id": "17035115",  "img" : "http://images.vfl.ru/ii/1619076251/0074008c/34175979.jpg"},
-  {"flag" : "Soflens Natural Colors", "type" : "цветные", "id" : "17035114",  "img" : "http://images.vfl.ru/ii/1619433896/b66d9e08/34228480.jpg"},
+  {"flag" : "Soflens Natural Colors", "type" : "цветные", "id" : "17035114",  "img" : { "main": "http://images.vfl.ru/ii/1619433896/b66d9e08/34228480.jpg", "additional" : ["http://images.vfl.ru/ii/1619451518/aa32ecb3/34233352.jpg"]}},
   {"flag" : "Optima FW", "type" : "прозрачные", "id": "17035115",  "img" : "http://images.vfl.ru/ii/1619434012/4358ba00/34228617.jpg"},
-  {"flag" : "BioTrue Oneday", "type" : "однодневные", "id" : "17035118",  "img" : {"30": "http://images.vfl.ru/ii/1619449526/a20f4d9d/34232996.jpg", "90": "http://images.vfl.ru/ii/1619449527/ee20f5d0/34232997.jpg"}},
+  {"flag" : "BioTrue Oneday", "type" : "однодневные", "id" : "17035118",  "img" : {"30": "http://images.vfl.ru/ii/1619506779/e50bee69/34238457.jpg", "90": "http://images.vfl.ru/ii/1619449527/ee20f5d0/34232997.jpg"}},
   {"flag" : "Soflens 59", "type" : "прозрачные", "id" : "17035115",  "img" : "http://images.vfl.ru/ii/1619434168/2562647f/34228716.jpg"},
   {"flag" : "PureVision", "type" : "прозрачные", "id" : "17035115",  "img" : "http://images.vfl.ru/ii/1619434236/7a2a1121/34228738.jpg"},
   {"flag" : "ULTRA", "type" : "прозрачные", "id" : "17035115",  "img" : "http://images.vfl.ru/ii/1619434348/de929bc2/34228767.jpg"},

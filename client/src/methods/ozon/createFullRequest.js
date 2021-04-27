@@ -70,7 +70,22 @@ const CreateFullRequest = () => {
                 itemFinal.height = newItem.packHeight
                 itemFinal.name = newItem.name
                 itemFinal.price = newItem.price
-                itemFinal.images[0] = newItem.image
+                if (typeof newItem.image == "object" && "main" in newItem.image) { //Происходит фильтрация внутри объекта с ключом "img" в файле "modelsinfo.json"
+                    newItem.image["additional"].forEach((element) => {
+
+                        itemFinal.images.push(element)
+                    })
+                    searchAttrById(4194).value = newItem.image["main"]
+
+
+                }
+                if (typeof newItem.image == "object" && "30" in newItem.image) {
+                    searchAttrById(4194).value = newItem.image[newData[index].packAmount]
+                }
+                if (typeof newItem.image !== "object") {
+                    searchAttrById(4194).value = newItem.image
+                }
+
                 itemFinal.weight = newItem.packWeight
                 itemFinal.width = newItem.packWidth
                 itemFinal["offer_id"] = newItem.article
@@ -78,10 +93,10 @@ const CreateFullRequest = () => {
 
                 searchAttrById(85).value = newItem.brand
                 searchAttrById(4191).value = newItem.description
-                searchAttrById(4194).value = newItem.image
+
                 searchAttrById(4384).value = newItem.equipment
 
-                let createAttrObj = (idCategory, dictionaryValueId, value) => {
+                let createAttrObj = (idCategory, dictionaryValueId, value) => { //Происходит добавление нового атребута в значение ключа "attributes"
                     return {
                         "complex_id": 0,
                         "id": idCategory,
@@ -140,7 +155,7 @@ const CreateFullRequest = () => {
 
         if (numberItem === index) {
             // setTimeout((f) => {
-            //     console.log(data)
+            //     console.log(fullRequest)
             // }, index * 100)
             // console.log(fullRequest)
 
@@ -163,7 +178,7 @@ const CreateFullRequest = () => {
 
 
         if (sourceData.length === index + 1) {
-            // console.log(fullRequest)
+            console.log(fullRequest)
 
             // let data = _.cloneDeep(fullRequest)
 
@@ -174,7 +189,7 @@ const CreateFullRequest = () => {
             //     console.log(data)
             // }, index * 50)
             // setTimeout(() => {
-                RequestServer(fullRequest)
+            //     RequestServer(fullRequest)
             // }, index*100)
         }
 
