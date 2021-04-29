@@ -10,6 +10,12 @@ const tablesReducer = (state = initialState, action) => {
             return {
                 isOpen: true
             }
+        case 'ADD_PRODUCT_INFO':
+            return {
+                ...state,
+                items: action.payload,
+                isLoaded: true
+            }
         default:
             return state
     }

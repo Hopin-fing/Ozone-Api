@@ -1,50 +1,30 @@
-import React, {useEffect, useState} from 'react';
-import CreateFullRequest from "../methods/ozon/createFullRequest";
-import CustomRequest from "../methods/ozon/customRequest";
-import {useMessage} from "../hooks/message.hook";
-import {useHttp} from "../hooks/http.hook";
+import React from 'react';
+import CreateFullRequest from "../methods/ozon/import/createFullRequest";
 import {useDispatch, useSelector} from "react-redux";
-import {openTables} from "../redux/actions/tables";
+import {fetchProductInfo, openTables} from "../redux/actions/tables";
+
+const data = require("../data/responseData/products.json")
 
 const CommandPanel = () => {
 
     const dispatch = useDispatch();
 
-    const { isOpen, isLoaded, items} = useSelector(({tables}) => tables);
+    const isOpen = useSelector(({tables}) => tables.isOpen);
+
+    const bodyRequestInfoList = {
+        "offer_id": [],
+        "product_id": [],
+        "sku": []
+    }
 
 
     const onOpenTables = () => {
         dispatch(openTables())
-        console.log(isOpen)
+        data.forEach(element => {
+            bodyRequestInfoList.offer_id.push(element.art.toString())
+        })
+        dispatch(fetchProductInfo(bodyRequestInfoList))
     }
-
-    const message = useMessage()
-    const {loading, error, request, clearError} = useHttp()
-    const [form, setForm] = useState({
-        name: '',
-        message: ''
-    })
-
-    useEffect( () => {
-        message(error)
-        clearError()
-    }, [error, message, clearError])
-
-    const changeHandler = event => {
-        setForm({ ...form, [event.target.name] : event.target.value})
-    }
-
-    const reviewHandler = async () => {
-        try {
-            const data = await request('api/review/review', 'POST', {...form})
-            message(data.message)
-        }catch (e) {
-
-        }
-    }
-
-
-
 
     return (
         <div className="col s8 offset-s2">
@@ -55,27 +35,33 @@ const CommandPanel = () => {
                 </div>
                 <div className="card-action center">
                     <button
-                        className="green btn darken-3"
+                        className="green waves-effect waves-light btn darken-3"
                         onClick={CreateFullRequest}
-                        disabled={loading}
 
-                    >Отправить запрос</button>
-                    <button
-                        className="orange btn accent-4"
-                        onClick={CustomRequest}
-                        disabled={loading}
+                    >Импортировать товары</button>
+                    {/*<button*/}
+                    {/*    className="orange waves-effect waves-light btn accent-4"*/}
+                    {/*    onClick={onOpenTables}*/}
 
-                    >Тестовый запрос</button>
+                    {/*>Тестовый запрос</button>*/}
 
                 </div>
             </div>
+
             <div className="card">
                 <div className="card-action center brown lighten-5">
-                    <button
-                        className="indigo btn  darken-1"
+                    {isOpen ? <button
+                        className="indigo waves-effect waves-light btn  darken-1"
                         onClick={onOpenTables}
+                    >Перезагрузить</button> :
+                        <button
+                            className="indigo waves-effect waves-light btn  darken-1"
+                            onClick={onOpenTables}
 
-                    >Загрузить таблицу</button>
+
+                        >Загрузить таблицу</button>
+                    }
+
                 </div>
             </div>
 

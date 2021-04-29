@@ -1,65 +1,66 @@
-import React from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import React, {useEffect, useState} from 'react';
+import {useSelector} from "react-redux";
+import Pagination from "./Pagination";
+import {Link} from "react-router-dom";
 
 
 
 const Tables = () => {
 
-    const dispatch = useDispatch();
 
-    const {items} = useSelector(({tables}) => tables);
+
+    const items = useSelector(({tables}) => tables.items);
+
+    const commission = price => {
+        return (price * 20)/100
+    }
+
+
+
     return (
         <div className="row">
             <div className="col s12">
                 <table className="striped centered">
                     <thead>
-                    <tr>
-                        <th>Артикул</th>
-                        <th>Название товара</th>
-                        <th>Штрихкод</th>
-                        <th>Цена</th>
-                        <th>Статус</th>
-                        <th>Комиссия</th>
-                        <th>Мин. цена</th>
-                        <th>Прибыль</th>
+                        <tr>
+                            <th>Артикул</th>
+                            <th>Название товара</th>
+                            <th>Штрихкод</th>
+                            <th>Цена</th>
+                            <th>Кол-во на складе</th>
+                            <th>Комиссия</th>
+                            <th>Мин. цена</th>
+                            <th>Прибыль</th>
+                            <th> </th>
 
-                    </tr>
+                        </tr>
                     </thead>
 
                     <tbody>
-                    <tr>
-                        <td>Alvin</td>
-                        <td>Alvin</td>
-                        <td>Alvin</td>
-                        <td>Alvin</td>
-                        <td>Eclair</td>
-                        <td>$0.87</td>
-                        <td>$0.87</td>
-                        <td>$0.87</td>
-                    </tr>
-                    <tr>
-                        <td>Alan</td>
-                        <td>Alan</td>
-                        <td>Alan</td>
-                        <td>Alan</td>
-                        <td>Jellybean</td>
-                        <td>$3.76</td>
-                        <td>$3.76</td>
-                        <td>$3.76</td>
-                    </tr>
-                    <tr>
-                        <td>Jonathan</td>
-                        <td>Jonathan</td>
-                        <td>Lollipop</td>
-                        <td>Lollipop</td>
-                        <td>Lollipop</td>
-                        <td>$7.00</td>
-                        <td>$7.00</td>
-                        <td>$7.00</td>
-                    </tr>
+                        {items.result.items.map((item,index) =>
+                                <tr key={`product_${index}`}>
+                                    <td>{item.offer_id}</td>
+                                    <td>{item.name}</td>
+                                    <td>{item.barcode}</td>
+                                    <td>{item.price.replace(/(00$)/ , "" )}</td>
+                                    <td>{item.stocks.coming}</td>
+                                    <td>{commission(item.price)}</td>
+                                    <td>?????</td>
+                                    <td>?????</td>
+                                    <td>
+                                        <Link to={`/profile/` + item.offer_id}>
+                                            <i className="material-icons">chevron_right</i>
+                                        </Link>
+                                    </td>
+                                </tr>
+                            )
+                        }
                     </tbody>
                 </table>
+                <Pagination totalRecords={items.result.items.length} />
             </div>
+
+
         </div>
     );
 };

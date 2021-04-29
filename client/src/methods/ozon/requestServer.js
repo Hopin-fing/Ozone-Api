@@ -1,7 +1,7 @@
 import axios from "axios";
 
-
 const RequestServer = (method, url,bodyRequest = null) => {
+
 
     const headers = {
         "Client-Id": 52496,
@@ -9,8 +9,6 @@ const RequestServer = (method, url,bodyRequest = null) => {
         "Content-Type":"application/json",
         "Retry-After": 2000
     }
-
-    const results = {}
 
     const request = async () => {
         if (method === "GET") {
@@ -25,19 +23,14 @@ const RequestServer = (method, url,bodyRequest = null) => {
                 `https://api-seller.ozon.ru${url}`,
                 bodyRequest,
                 {headers})
-                .then(answer => console.log(answer.data.result))
-            return response
+                .then(answer => console.log(answer.data.result) )
+
         }
-
-            // .catch(err => console.log(err))
-
-
 
     };
 
-    request().catch(err => console.log(err))
+    request()
 
-    return results
 
 };
 
