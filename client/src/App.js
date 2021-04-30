@@ -2,7 +2,8 @@ import React from 'react'
 import 'materialize-css'
 import Home from "./pages/Home";
 import {Route, Switch} from "react-router-dom";
-import Profile from "./pages/Profile";
+import Product from "./pages/Product";
+import List from "./pages/List";
 
 function App() {
 
@@ -10,7 +11,8 @@ function App() {
     <div className="had-container">
         <Switch>
             <Route path="/" exact component={Home}/>
-            <Route path="/profile/:name" component={Profile}/>
+            <Route path="/list/:name" component={List}/>
+            <Route path="/product/:name" component={Product}/>
         </Switch>
     </div>
   );

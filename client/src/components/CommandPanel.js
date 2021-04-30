@@ -1,7 +1,7 @@
 import React from 'react';
 import CreateFullRequest from "../methods/ozon/import/createFullRequest";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchProductInfo, openTables} from "../redux/actions/tables";
+import {fetchProductInfo, openTables} from "../redux/actions/products";
 
 const data = require("../data/responseData/products.json")
 
@@ -9,7 +9,7 @@ const CommandPanel = () => {
 
     const dispatch = useDispatch();
 
-    const isOpen = useSelector(({tables}) => tables.isOpen);
+    const isOpen = useSelector(({products}) => products.isOpen);
 
     const bodyRequestInfoList = {
         "offer_id": [],
@@ -39,11 +39,6 @@ const CommandPanel = () => {
                         onClick={CreateFullRequest}
 
                     >Импортировать товары</button>
-                    {/*<button*/}
-                    {/*    className="orange waves-effect waves-light btn accent-4"*/}
-                    {/*    onClick={onOpenTables}*/}
-
-                    {/*>Тестовый запрос</button>*/}
 
                 </div>
             </div>

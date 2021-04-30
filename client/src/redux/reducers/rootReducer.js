@@ -1,10 +1,10 @@
 import {combineReducers} from "redux";
 
-import tables from "./tables";
+import products from "./products";
 
 
 const rootReducer =  combineReducers({
-    tables
+    products
 })
 
 
