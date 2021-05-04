@@ -1,6 +1,5 @@
 {
   "port": 5000,
-  "jwtSecret": "test",
   "mongoUri": "mongodb://84.38.180.73:27017/parserV2",
   "baseUrl": "http://localhost:5000"
 }

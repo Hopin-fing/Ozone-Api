@@ -1,7 +1,4 @@
 const {Router} = require('express')
-const config = require('config')
-const jwt = require('jsonwebtoken')
-const {check, validationResult} = require('express-validator')
 const Product = require('../models/Product')
 const router = Router()
 
@@ -101,10 +98,12 @@ router.post('/product', async (req, res) => {
 
         try{
 
-        const {name, message} = req.body
 
+        const product  = await Product.findOne({art : 194905800696})
 
-        // const product = new Product({name, message})
+        if(product) {
+            console.log("Its work!!")
+        }
 
         await product.save()
 
