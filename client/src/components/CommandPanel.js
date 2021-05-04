@@ -1,7 +1,7 @@
 import React from 'react';
 import CreateFullRequest from "../methods/ozon/import/createFullRequest";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchProductInfo, openTables} from "../redux/actions/products";
+import {fetchProductInfo, importProduct, openTables, testRequest} from "../redux/actions/products";
 
 const data = require("../data/responseData/products.json")
 
@@ -17,6 +17,13 @@ const CommandPanel = () => {
         "sku": []
     }
 
+    const testBody = {
+        "category_id": 17035118,
+        "attribute_id": 4389,
+        "limit": 50,
+        "last_value_id": 90544
+    }
+
 
     const onOpenTables = () => {
         dispatch(openTables())
@@ -25,6 +32,23 @@ const CommandPanel = () => {
         })
         dispatch(fetchProductInfo(bodyRequestInfoList))
     }
+
+    const handlerImportRequest = () => {
+
+
+        const request = CreateFullRequest()
+
+        dispatch(importProduct(request))
+    }
+
+
+    const handlerTestRequest = () => {
+
+        dispatch(testRequest(testBody))
+    }
+
+
+
 
     return (
         <div className="col s8 offset-s2">
@@ -36,11 +60,19 @@ const CommandPanel = () => {
                 <div className="card-action center">
                     <button
                         className="green waves-effect waves-light btn darken-3"
-                        onClick={CreateFullRequest}
+                        onClick={handlerImportRequest}
 
                     >Импортировать товары</button>
 
                 </div>
+                <div className="card-action center">
+                <button
+                    className="purple waves-effect waves-light btn darken-3"
+                    onClick={handlerTestRequest}
+
+                >Тестовый запрос</button>
+
+            </div>
             </div>
 
             <div className="card">
@@ -52,8 +84,6 @@ const CommandPanel = () => {
                         <button
                             className="indigo waves-effect waves-light btn  darken-1"
                             onClick={onOpenTables}
-
-
                         >Загрузить таблицу</button>
                     }
 

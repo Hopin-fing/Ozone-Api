@@ -15,7 +15,14 @@ const Home = () => {
                 <CommandPanel/>
             </div>
             {loading
-                ? <p className="text-center">Загрузка</p>
+                ? <div className="row">
+                    <div className="col s12 text-center">
+                        <p className="center-align">
+                            Загрузка...
+                        </p>
+
+                    </div>
+                </div>
                 : <Tables products={products}/>}
         </div>
     );

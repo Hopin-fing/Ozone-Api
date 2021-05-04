@@ -4,6 +4,7 @@ const GetAttributes = (indexItem, sourceData) => {
 
     const arrModels = require("./dataTransferAttributes/modelsInfo.json")
     const arrColors = require("./dataTransferAttributes/modelsColor.json")
+    const arrIdColorOzon = require("../../../data/ozonData/nameColor.json")
 
     const arrAllAttr = []
 
@@ -99,10 +100,10 @@ const GetAttributes = (indexItem, sourceData) => {
 
         // let name = searchAttr( 'Ключевые слова').params;
 
-
         const brand = searchAttr( 'Бренд').replace(/\+/ , " + " );
         const description = searchAttr( 'Описание');
         const equipment = searchAttr( 'Комплектация');
+
 
 
         const packHeightUnit = searchAttr( 'Высота упаковки', 0, "units");
@@ -179,13 +180,20 @@ const GetAttributes = (indexItem, sourceData) => {
 
             name += `  / ${optPwr}/ ${radCurvature}/` // Дополнительная информация к названию
 
-
+            const idMaterial = searchValue(flagGroup,"flag", "idMaterial");
+            const idFeatures = searchValue(flagGroup,"flag", "features");
+            const idCountry = searchValue(flagGroup,"flag", "countryId");
+            const urlPdf = searchValue(flagGroup,"flag", "urlPdf");
             const isColored = searchValue(flagGroup,"flag", "type") === "цветные"
 
             const objRequest = {
                 isSolutions,
                 isColored,
+                idMaterial,
+                idCountry,
+                idFeatures,
                 article,
+                urlPdf,
                 brand,
                 name,
                 description,
@@ -217,8 +225,10 @@ const GetAttributes = (indexItem, sourceData) => {
                 const colorInfo = searchColor(nameOriginal);
                 const colorName = colorInfo.color
                 const colorId = colorInfo.id
+
                 objRequest.colorName = colorName
                 objRequest.colorId = colorId
+                objRequest.colorProductNameId = arrIdColorOzon.result.find(x => x.value === colorName).id
             }
 
             arrAllAttr.push(objRequest)

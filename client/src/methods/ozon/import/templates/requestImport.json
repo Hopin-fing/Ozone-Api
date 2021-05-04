@@ -44,16 +44,6 @@
         },
         {
           "complex_id": 0,
-          "id": 4389,
-          "values": [
-            {
-              "dictionary_value_id": 90299,
-              "value": "США"
-            }
-          ]
-        },
-        {
-          "complex_id": 0,
           "id": 7694,
           "values": [
             {
@@ -221,7 +211,7 @@
       ],
       "premium_price": "string",
       "price": "1321",
-      "vat": "0.2",
+      "vat": "0",
       "weight": 30,
       "weight_unit": "g",
       "width": 100

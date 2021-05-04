@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {getProduct, setLoading} from "../redux/actions/products";
+import LinkHome from "../components/LinkHome";
 
 const Product = ({match}) => {
 
@@ -19,14 +20,22 @@ const Product = ({match}) => {
 
     return (
         <div>
-            <Link to="/">
-                <div>Стартовая страница</div>
-            </Link>
-            <ul>
-                <li>Атрибут: {products.id}</li>
-                <li>Наименование: {products.name}</li>
-                <li>Изображение: <img src={products.images} alt="test" style={{width: "350px"}}/></li>
-            </ul>
+            <LinkHome/>
+            <div className="row">
+                <div className="col s8 offset-s2 text-center">
+                    <img src={products.images} alt="test" style={{width: "350px"}}/>
+                    <ul>
+                        <li>Атрибут: {products.id}</li>
+                        <li>Наименование: {products.name}</li>
+                        <li>Цена: {`${parseInt(products.price)} р.`}</li>
+                    </ul>
+                </div>
+
+            </div>
+
+
+
+
 
         </div>
     );

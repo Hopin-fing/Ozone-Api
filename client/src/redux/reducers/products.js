@@ -11,13 +11,11 @@ const productsReducer = (state = initialState, action) => {
     switch (action.type) {
 
         case 'OPEN_TABLES':
-
             return {
                 ...state,
                 isOpen: true
             }
         case 'ADD_PRODUCT_INFO': {
-
             const listModel = {}
             action.payload.forEach(item => {
                 if(!("check" in item)) {
@@ -44,7 +42,6 @@ const productsReducer = (state = initialState, action) => {
             }
         }
         case 'GET_LIST_MODEL': {
-
             const arrModels = []
             state.listModels[action.payload].forEach( product => {
                 arrModels.push(product)
@@ -56,6 +53,7 @@ const productsReducer = (state = initialState, action) => {
                 loading: false
             }
         }
+
         case 'GET_PRODUCT':
             const objProduct = state.listModel.find(x => x.id === Number(action.payload) )
 
@@ -71,6 +69,11 @@ const productsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: true
+            }
+        case 'END_LOADING':
+            return {
+                ...state,
+                loading: false
             }
         default:
             return state
