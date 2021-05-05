@@ -1,4 +1,4 @@
- import {useCallback, useState} from "react";
+import {useCallback, useState} from "react";
 
 export const useHttp = () => {
     const [loading, setLoading] = useState(false)
@@ -8,7 +8,7 @@ export const useHttp = () => {
     const request = useCallback(
         async (
             url,
-            method = 'POST',
+            method = 'GET',
             body= null,
             headers = {
                 "Client-Id": 52496,
@@ -27,7 +27,7 @@ export const useHttp = () => {
            const data = await  response.json()
 
             if(!response.ok) {
-                throw new Error('Некорректные данные для отправки отзыва')
+                throw new Error(data.message || 'Ошибка')
             }
             setLoading(false)
 

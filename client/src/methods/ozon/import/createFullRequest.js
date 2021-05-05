@@ -2,7 +2,7 @@ import GetAttributes from "./getAttributes";
 import _ from "lodash";
 
 const example = require('./templates/requestImport.json')
-const sourceData = require('../../../data/productDB/allBaush.json')
+const sourceData = require('../../../data/productDB/Alcon.json')
 const oxyCofData = require('../../../data/ozonData/oxygen_transmission.json')
 const optPwrData = require('../../../data/ozonData/optical_power.json')
 const radCurvatureData = require('../../../data/ozonData/radius_curvature.json')
@@ -172,9 +172,9 @@ const CreateFullRequest = () => {
                 "id" : mainRequest.length + 1,
                 "request" : _.cloneDeep(fullRequest)
             }
-            mainRequest.push(data)
+            // mainRequest.push(data)
 
-            // console.log(data)
+            console.log(data)
 
             numberItem = numberItem + 100
             fullRequest = {items: []}
@@ -191,9 +191,9 @@ const CreateFullRequest = () => {
                 "id" : mainRequest.length + 1,
                 "request" : _.cloneDeep(fullRequest)
             }
-            mainRequest.push(data)
+            // mainRequest.push(data)
 
-            // console.log(data)
+            console.log(data)
         }
     })
 

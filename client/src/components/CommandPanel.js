@@ -34,16 +34,12 @@ const CommandPanel = () => {
     }
 
     const handlerImportRequest = () => {
-
-
         const request = CreateFullRequest()
-
         dispatch(importProduct(request))
     }
 
 
     const handlerTestRequest = () => {
-
         dispatch(testRequest(testBody))
     }
 

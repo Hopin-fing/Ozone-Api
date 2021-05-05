@@ -18,12 +18,17 @@ const GetAttributes = (indexItem, sourceData) => {
 
 
     const searchGlobalFlag = (string) => {
-        for (let i = 0; arrModels.length >= i; i++ ) {
-            const regex = new RegExp(arrModels[i].flag)
-            if ( regex.test(string)) {
-                return arrModels[i].flag
+        try {
+            for (let i = 0; arrModels.length >= i; i++ ) {
+                const regex = new RegExp(arrModels[i].flag)
+                if ( regex.test(string)) {
+                    return arrModels[i].flag
+                }
             }
+        }catch (e) {
+            console.log(string)
         }
+
     }
 
     const searchColor = (string) => {
@@ -98,7 +103,6 @@ const GetAttributes = (indexItem, sourceData) => {
 
         const isSolutions = checkSolutions(typeProduct)
 
-        // let name = searchAttr( 'Ключевые слова').params;
 
         const brand = searchAttr( 'Бренд').replace(/\+/ , " + " );
         const description = searchAttr( 'Описание');
@@ -154,6 +158,7 @@ const GetAttributes = (indexItem, sourceData) => {
 
         if (!isSolutions) {
             const nameOriginal = searchAttr( 'Наименование');
+
             const flagGroup = searchGlobalFlag(nameOriginal);
             let name = flagGroup;
 

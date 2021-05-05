@@ -1,6 +1,4 @@
 const {Schema, model} = require('mongoose')
-
-
 const prodListSchema = new Schema({
     art_wb: Number,
     art: String,
