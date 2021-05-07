@@ -35,11 +35,19 @@ const CreateFullRequest = () => {
     sourceData.forEach((sourceItem, index) => {
         const createNewProduct = () => {
             fullRequest.items.push(_.cloneDeep(example.items[0]))
+            try{
+                let newItem = newData[index]
 
+            } catch (e) {
+                console.log(newData)
+            }
+            if(newData === null) return
+            console.log('test')
             let newItem = newData[index],
                 itemFinal = fullRequest.items[newIndex],
                 isSolutions = newData[index].isSolutions,
                 isColored = newData[index].isColored
+
 
 
 
@@ -62,6 +70,7 @@ const CreateFullRequest = () => {
                         return source.result.find(x => x.value === newData[index][item].trim()).id
                     }
                 }
+                if(newItem.barcode) return
 
                 itemFinal.barcode = newItem.barcode
                 itemFinal.depth = newItem.packDepth
@@ -142,6 +151,7 @@ const CreateFullRequest = () => {
 
                 if(newItem.idFeatures) itemFinal.attributes.push(createAttrObj(7707, newItem.idFeatures, ""))
                 if(newItem.idMaterial) itemFinal.attributes.push(createAttrObj(7708, newItem.idMaterial, ""))
+                if(newItem.isMultifocal) itemFinal.attributes.push(createAttrObj(9237, newItem.isMultifocal, ""))
 
                 itemFinal.attributes.push(createAttrObj(7705,30682, ""))
                 itemFinal.attributes.push(createAttrObj(4389,newItem.idCountry, ""))

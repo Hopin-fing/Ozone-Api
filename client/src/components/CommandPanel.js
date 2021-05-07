@@ -19,9 +19,9 @@ const CommandPanel = () => {
 
     const testBody = {
         "category_id": 17035118,
-        "attribute_id": 4389,
-        "limit": 50,
-        "last_value_id": 90544
+        "attribute_id": 9237,
+        "limit": 50
+        // "last_value_id": 90544
     }
 
 
