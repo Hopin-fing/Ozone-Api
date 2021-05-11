@@ -9,6 +9,8 @@ const radCurvatureData = require('../../../data/ozonData/radius_curvature.json')
 const packAmountData = require('../../../data/ozonData/pack_amount.json')
 const wearModeData = require('../../../data/ozonData/wear_mode.json')
 const daysReplaceData = require('../../../data/ozonData/days_replace.json')
+const axData = require('../../../data/ozonData/id_ax.json')
+const cylData = require('../../../data/ozonData/id_cyl.json')
 const arrCountry = require("../../../data/ozonData/country.json")
 
 
@@ -34,6 +36,11 @@ const CreateFullRequest = () => {
 
     sourceData.forEach((sourceItem, index) => {
         const createNewProduct = () => {
+            if(!newData[index]){
+                console.log("null")
+                newIndex++
+                return fullRequest.items.push({})
+            }
             fullRequest.items.push(_.cloneDeep(example.items[0]))
             try{
                 let newItem = newData[index]
@@ -41,13 +48,13 @@ const CreateFullRequest = () => {
             } catch (e) {
                 console.log(newData)
             }
-            if(newData === null) return
-            console.log('test')
+
             let newItem = newData[index],
                 itemFinal = fullRequest.items[newIndex],
                 isSolutions = newData[index].isSolutions,
-                isColored = newData[index].isColored
-
+                isColored = newData[index].isColored,
+                isMultifocal = newData[index].isMultifocal,
+                isForAstigmatism = newData[index].isForAstigmatism
 
 
 
@@ -60,6 +67,8 @@ const CreateFullRequest = () => {
 
                 const searchAttrById = idValue => {
                     return itemFinal.attributes.find(x => x.id === idValue).values[0]
+
+
                 }
 
                 const searchAttrByIdList = (item, source) => {
@@ -67,12 +76,21 @@ const CreateFullRequest = () => {
                         return source.result.find(x => capitalize(x.value) === newData[index][item]).id
                     }
                     if (item !== "wearMode") {
+
+                        try{
+                            return (source.result.find(x => x.value === newData[index][item].trim()).id)
+                        }catch (e) {
+                            console.log("item: ", [item])
+                            console.log("index: ", [index])
+                            console.log("newData[index][item] ",  newData[index][item])
+                        }
                         return source.result.find(x => x.value === newData[index][item].trim()).id
                     }
                 }
-                if(newItem.barcode) return
 
                 itemFinal.barcode = newItem.barcode
+
+
                 itemFinal.depth = newItem.packDepth
                 itemFinal["dimension_unit"] = newItem.packDepthUnit
                 itemFinal.height = newItem.packHeight
@@ -147,11 +165,14 @@ const CreateFullRequest = () => {
 
                     searchAttrById(7694).value = newData[index].daysReplace
                     searchAttrById(7694).dictionary_value_id = searchAttrByIdList('daysReplace', daysReplaceData)
+
+                    searchAttrById(7694).dictionary_value_id = searchAttrByIdList('daysReplace', daysReplaceData)
                 }
 
                 if(newItem.idFeatures) itemFinal.attributes.push(createAttrObj(7707, newItem.idFeatures, ""))
                 if(newItem.idMaterial) itemFinal.attributes.push(createAttrObj(7708, newItem.idMaterial, ""))
-                if(newItem.isMultifocal) itemFinal.attributes.push(createAttrObj(9237, newItem.isMultifocal, ""))
+                if(newItem.isMultifocal) itemFinal.attributes.push(createAttrObj(9237, newItem.idAddition, ""))
+                if(isMultifocal) itemFinal.attributes.push(createAttrObj(8745, newItem.idAddition, ""))
 
                 itemFinal.attributes.push(createAttrObj(7705,30682, ""))
                 itemFinal.attributes.push(createAttrObj(4389,newItem.idCountry, ""))
@@ -163,6 +184,13 @@ const CreateFullRequest = () => {
                     itemFinal.attributes.push(createAttrObj(10096, newItem.colorProductNameId, ""))
                     itemFinal.attributes.push(createAttrObj(10097, 0, newItem.colorName))
                 }
+
+                if (isForAstigmatism) {
+
+                    itemFinal.attributes.push(createAttrObj(8745, searchAttrByIdList('lensesAx', axData), ""))
+                    itemFinal.attributes.push(createAttrObj(8746, searchAttrByIdList('lensesCYL', cylData), ""))
+                }
+
 
                 if (!isColored) {
                     itemFinal.attributes.push(createAttrObj(10096, 61572, "Прозрачный"))
@@ -182,9 +210,9 @@ const CreateFullRequest = () => {
                 "id" : mainRequest.length + 1,
                 "request" : _.cloneDeep(fullRequest)
             }
-            // mainRequest.push(data)
+            mainRequest.push(data)
 
-            console.log(data)
+            // console.log(data)
 
             numberItem = numberItem + 100
             fullRequest = {items: []}
@@ -201,9 +229,9 @@ const CreateFullRequest = () => {
                 "id" : mainRequest.length + 1,
                 "request" : _.cloneDeep(fullRequest)
             }
-            // mainRequest.push(data)
+            mainRequest.push(data)
 
-            console.log(data)
+            // console.log(data)
         }
     })
 

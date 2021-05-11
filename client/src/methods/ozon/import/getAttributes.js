@@ -6,6 +6,7 @@ const GetAttributes = (indexItem, sourceData) => {
     const arrColors = require("./dataTransferAttributes/modelsColor.json")
     const arrIdColorOzon = require("../../../data/ozonData/nameColor.json")
     const arrAddition = require("../../../data/ozonData/addition.json")
+    const arrFlagCurrent = require("./dataTransferAttributes/modelsFlagCurrect.json")
 
     const arrAllAttr = []
 
@@ -18,28 +19,46 @@ const GetAttributes = (indexItem, sourceData) => {
     // ]
 
 
+
+
+
     const searchGlobalFlag = (string, isColoredWB, brand) => {
+        const checkFlag  = () => {
+            let result
+            arrFlagCurrent.forEach (item => {
+                if(string.includes(item["flagOld"])) {
+                    result = item["flagNew"]
+                }
+
+            })
+            return result
+        }
+
         if(brand === "Alcon" && isColoredWB === "цветные") {
             return "Air Optix Colors"
         }
-        if(string.includes("Air Optix HydraGlyde")) {
-            return "Air Optix plus HydraGlyde"
-        }
-        for (let i = 0; arrModels.length >= i; i++ ) {
 
+        // if(string.includes("Air Optix HydraGlyde")) {
+        //     return "Air Optix plus HydraGlyde"
+        // }
+        // if(string.includes("night & day")) {
+        //     return "Air Optix Night & Day"
+        // }
+        // if(string.includes("Totalone")) {
+        //     return "Dailies Total1"
+        // }
+
+        for (let i = 0; arrModels.length >= i; i++ ) {
             try{
                 const regex = new RegExp(arrModels[i].flag)
                 if ( regex.test(string)) {
                     return arrModels[i].flag
                 }
             }catch (e) {
-                console.log(string)
-            }
-            const regex = new RegExp(arrModels[i].flag)
-            if ( regex.test(string)) {
-                return arrModels[i].flag
+               return checkFlag()
             }
         }
+
 
 
 
@@ -107,6 +126,12 @@ const GetAttributes = (indexItem, sourceData) => {
             value = "Air Optix Colors"
             return arrModels.find(x => x[inputKey] === value)[outputKey]
 
+        }
+        try{
+            const result = arrModels.find(x => x[inputKey] === value)[outputKey]
+        } catch (e) {
+            console.log(value)
+            console.log(outputKey)
         }
 
         const result = arrModels.find(x => x[inputKey] === value)[outputKey]
@@ -266,10 +291,9 @@ const GetAttributes = (indexItem, sourceData) => {
 
             const oxyCof = Math.floor(searchAttr( 'Коэффициент пропускания кислорода', 0, "count")).toString();
             const diameter = Math.floor(searchAttr( 'Диаметр МКЛ', 0, "count")).toString();
+            const radCurvature = searchAttr( 'Радиус кривизны');
             const oldFormatOptPwr = searchAttr( 'Оптическая сила', 0)
             const optPwr = doOzonFormat("Оптическая сила", oldFormatOptPwr)
-            const radCurvature = searchAttr( 'Радиус кривизны');
-
 
             const packAmount  = searchAttr('Количество предметов в упаковке') ? searchAttr('Количество предметов в упаковке').replace(/\D/g,'') : null;
 
@@ -290,6 +314,9 @@ const GetAttributes = (indexItem, sourceData) => {
             const isColored = searchValue(flagGroup,"flag", "type",  brand) === "цветные"
             const isMultifocal = nameOriginal.includes("мультифокальные")
             const isForAstigmatism = nameOriginal.includes("астигматизм")
+
+
+
 
             const objRequest = {
                 isMultifocal,
@@ -328,8 +355,7 @@ const GetAttributes = (indexItem, sourceData) => {
                 wearMode
 
             }
-            if(isMultifocal) objRequest.iAddition = searchAddition(nameOriginal)
-            if(isMultifocal) objRequest.iAddition = searchAddition(nameOriginal)
+            if(isMultifocal) objRequest.idAddition = searchAddition(nameOriginal)
             if(isColored) {
                 const colorInfo = searchColor(nameOriginal);
                 try {
@@ -345,6 +371,31 @@ const GetAttributes = (indexItem, sourceData) => {
                 objRequest.colorName = colorName
                 objRequest.colorId = colorId
                 objRequest.colorProductNameId = arrIdColorOzon.result.find(x => x.value === colorName).id
+            }
+            if(isForAstigmatism) {
+
+                const lensesAx = searchAttr( "Ось линзы");
+                const lensesCYL = searchAttr("Оптическая сила цилиндра")
+
+                objRequest.lensesAx = lensesAx
+                objRequest.lensesCYL = lensesCYL
+
+
+                if(objRequest.lensesAx === null) {
+                    objRequest.lensesAx = nameOriginal
+                        .replace(/^\D*\S*(?!AX:)/g, "")
+                        .replace(/( CYL:\S*\s+\D*)/g, "")
+                        .replace(/ \/\D*/g, "")
+                }
+
+                if(objRequest.lensesCYL === null) {
+                    objRequest.lensesCYL = nameOriginal
+                        .replace(/^\D*\S*(?!CYL:)/g, "")
+                        .replace(/[^,]*$/g, "")
+                        .replace(/ CYL:/g, "")
+                        .replace(/,/g, "")
+                }
+
             }
 
             arrAllAttr.push(objRequest)
