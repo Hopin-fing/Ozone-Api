@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const  testBodyRequest = require('../../test/badRequest.json')
+
 const headers = {
     "Client-Id": 52496,
     "Api-Key":"4d9d2744-e2c4-4e6d-900a-a0f54b0af790",
@@ -20,9 +22,17 @@ export const testRequest = bodyRequest =>  async (dispatch) => {
 
 export const importProduct = bodyRequest => async dispatch => {
     dispatch(setLoading())
+    // console.log(testBodyRequest)
+    //         const response = await axios.post(
+    //             `https://api-seller.ozon.ru/v2/product/import`,
+    //             testBodyRequest,
+    //             {headers})
+    //
+    // console.log(response.data);
 
 
-    const reqLog = []
+
+    let reqLog = []
 
     for (const item of bodyRequest)  {
         try {
@@ -42,28 +52,28 @@ export const importProduct = bodyRequest => async dispatch => {
             console.log(e)
         }
     }
-    if(reqLog.length !== 0) {
+    while(reqLog.length !== 0) {
         for (const item of reqLog) {
-            if (reqLog.length !== 0) {
-                try {
-                    const response = await axios.post(
-                        `https://api-seller.ozon.ru/v2/product/import`,
-                        item.request,
-                        {headers})
+            try {
+                console.log(reqLog)
+                const response = await axios.post(
+                    `https://api-seller.ozon.ru/v2/product/import`,
+                    item.request,
+                    {headers})
+                console.log(response.data);
 
+                console.log("response.data.result.task_id :", response.data.result.task_id)
+                if (response.data.result.task_id !== 0) {
 
-                    if (response.data.result.task_id !== 0) {
-                        const index = reqLog.indexOf(reqLog.find(x => x.id === item.id))
-                        console.log(index)
-                        reqLog.slice(index, 1)
-                    }
-
-                } catch (e) {
-                    console.log(e)
+                    reqLog = reqLog.slice(1)
                 }
+
+            } catch (e) {
+                console.log(e)
             }
         }
     }
+    console.log("Ошибок нет")
 
     // axios.post(
     //     `https://api-seller.ozon.ru/v2/product/import`,

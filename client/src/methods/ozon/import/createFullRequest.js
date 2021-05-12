@@ -53,7 +53,6 @@ const CreateFullRequest = () => {
                 itemFinal = fullRequest.items[newIndex],
                 isSolutions = newData[index].isSolutions,
                 isColored = newData[index].isColored,
-                isMultifocal = newData[index].isMultifocal,
                 isForAstigmatism = newData[index].isForAstigmatism
 
 
@@ -63,12 +62,10 @@ const CreateFullRequest = () => {
                 return value.charAt(0).toUpperCase() + value.slice(1)
             }
 
-            const addItemsFinal = () => {
 
+            const addItemsFinal = () => {
                 const searchAttrById = idValue => {
                     return itemFinal.attributes.find(x => x.id === idValue).values[0]
-
-
                 }
 
                 const searchAttrByIdList = (item, source) => {
@@ -89,7 +86,6 @@ const CreateFullRequest = () => {
                 }
 
                 itemFinal.barcode = newItem.barcode
-
 
                 itemFinal.depth = newItem.packDepth
                 itemFinal["dimension_unit"] = newItem.packDepthUnit
@@ -122,17 +118,45 @@ const CreateFullRequest = () => {
                 searchAttrById(4384).value = newItem.equipment
 
                 let createAttrObj = (idCategory, dictionaryValueId, value) => { //Происходит добавление нового атребута в значение ключа "attributes"
-                    return {
-                        "complex_id": 0,
-                        "id": idCategory,
-                        "values": [
-                            {
+                    if(Array.isArray(dictionaryValueId))   {
+                        const arrComplexValue = []
+                        dictionaryValueId.forEach( item => {
+                            arrComplexValue.push({
+                                "dictionary_value_id": item,
+                                "value": ""
+                            })
+                        })
+                        return {
+                            "complex_id": idCategory,
+                            "id": idCategory,
+                            "values": arrComplexValue
+                        }
+                    }
+                    if(!Array.isArray(dictionaryValueId)) {
+                        return {
+                            "complex_id": 0,
+                            "id": idCategory,
+                            "values": [{
                                 "dictionary_value_id": dictionaryValueId,
                                 "value": value
                             }
-                        ]
+                            ]
+                        }
                     }
                 }
+
+                // const addEveryItem = (value, idCategory, attrValue = "") => {
+                //     if(Array.isArray(value)) {
+                //         value.forEach( item => {
+                //             itemFinal.attributes.push(createAttrObj(idCategory, item, attrValue, idCategory))
+                //         })
+                //     }
+                //     if(!Array.isArray(value)) {
+                //
+                //
+                //         itemFinal.attributes.push(createAttrObj(idCategory, value, attrValue))
+                //     }
+                // }
 
 
                 if (!isSolutions) {
@@ -172,7 +196,6 @@ const CreateFullRequest = () => {
                 if(newItem.idFeatures) itemFinal.attributes.push(createAttrObj(7707, newItem.idFeatures, ""))
                 if(newItem.idMaterial) itemFinal.attributes.push(createAttrObj(7708, newItem.idMaterial, ""))
                 if(newItem.isMultifocal) itemFinal.attributes.push(createAttrObj(9237, newItem.idAddition, ""))
-                if(isMultifocal) itemFinal.attributes.push(createAttrObj(8745, newItem.idAddition, ""))
 
                 itemFinal.attributes.push(createAttrObj(7705,30682, ""))
                 itemFinal.attributes.push(createAttrObj(4389,newItem.idCountry, ""))
@@ -212,7 +235,7 @@ const CreateFullRequest = () => {
             }
             mainRequest.push(data)
 
-            // console.log(data)
+            console.log(data)
 
             numberItem = numberItem + 100
             fullRequest = {items: []}
@@ -231,7 +254,7 @@ const CreateFullRequest = () => {
             }
             mainRequest.push(data)
 
-            // console.log(data)
+            console.log(data)
         }
     })
 

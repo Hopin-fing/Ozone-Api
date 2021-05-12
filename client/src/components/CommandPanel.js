@@ -10,6 +10,7 @@ const CommandPanel = () => {
     const dispatch = useDispatch();
 
     const isOpen = useSelector(({products}) => products.isOpen);
+    const isLoading = useSelector(({products}) => products.loading);
 
     const bodyRequestInfoList = {
         "offer_id": [],
@@ -57,6 +58,7 @@ const CommandPanel = () => {
                     <button
                         className="green waves-effect waves-light btn darken-3"
                         onClick={handlerImportRequest}
+                        disabled={isLoading}
 
                     >Импортировать товары</button>
 

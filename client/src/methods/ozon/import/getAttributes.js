@@ -135,9 +135,8 @@ const GetAttributes = (indexItem, sourceData) => {
         }
 
         const result = arrModels.find(x => x[inputKey] === value)[outputKey]
-        if(typeof result === "object" && !("main" in result)) {
-            return result[count]
-        }
+        if(Array.isArray(result)) return result
+        if(typeof result === "object" && !("main" in result)) return result[count]
         return result
     }
 
@@ -286,7 +285,7 @@ const GetAttributes = (indexItem, sourceData) => {
 
             const typeProductId = searchValue(flagGroup,"flag", "id", brand);
 
-            const packWidth = searchAttr( 'Ширина упаковки', 0, "count");
+            const packWidth = Math.round(searchAttr( 'Ширина упаковки', 0, "count"))*10;
             const packWidthUnit = searchAttr( 'Ширина упаковки', 0, "units") === "см"? "cm" : null ;
 
             const oxyCof = Math.floor(searchAttr( 'Коэффициент пропускания кислорода', 0, "count")).toString();
@@ -355,7 +354,12 @@ const GetAttributes = (indexItem, sourceData) => {
                 wearMode
 
             }
-            if(isMultifocal) objRequest.idAddition = searchAddition(nameOriginal)
+            if(isMultifocal)  {
+
+                const addition = searchAddition(nameOriginal)
+                objRequest.idAddition = addition
+                objRequest.name += ` ${addition}/`
+            }
             if(isColored) {
                 const colorInfo = searchColor(nameOriginal);
                 try {
@@ -374,26 +378,36 @@ const GetAttributes = (indexItem, sourceData) => {
             }
             if(isForAstigmatism) {
 
-                const lensesAx = searchAttr( "Ось линзы");
-                const lensesCYL = searchAttr("Оптическая сила цилиндра")
+                let lensesAx = searchAttr( "Ось линзы");
+                let lensesCYL = searchAttr("Оптическая сила цилиндра")
 
                 objRequest.lensesAx = lensesAx
                 objRequest.lensesCYL = lensesCYL
+                if(lensesAx !== null && lensesCYL !== null) {
+                    objRequest.name += ` AX:${lensesAx}/ CYL:${lensesCYL} `
+                }
+
 
 
                 if(objRequest.lensesAx === null) {
-                    objRequest.lensesAx = nameOriginal
+                    lensesAx = nameOriginal
                         .replace(/^\D*\S*(?!AX:)/g, "")
                         .replace(/( CYL:\S*\s+\D*)/g, "")
                         .replace(/ \/\D*/g, "")
+                    objRequest.lensesAx = lensesAx
+                    objRequest.name += ` AX:${lensesAx}/`
                 }
 
                 if(objRequest.lensesCYL === null) {
-                    objRequest.lensesCYL = nameOriginal
+
+                    lensesCYL = nameOriginal
                         .replace(/^\D*\S*(?!CYL:)/g, "")
                         .replace(/[^,]*$/g, "")
                         .replace(/ CYL:/g, "")
                         .replace(/,/g, "")
+
+                    objRequest.lensesCYL = lensesCYL
+                    objRequest.name += ` CYL:${lensesCYL}/`
                 }
 
             }
