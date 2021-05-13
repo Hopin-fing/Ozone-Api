@@ -218,10 +218,11 @@ const GetAttributes = (indexItem, sourceData) => {
         );
 
         const packDepthUnit = searchAttr( 'Глубина упаковки', 0, "units");
-        const packDepth = multiplicationToMm(
+        const calculatePackDepth = multiplicationToMm(
             packDepthUnit,
             searchAttr( 'Глубина упаковки', 0, "count")
         )
+        const packDepth = calculatePackDepth > 50 ? 50 : calculatePackDepth
 
         let barcode  = sourceData[index].nomenclatures[0].variations[0].barcodes;
         let isEmpty = false
@@ -285,8 +286,13 @@ const GetAttributes = (indexItem, sourceData) => {
 
             const typeProductId = searchValue(flagGroup,"flag", "id", brand);
 
-            const packWidth = Math.round(searchAttr( 'Ширина упаковки', 0, "count"))*10;
             const packWidthUnit = searchAttr( 'Ширина упаковки', 0, "units") === "см"? "cm" : null ;
+            const packWidth = multiplicationToMm(
+                packWidthUnit,
+                Math.round(
+                    searchAttr( 'Ширина упаковки', 0, "count")
+                )
+            );
 
             const oxyCof = Math.floor(searchAttr( 'Коэффициент пропускания кислорода', 0, "count")).toString();
             const diameter = Math.floor(searchAttr( 'Диаметр МКЛ', 0, "count")).toString();
@@ -306,6 +312,7 @@ const GetAttributes = (indexItem, sourceData) => {
 
             name += `  / ${optPwr}/ ${radCurvature}/` // Дополнительная информация к названию
 
+            const idTypeAttr = searchValue(flagGroup,"flag", "typeAttr");
             const idMaterial = searchValue(flagGroup,"flag", "idMaterial",  brand);
             const idFeatures = searchValue(flagGroup,"flag", "features",  brand);
             const idCountry = searchValue(flagGroup,"flag", "countryId",  brand);
@@ -325,6 +332,7 @@ const GetAttributes = (indexItem, sourceData) => {
                 idMaterial,
                 idCountry,
                 idFeatures,
+                idTypeAttr,
                 article,
                 urlPdf,
                 brand,
@@ -362,16 +370,10 @@ const GetAttributes = (indexItem, sourceData) => {
             }
             if(isColored) {
                 const colorInfo = searchColor(nameOriginal);
-                try {
-                    const colorName = colorInfo.color
-
-                }catch (e) {
-                    console.log("colorInfo ", colorInfo)
-                    console.log("colorName ", nameOriginal)
-                }
                 const colorName = colorInfo.color
                 const colorId = colorInfo.id
 
+                objRequest.typeColorLen = searchValue(flagGroup,"flag", "typeColorLen");
                 objRequest.colorName = colorName
                 objRequest.colorId = colorId
                 objRequest.colorProductNameId = arrIdColorOzon.result.find(x => x.value === colorName).id

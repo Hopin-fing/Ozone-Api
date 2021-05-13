@@ -9,9 +9,15 @@ const headers = {
     "Retry-After": 2000
 }
 
-export const testRequest = bodyRequest =>  async (dispatch) => {
+export const setLoading = () => ({
+    type: 'SET_LOADING'
+})
 
+export const endLoading = () => ({
+    type: 'END_LOADING'
+})
 
+export const testRequest = bodyRequest =>  async () => {
     const response = await axios.post(
         `https://api-seller.ozon.ru/v2/category/attribute/values`,
         bodyRequest,
@@ -74,13 +80,6 @@ export const importProduct = bodyRequest => async dispatch => {
         }
     }
     console.log("Ошибок нет")
-
-    // axios.post(
-    //     `https://api-seller.ozon.ru/v2/product/import`,
-    //     bodyRequest,
-    //     {headers})
-    //     .then(data => console.log(data))
-    //     .catch(err => console.log('Ошибка: ', err.message))
     dispatch(endLoading())
 
 }
@@ -98,13 +97,28 @@ export const fetchProductInfo = bodyRequest =>  async (dispatch) => {
 
 }
 
+export const getPrices = bodyRequest => async (dispatch) => {
+    dispatch(setLoading())
+
+    await axios.post(
+        `https://api-seller.ozon.ru/v2/product/info`,
+        bodyRequest,
+        {headers}).then(data => console.log(data.data))
+
+    dispatch(endLoading())
+
+}
+
 export const sendPrice = bodyRequest =>  async (dispatch) =>{
     dispatch(setLoading())
 
-    const response = await axios.post(
+    await axios.post(
         `https://api-seller.ozon.ru/v1/product/import/prices`,
         bodyRequest,
         {headers}).then(data => console.log(data.data))
+
+    dispatch(endLoading())
+
 
     // dispatch(addProductInfo(response.data))
 
@@ -115,13 +129,9 @@ export const openTables = () => ({
 
 })
 
-export const setLoading = () => ({
-    type: 'SET_LOADING'
-})
 
-export const endLoading = () => ({
-    type: 'END_LOADING'
-})
+
+
 
 export const setNewPrice = () => ({
     type: 'SET_NEW_PRICE'

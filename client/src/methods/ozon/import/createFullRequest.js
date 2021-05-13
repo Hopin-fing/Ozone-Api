@@ -37,7 +37,6 @@ const CreateFullRequest = () => {
     sourceData.forEach((sourceItem, index) => {
         const createNewProduct = () => {
             if(!newData[index]){
-                console.log("null")
                 newIndex++
                 return fullRequest.items.push({})
             }
@@ -191,6 +190,8 @@ const CreateFullRequest = () => {
                     searchAttrById(7694).dictionary_value_id = searchAttrByIdList('daysReplace', daysReplaceData)
 
                     searchAttrById(7694).dictionary_value_id = searchAttrByIdList('daysReplace', daysReplaceData)
+
+                    searchAttrById(8229).dictionary_value_id = newItem.idTypeAttr
                 }
 
                 if(newItem.idFeatures) itemFinal.attributes.push(createAttrObj(7707, newItem.idFeatures, ""))
@@ -203,7 +204,8 @@ const CreateFullRequest = () => {
                 itemFinal.attributes.push(createAttrObj(8790,0, newItem.urlPdf))
 
                 if (isColored) {
-                    itemFinal.attributes.push(createAttrObj(59, newItem.colorId, newItem.colorName))
+                    itemFinal.attributes.push(createAttrObj(59, newItem.colorId, ""))
+                    itemFinal.attributes.push(createAttrObj(8729, newItem.typeColorLen, ""))
                     itemFinal.attributes.push(createAttrObj(10096, newItem.colorProductNameId, ""))
                     itemFinal.attributes.push(createAttrObj(10097, 0, newItem.colorName))
                 }
