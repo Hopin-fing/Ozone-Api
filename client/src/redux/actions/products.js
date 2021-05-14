@@ -40,6 +40,11 @@ export const importProduct = bodyRequest => async dispatch => {
 
     let reqLog = []
 
+    const addError = (item) => {
+        reqLog.push(item)
+        console.log('Errrorr')
+    }
+
     for (const item of bodyRequest)  {
         try {
             const response = await axios.post(
@@ -50,8 +55,7 @@ export const importProduct = bodyRequest => async dispatch => {
             console.log(response.data);
 
             if (response.data.result.task_id === 0) {
-                reqLog.push(item)
-                console.log('Errrorr')
+                addError(item)
             }
 
         } catch (e) {
@@ -69,10 +73,10 @@ export const importProduct = bodyRequest => async dispatch => {
                 console.log(response.data);
 
                 console.log("response.data.result.task_id :", response.data.result.task_id)
-                if (response.data.result.task_id !== 0) {
-
-                    reqLog = reqLog.slice(1)
+                if (response.data.result.task_id === 0) {
+                    addError(item)
                 }
+                reqLog = reqLog.slice(1)
 
             } catch (e) {
                 console.log(e)

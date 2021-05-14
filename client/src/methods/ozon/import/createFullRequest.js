@@ -34,9 +34,12 @@ const CreateFullRequest = () => {
     let newIndex = 0 // добавил новый индекс для того чтобы обнулять его при достижении итемов в запросе до сотки, а исходный индекс будет с того же место перебирать элементы бд
     let numberItem = 100;
 
+    console.log("sourceData.length:", sourceData.length)
+
     sourceData.forEach((sourceItem, index) => {
         const createNewProduct = () => {
             if(!newData[index]){
+                //Итемы пустые из-за того что в бд  есть товары с пустым штрих кодом и растворы которые в импорт мы не добавляем
                 newIndex++
                 return fullRequest.items.push({})
             }
@@ -86,6 +89,10 @@ const CreateFullRequest = () => {
 
                 itemFinal.barcode = newItem.barcode
 
+                if (  newItem.barcode === "730821680654") {
+                    console.log("name ", newItem.name)
+                }
+
                 itemFinal.depth = newItem.packDepth
                 itemFinal["dimension_unit"] = newItem.packDepthUnit
                 itemFinal.height = newItem.packHeight
@@ -93,13 +100,28 @@ const CreateFullRequest = () => {
                 itemFinal.price = newItem.price
                 if (typeof newItem.image == "object" && "main" in newItem.image) { //Происходит фильтрация внутри объекта с ключом "img" в файле "modelsinfo.json"
                     itemFinal.images.push(newItem.image["main"])
+                    if (isColored) {
+                        try {
+                            if (newItem.image["additional"]["allColors"]){
+                                newItem.image["additional"]["allColors"].forEach((element) => {
+                                    itemFinal.images.push(element)
+                                })
+                            }
+                            newItem.image["additional"][newItem.colorName].forEach((element) => {
+                                itemFinal.images.push(element)
+                            })
+                        } catch {}
+
+                    }
+                    if(!isColored) {
                     newItem.image["additional"].forEach((element) => {
                         itemFinal.images.push(element)
                     })
+                    }
                     searchAttrById(4194).value = newItem.image["main"]
 
                 }
-                if (typeof newItem.image == "object" && "30" in newItem.image) {
+                if (typeof newItem.image === "object" && "30" in newItem.image) {
                     searchAttrById(4194).value = newItem.image[newData[index].packAmount]
                 }
                 if (typeof newItem.image !== "object") {
@@ -166,6 +188,10 @@ const CreateFullRequest = () => {
                     searchAttrById(9048).value = newItem.modelProduct
                     searchAttrById(10289).value = newItem.flagGroup
 
+                    // if(newItem.flagGroup === "Freshlook Colors"
+                    //     || newItem.flagGroup === "Freshlook ColorBlends"
+                    //     || newItem.flagGroup === "Freshlook Dimensions"
+                    // ) console.log("flag: ", newItem.flagGroup)
                     //Добавление в финальный запрос значений требующий как value так и id
 
                     searchAttrById(7709).value = newData[index].oxyCof
@@ -237,7 +263,7 @@ const CreateFullRequest = () => {
             }
             mainRequest.push(data)
 
-            console.log(data)
+            // console.log(data)
 
             numberItem = numberItem + 100
             fullRequest = {items: []}
@@ -256,7 +282,7 @@ const CreateFullRequest = () => {
             }
             mainRequest.push(data)
 
-            console.log(data)
+            // console.log(data)
         }
     })
 

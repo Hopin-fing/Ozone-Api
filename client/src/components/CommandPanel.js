@@ -10,7 +10,7 @@ import {
     testRequest
 } from "../redux/actions/products";
 
-const data = require("../data/responseData/result.json")
+const data = require("../data/responseData/sourcePrices.json")
 
 const CommandPanel = () => {
 

@@ -1,7 +1,7 @@
 const initialState = {
     item: {},
     listModels: [],
-    listModel: [],
+    listModel: {},
     allItems: [],
     loading: false,
     isOpen: false
@@ -16,7 +16,9 @@ const productsReducer = (state = initialState, action) => {
                 isOpen: true
             }
         case 'ADD_PRODUCT_INFO': {
-            const listModel = {}
+
+            const listModel = state.listModel
+
             action.payload.forEach(item => {
                 if(!("check" in item)) {
                     const isEqualName = (originalName, checkingObj) => {
@@ -29,7 +31,7 @@ const productsReducer = (state = initialState, action) => {
                         return false
                     }
                     const name = item.name.replace(/\/.*$/, "").trim().replace(/ /g, "_")
-                    listModel[name] = action.payload.filter(checkingName => isEqualName(name, checkingName ))
+                    state.listModel[name] = action.payload.filter(checkingName => isEqualName(name, checkingName ))
                 }
             })
 

@@ -29,24 +29,12 @@ const GetAttributes = (indexItem, sourceData) => {
                 if(string.includes(item["flagOld"])) {
                     result = item["flagNew"]
                 }
-
             })
             return result
         }
 
-        if(brand === "Alcon" && isColoredWB === "цветные") {
-            return "Air Optix Colors"
-        }
 
-        // if(string.includes("Air Optix HydraGlyde")) {
-        //     return "Air Optix plus HydraGlyde"
-        // }
-        // if(string.includes("night & day")) {
-        //     return "Air Optix Night & Day"
-        // }
-        // if(string.includes("Totalone")) {
-        //     return "Dailies Total1"
-        // }
+
 
         for (let i = 0; arrModels.length >= i; i++ ) {
             try{
@@ -55,6 +43,10 @@ const GetAttributes = (indexItem, sourceData) => {
                     return arrModels[i].flag
                 }
             }catch (e) {
+                if(brand === "Alcon" && isColoredWB === "цветные") { //В базе данных были линзы без названия модели и так к ним добавляется бренд Air Optix Colors
+
+                    return "Air Optix Colors"
+                }
                return checkFlag()
             }
         }
@@ -86,21 +78,6 @@ const GetAttributes = (indexItem, sourceData) => {
                     color: arrColors[i].colorOzon,
                     id: arrColors[i].id
                 }
-
-                // const arrEndWord = {
-                //     "ие" : "ий ",
-                //     "бые" : "бой ",
-                //     "рые" : "рый "
-                // }
-                // const rightEnd =  Object.keys(arrEndWord).forEach( item => {
-                //     const valueRegex = new RegExp(item, "g")
-                //     if (string.match(valueRegex)) {
-                //         console.log("item ",item)
-                //         return item
-                //     }
-                // })
-
-
 
             }
         }catch (e) {
@@ -143,6 +120,7 @@ const GetAttributes = (indexItem, sourceData) => {
 
     for (let index = 0; indexItem > index; index++) {
 
+
         const searchAttr = (
             typeAttr,
             secondIndex = 0,
@@ -162,6 +140,9 @@ const GetAttributes = (indexItem, sourceData) => {
             const result = attr.params[secondIndex][valueParam]
             if (result !== undefined) return result
         }
+
+
+
 
         const multiplicationToMm = (unit, value) => {
             if (unit === "см" || unit === "cm" ) {
@@ -234,8 +215,6 @@ const GetAttributes = (indexItem, sourceData) => {
             isEmpty = true
         }
 
-
-
         const article = isEmpty ? null : "100" + cleaningBarcode(barcode);
 
         const price  = sourceData[index].nomenclatures[0].variations[0].addin[0].params[0].count.toString();
@@ -271,17 +250,8 @@ const GetAttributes = (indexItem, sourceData) => {
 
         if (!isSolutions && !isEmpty) {
             const nameOriginal = searchAttr( 'Наименование');
-            try {
-                const isColorWB = searchAttr( 'Тип линз')
-            } catch(e) {
-                console.log(nameOriginal)
-                console.log(barcode)
-            }
             const isColorWB = searchAttr( 'Тип линз')
             const flagGroup = searchGlobalFlag(nameOriginal, isColorWB, brand);
-
-
-
             let name = flagGroup;
 
             const typeProductId = searchValue(flagGroup,"flag", "id", brand);
@@ -322,8 +292,6 @@ const GetAttributes = (indexItem, sourceData) => {
             const isForAstigmatism = nameOriginal.includes("астигматизм")
 
 
-
-
             const objRequest = {
                 isMultifocal,
                 isForAstigmatism,
@@ -362,8 +330,10 @@ const GetAttributes = (indexItem, sourceData) => {
                 wearMode
 
             }
-            if(isMultifocal)  {
 
+
+
+            if(isMultifocal)  {
                 const addition = searchAddition(nameOriginal)
                 objRequest.idAddition = addition
                 objRequest.name += ` ${addition}/`
@@ -418,6 +388,7 @@ const GetAttributes = (indexItem, sourceData) => {
         }
 
     }
+    console.log("arrAllAttr", arrAllAttr)
 
     return arrAllAttr
 

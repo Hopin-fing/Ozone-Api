@@ -23,11 +23,9 @@ const rewriteJson = () => {
             "count": 0,
             "market_price": 0
         }
-        const barcode = typeof element["Barcode"] === "number"
-            ? element["Barcode"].toString()
-            : null
+        const barcode =  element["Barcode"].toString()
         const objProduct = pricesDB.find(x => x["barcode"] === barcode )
-
+        console.log("objProduct: ", objProduct)
         // const oldBarcode = element["nomenclatures"][0]["variations"][0]["barcodes"].toString()
         // const shortBarcode = oldBarcode.slice(-9)
         // const clearOldBarcode = Number(`100${shortBarcode}`)
