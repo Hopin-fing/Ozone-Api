@@ -65,14 +65,11 @@ export const importProduct = bodyRequest => async dispatch => {
     while(reqLog.length !== 0) {
         for (const item of reqLog) {
             try {
-                console.log(reqLog)
                 const response = await axios.post(
                     `https://api-seller.ozon.ru/v2/product/import`,
                     item.request,
                     {headers})
-                console.log(response.data);
 
-                console.log("response.data.result.task_id :", response.data.result.task_id)
                 if (response.data.result.task_id === 0) {
                     addError(item)
                 }
@@ -116,6 +113,8 @@ export const getPrices = bodyRequest => async (dispatch) => {
 export const sendPrice = bodyRequest =>  async (dispatch) =>{
     dispatch(setLoading())
 
+    console.log(bodyRequest)
+
     await axios.post(
         `https://api-seller.ozon.ru/v1/product/import/prices`,
         bodyRequest,
@@ -132,8 +131,6 @@ export const openTables = () => ({
     type: 'OPEN_TABLES'
 
 })
-
-
 
 
 

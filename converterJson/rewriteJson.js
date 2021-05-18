@@ -45,7 +45,7 @@ const rewriteJson = () => {
     })
     // console.log(data)
 
-    fs.writeFile ('./dataServer/result.json', JSON.stringify(data, null, 2), function(err) {
+    fs.writeFile ('./dataServer/sourcePrices.json', JSON.stringify(data, null, 2), function(err) {
             if (err) console.log(err) ;
             console.log('complete');
         }

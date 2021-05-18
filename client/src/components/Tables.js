@@ -20,9 +20,17 @@ const Tables = ({products} ) => {
     const sumPriceModels = arrModels => {
         let sum = 0
         arrModels.forEach(model => {
-            sum += parseInt(model.price)
+            sum += model.price
         })
         return sum
+    }
+
+    const maxPurchasePrice = arrModels => {
+        let arrPrices = []
+        arrModels.forEach(model => {
+            arrPrices.push(model["PurchasePrice"])
+        })
+        return Math.max.apply(null, arrPrices)
     }
 
 
@@ -36,7 +44,7 @@ const Tables = ({products} ) => {
                              {/*<th>Артикул</th>*/}
                              <th>Название товара</th>
                              <th>Средняя цена за модель</th>
-                             <th>Средняя коммисия </th>
+                             <th>Максимальная закупочная цена </th>
                              <th>Минимальная цена</th>
                              <th>Продано за неделю</th>
 
@@ -56,8 +64,8 @@ const Tables = ({products} ) => {
                                  {/*<td>{item.offer_id}</td>*/}
                                  <td>{item.replace(/_/g, " ")}</td>
                                  <td>{`${averagePrice(products[item])} р.`}</td>
+                                 <td>{`${maxPurchasePrice(products[item])} р.`}</td>
                                  <td>{`${commission(products[item])} р.`}</td>
-                                 <td>?????</td>
                                  <td>?????</td>
                                  {/*<td>{item.barcode}</td>*/}
                                  {/*<td>{item.price.replace(/(00$)/ , "" )}</td>*/}

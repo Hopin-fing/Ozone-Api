@@ -11,13 +11,17 @@ const List = ({match}) => {
     const dispatch = useDispatch();
 
 
-    useEffect(() => {
-        dispatch(getListModel(urlName))
-    }, [])
+    console.log('urlName ', urlName)
 
+
+    // useEffect(() => {
+    //     console.log('edjsfhsdfdhshfj')
+    //     // dispatch(getListModel(urlName))
+    // }, [])
+
+    dispatch(getListModel(urlName))
 
     const products = useSelector(({products}) => products.listModel);
-
     return (
         <> {products.length !== 0
 
@@ -44,8 +48,8 @@ const List = ({match}) => {
                             {products.map((item,index) =>
                                 <tr key={`product_${index}`}>
                                     <td>{item.id}</td>
-                                    <td>{item.barcode}</td>
                                     <td>{item.name}</td>
+                                    <td>{item.barcode}</td>
                                     <InputTables item={item} />
 
 

@@ -6,7 +6,7 @@ const MongoClient = require('mongodb').MongoClient;
 const app = express()
 
 // app.use(express.json({extended: true}))
-app.use('/api/products', require('./routes/products.routes'))
+// app.use('/api/products', require('./routes/products.routes'))
 
 
 const PORT = config.get('port') || 5000

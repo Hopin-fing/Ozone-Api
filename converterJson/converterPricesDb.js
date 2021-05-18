@@ -23,14 +23,20 @@ const rewriteJson = () => {
             "count": 0,
             "market_price": 0
         }
-        const barcode =  element["Barcode"].toString()
-        const objProduct = pricesDB.find(x => x["barcode"] === barcode )
-        console.log("objProduct: ", objProduct)
+        const article =  element["Артикул"].toString()
+        const shortBarcode = article.slice(-9)
+        let objProduct = ""
+        const checkProduct =  pricesDB.forEach(item => {
+            const check = item["barcode"].includes(shortBarcode)
+            if (check) objProduct = item
+        })
+
+        // const objProduct = pricesDB.find(x => x["barcode"] === barcode )
         // const oldBarcode = element["nomenclatures"][0]["variations"][0]["barcodes"].toString()
         // const shortBarcode = oldBarcode.slice(-9)
         // const clearOldBarcode = Number(`100${shortBarcode}`)
+        // console.log(objProduct)
         if (objProduct) {
-            console.log("test")
             objResult["art"] = element["Артикул"]
             objResult["Ozon_Product_ID"] = element["Ozon Product ID"]
             objResult["FBO_OZON_SKU_ID"] = element["FBO OZON SKU ID"]
@@ -53,7 +59,7 @@ const rewriteJson = () => {
     })
     // console.log(data)
 
-    fs.writeFile ('./dataServer/result.json', JSON.stringify(data), function(err) {
+    fs.writeFile ('./dataServer/sourcePrices.json', JSON.stringify(data), function(err) {
             if (err) console.log(err) ;
             console.log('complete');
         }

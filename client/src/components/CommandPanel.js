@@ -18,6 +18,7 @@ const CommandPanel = () => {
 
     const isOpen = useSelector(({products}) => products.isOpen);
     const isLoading = useSelector(({products}) => products.loading);
+    const listModels = useSelector(({products}) => products.listModels);
 
     const bodyRequestInfoList = {
         "offer_id": [],
@@ -39,23 +40,14 @@ const CommandPanel = () => {
         "sku": 0
     }
 
-    const pricesBody = {
-        "prices": [
-            {
-                "offer_id": "100175508539",
-                "old_price": "7213",
-                "premium_price": "0",
-                "price": "4000",
-                "product_id": 73438434
-            }
-        ]
-    }
 
+
+    const existListModels = Object.keys(listModels).length
 
     const onOpenTables = () => {
         dispatch(openTables())
         data.forEach((element, index) => {
-            if(index % 999 === 0) {
+            if(index % 999 === 0 && index !== 0) {
                 dispatch(fetchProductInfo(bodyRequestInfoList))
                 bodyRequestInfoList.offer_id = []
             }
@@ -77,7 +69,30 @@ const CommandPanel = () => {
         dispatch(getPrices(productBody))
     }
 
+
     const handlerSendPrices = () => {
+        const pricesBody = {
+            "prices": []
+        }
+
+        Object.keys(listModels).forEach(item => {
+            console.log(item)
+            listModels[item].forEach(element => {
+                if (element["price"] < element["minimalPriceForIncome"]) {
+                    const content = {
+                        "offer_id": element["offer_id"],
+                        "old_price": (element["price"]+ 500).toString(),
+                        "premium_price": "0",
+                        "price": element["minimalPriceForIncome"].toString(),
+                        "product_id": element["id"]
+                    }
+
+
+                    pricesBody["prices"].push(content)
+                }
+            })
+        })
+
         dispatch(sendPrice(pricesBody))
     }
 
@@ -95,7 +110,8 @@ const CommandPanel = () => {
                     <button
                         className="green waves-effect waves-light btn darken-3"
                         onClick={handlerImportRequest}
-                        disabled={isLoading}
+                        // disabled={isLoading}
+                        disabled={true}
 
                     >Импортировать товары</button>
 
@@ -115,7 +131,7 @@ const CommandPanel = () => {
                     <button
                         className="yellow waves-effect waves-light btn darken-3"
                         onClick={handlerSendPrices}
-                        disabled={isLoading}
+                        disabled={!existListModels || isLoading}
 
                     >Отправить новую цену</button>
 
