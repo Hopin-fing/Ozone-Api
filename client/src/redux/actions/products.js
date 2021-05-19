@@ -110,9 +110,6 @@ export const fetchPurchasePrice = bodyRequest =>  async (dispatch) => {
             "Access-Control-Allow-Origin": "*"
         }
     });
-
-    // const resp = await response.json()
-    // console.log(resp)
 }
 
 
