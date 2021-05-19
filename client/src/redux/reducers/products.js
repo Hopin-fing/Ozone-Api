@@ -38,7 +38,7 @@ const productsReducer = (state = initialState, action) => {
                             checkingObj["PurchasePrice"] = Number(addPurchasePrice(item))
                             checkingObj["price"] = parseInt(checkingObj["price"])
                             checkingObj["income"] = checkingObj["price"] - checkingObj["PurchasePrice"]
-                            checkingObj["minimalPriceForIncome"] = checkingObj["PurchasePrice"] + 332
+                            checkingObj["minimalPriceForIncome"] = checkingObj["PurchasePrice"] + 333
                             checkingObj["check"] = true
                             return true
                         }
@@ -63,8 +63,6 @@ const productsReducer = (state = initialState, action) => {
 
 
         case 'GET_LIST_MODEL': {
-
-            console.log("action.payload ", action.payload)
             const arrModels = []
             state.listModels[action.payload].forEach( product => {
                 arrModels.push(product)
@@ -77,8 +75,25 @@ const productsReducer = (state = initialState, action) => {
             }
         }
 
+        case 'GET_PRICES':
+            const objWrongPrices = []
+            Object.keys(state.listModels).forEach( model => {
+                state.listModels[model].forEach(product => {
+                    const minPrice = product["minimalPriceForIncome"]
+                    const price = product["price"]
+                    if (minPrice > price) objWrongPrices.push(product)
+                })
+            })
+            if(objWrongPrices.length !== 0) console.log(objWrongPrices)
+
+            return {
+                ...state,
+                loading: false
+            }
+
         case 'GET_PRODUCT':
             const objProduct = state.listModel.find(x => x.id === Number(action.payload) )
+
             return {
                 ...state,
                 item: objProduct,

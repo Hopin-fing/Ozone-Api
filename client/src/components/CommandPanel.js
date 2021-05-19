@@ -2,7 +2,7 @@ import React from 'react';
 import CreateFullRequest from "../methods/ozon/import/createFullRequest";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    fetchProductInfo,
+    fetchProductInfo, fetchPurchasePrice,
     getPrices,
     importProduct,
     openTables,
@@ -69,30 +69,35 @@ const CommandPanel = () => {
         dispatch(getPrices(productBody))
     }
 
+    const handlerGetPurchasePrice = () => {
+        dispatch(fetchPurchasePrice(productBody))
+    }
+
 
     const handlerSendPrices = () => {
         const pricesBody = {
             "prices": []
         }
-
         Object.keys(listModels).forEach(item => {
             console.log(item)
             listModels[item].forEach(element => {
                 if (element["price"] < element["minimalPriceForIncome"]) {
                     const content = {
                         "offer_id": element["offer_id"],
-                        "old_price": (element["price"]+ 500).toString(),
+                        "old_price": "0",
                         "premium_price": "0",
                         "price": element["minimalPriceForIncome"].toString(),
                         "product_id": element["id"]
                     }
-
+                    if (element["price"] === 999) {
+                        dispatch(sendPrice(pricesBody))
+                        element["price"] = []
+                    }
 
                     pricesBody["prices"].push(content)
                 }
             })
         })
-
         dispatch(sendPrice(pricesBody))
     }
 
@@ -121,9 +126,9 @@ const CommandPanel = () => {
                     <button
                         className="orange waves-effect waves-light btn darken-3"
                         onClick={handlerGetPrices}
-                        disabled={isLoading}
+                        disabled={!existListModels || isLoading}
 
-                    >Получить информацию по цене</button>
+                    >Получить информацию о неправильных ценах</button>
 
 
                 </div>
@@ -135,16 +140,26 @@ const CommandPanel = () => {
 
                     >Отправить новую цену</button>
 
+                </div>
+
+                <div className="card-action center">
+                    <button
+                        className="pink waves-effect waves-light btn lighten-2"
+                        onClick={handlerGetPurchasePrice}
+
+                    >Получить данные отбазы данных</button>
 
                 </div>
+
+
                 <div className="card-action center">
-                <button
-                    className="purple waves-effect waves-light btn darken-3"
-                    onClick={handlerTestRequest}
+                    <button
+                        className="purple waves-effect waves-light btn darken-3"
+                        onClick={handlerTestRequest}
 
-                >Тестовый запрос</button>
+                    >Тестовый запрос</button>
 
-            </div>
+                </div>
             </div>
 
             <div className="card">

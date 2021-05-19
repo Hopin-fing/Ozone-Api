@@ -1,4 +1,6 @@
 import axios from "axios";
+import md5  from "crypto-js/md5";
+import moment from "moment";
 
 const  testBodyRequest = require('../../test/badRequest.json')
 
@@ -98,17 +100,26 @@ export const fetchProductInfo = bodyRequest =>  async (dispatch) => {
 
 }
 
-export const getPrices = bodyRequest => async (dispatch) => {
-    dispatch(setLoading())
+export const fetchPurchasePrice = bodyRequest =>  async (dispatch) => {
 
-    await axios.post(
-        `https://api-seller.ozon.ru/v2/product/info`,
-        bodyRequest,
-        {headers}).then(data => console.log(data.data))
+    const sign = md5(moment().format("YYYY-MM-DD") + '2c428475c53106048f6364b5eb163431').toString()
+    const response = await axios.get(`https://viplinza.ru/export/price.php?sign=${sign}`,{
+        headers: {
+            "Content-Type":"application/json",
+            "Retry-After": 2000,
+            "Access-Control-Allow-Origin": "*"
+        }
+    });
 
-    dispatch(endLoading())
-
+    // const resp = await response.json()
+    // console.log(resp)
 }
+
+
+export const getPrices = () => ({
+    type: 'GET_PRICES'
+
+})
 
 export const sendPrice = bodyRequest =>  async (dispatch) =>{
     dispatch(setLoading())

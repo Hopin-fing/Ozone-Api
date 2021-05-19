@@ -7,3 +7,17 @@
 .cursor-pointer {
     cursor: pointer;
 }
+
+.journal__wrapper {
+    border: 2px solid #000000;
+    border-radius: 2px;
+    height: 500px;
+    padding: 2px 0;
+    overflow: auto
+}
+
+.journal__title {
+    border-bottom:  2px solid #000000;
+    padding:  0 5px 10px;
+    width: 100%;
+}

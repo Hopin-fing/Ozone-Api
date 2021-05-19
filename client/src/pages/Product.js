@@ -22,7 +22,20 @@ const Product = ({match}) => {
         <div>
             <LinkHome/>
             <div className="row">
-                <div className="col s8 offset-s2 text-center">
+                <div className="col s4 text-center journal">
+                    <div className="journal__wrapper">
+                        <h5 className="journal__title">Журнал изменения цен</h5>
+                        <ul className="collection">
+                            <li className="collection-item">Test</li>
+                            <li className="collection-item">Test</li>
+                            <li className="collection-item">Test</li>
+
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div className="col s8 text-center">
                     <img src={products.images} alt="test" style={{width: "350px"}}/>
                     <ul>
                         <li>Атрибут: {products.id}</li>
