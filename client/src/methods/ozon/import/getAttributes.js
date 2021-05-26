@@ -102,7 +102,6 @@ const GetAttributes = (indexItem, sourceData) => {
         if(brand === "Alcon" && typeof arrModels.find(x => x[inputKey] === value) === undefined) {
             value = "Air Optix Colors"
             return arrModels.find(x => x[inputKey] === value)[outputKey]
-
         }
         try{
             const result = arrModels.find(x => x[inputKey] === value)[outputKey]
@@ -127,6 +126,11 @@ const GetAttributes = (indexItem, sourceData) => {
             valueParam = "value") => {
 
             const attr = sourceData[index].addin.find(x => x.type === typeAttr)
+
+            try {
+                if (( attr.params[0].value === 'Acuvue for Astigmatism') && typeAttr === "Бренд") return "ACUVUE"
+            }catch {}
+
 
             if (( typeof attr === 'undefined') && typeAttr === "Оптическая сила") {
                 return "0.00"
@@ -161,6 +165,9 @@ const GetAttributes = (indexItem, sourceData) => {
             if(attr === 'Режим замены') {
                 if (oldFormat === "1 день") {
                     return "Однодневные"
+                }
+                if (oldFormat === "2 недели") {
+                    return "Двухнедельные"
                 }
                 return oldFormat
             }

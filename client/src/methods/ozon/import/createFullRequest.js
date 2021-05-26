@@ -263,7 +263,7 @@ const CreateFullRequest = () => {
             }
             mainRequest.push(data)
 
-            // console.log(data)
+            console.log(data)
 
             numberItem = numberItem + 100
             fullRequest = {items: []}
@@ -282,7 +282,7 @@ const CreateFullRequest = () => {
             }
             mainRequest.push(data)
 
-            // console.log(data)
+            console.log(data)
         }
     })
 

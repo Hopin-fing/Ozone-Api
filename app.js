@@ -18,6 +18,7 @@ async function start() {
             useUnifiedTopology: true,
             useCreateIndex: true
         })
+
         // const User = mongoose.model('productslists', {
         //     art_wb: Number,
         //     art: String,

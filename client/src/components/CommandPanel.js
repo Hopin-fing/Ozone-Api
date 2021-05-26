@@ -115,8 +115,8 @@ const CommandPanel = () => {
                     <button
                         className="green waves-effect waves-light btn darken-3"
                         onClick={handlerImportRequest}
-                        // disabled={isLoading}
-                        disabled={true}
+                        disabled={isLoading}
+                        // disabled={true}
 
                     >Импортировать товары</button>
 

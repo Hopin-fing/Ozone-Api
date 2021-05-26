@@ -1,12 +1,13 @@
 import axios from "axios";
-import md5  from "crypto-js/md5";
-import moment from "moment";
+
 
 const  testBodyRequest = require('../../test/badRequest.json')
+const REACT_APP_CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
+const REACT_APP_API_KEY = process.env.REACT_APP_API_KEY;
 
 const headers = {
-    "Client-Id": 52496,
-    "Api-Key":"4d9d2744-e2c4-4e6d-900a-a0f54b0af790",
+    "Client-Id": REACT_APP_CLIENT_ID,
+    "Api-Key" : REACT_APP_API_KEY,
     "Content-Type":"application/json",
     "Retry-After": 2000
 }
@@ -102,14 +103,9 @@ export const fetchProductInfo = bodyRequest =>  async (dispatch) => {
 
 export const fetchPurchasePrice = bodyRequest =>  async (dispatch) => {
 
-    const sign = md5(moment().format("YYYY-MM-DD") + '2c428475c53106048f6364b5eb163431').toString()
-    const response = await axios.get(`https://viplinza.ru/export/price.php?sign=${sign}`,{
-        headers: {
-            "Content-Type":"application/json",
-            "Retry-After": 2000,
-            "Access-Control-Allow-Origin": "*"
-        }
-    });
+
+    // const resp = await response.json()
+
 }
 
 
