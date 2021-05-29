@@ -2,13 +2,15 @@ import React from 'react';
 import CreateFullRequest from "../methods/ozon/import/createFullRequest";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    fetchProductInfo, fetchPurchasePrice,
+    fetchProductInfo, getPriceJournal,
     getPrices,
     importProduct,
     openTables,
     sendPrice,
     testRequest
 } from "../redux/actions/products";
+import {useHttp} from "../hooks/http.hook";
+import moment from "moment";
 
 const data = require("../data/responseData/sourcePrices.json")
 
@@ -19,6 +21,9 @@ const CommandPanel = () => {
     const isOpen = useSelector(({products}) => products.isOpen);
     const isLoading = useSelector(({products}) => products.loading);
     const listModels = useSelector(({products}) => products.listModels);
+    const pricesJournal = useSelector(({products}) => products.pricesJournal);
+
+    const {request} = useHttp()
 
     const bodyRequestInfoList = {
         "offer_id": [],
@@ -27,10 +32,9 @@ const CommandPanel = () => {
     }
 
     const testBody = {
-        "category_id": 17035114,
-        "attribute_id": 8729,
-        "limit": 50
-        // "last_value_id": 90544
+        "offer_id": "100175508539",
+        "product_id": 73438434,
+        "sku": 0
     }
 
 
@@ -40,20 +44,24 @@ const CommandPanel = () => {
         "sku": 0
     }
 
+    const priceBody = {
+        "page": 1,
+        "page_size": 1000
+    }
 
 
     const existListModels = Object.keys(listModels).length
 
-    const onOpenTables = () => {
-        dispatch(openTables())
-        data.forEach((element, index) => {
-            if(index % 999 === 0 && index !== 0) {
-                dispatch(fetchProductInfo(bodyRequestInfoList))
-                bodyRequestInfoList.offer_id = []
-            }
-            bodyRequestInfoList.offer_id.push(element.art.toString())
-        })
-        dispatch(fetchProductInfo(bodyRequestInfoList))
+    const onOpenTables = async () => {
+        try {
+            dispatch(openTables())
+            const dataPrices = await request("/api/price/get_price")
+            dispatch(getPriceJournal(dataPrices.docs))
+            dispatch(fetchProductInfo(data))
+        }catch (e) {
+            console.log("Ошибка :" , e)
+        }
+
     }
 
     const handlerImportRequest = () => {
@@ -69,35 +77,83 @@ const CommandPanel = () => {
         dispatch(getPrices(productBody))
     }
 
-    const handlerGetPurchasePrice = () => {
-        dispatch(fetchPurchasePrice(productBody))
-    }
+
+    const handlerSendPrices = async () => {
+        const pricesBody = []
+        const oldPricesJournal = pricesJournal
 
 
-    const handlerSendPrices = () => {
-        const pricesBody = {
-            "prices": []
+        const createPrice = (element, price) => {
+            const priceString = price.toString()
+            const result = {
+                "offer_id": element["offer_id"],
+                "old_price": "0",
+                "premium_price": "0",
+                "price": priceString,
+                "product_id": element["id"]
+            }
+            const actualData = moment().format('MMMM Do YYYY, h:mm:ss a');
+            const elementPriceJournal = oldPricesJournal.find(x => x.art === element["offer_id"])
+            const dataObj = {
+                data : actualData,
+                price : priceString
+            }
+            const productObj = {
+                history : [dataObj],
+                art : element["offer_id"],
+                name : element["name"]
+            }
+            if (elementPriceJournal)  {
+                elementPriceJournal["history"].push(dataObj)
+                if(elementPriceJournal["history"].length > 10) elementPriceJournal["history"].slice(-10)
+            }
+            if (!elementPriceJournal) oldPricesJournal.push(productObj)
+            pricesBody.push(result)
         }
-        Object.keys(listModels).forEach(item => {
-            console.log(item)
-            listModels[item].forEach(element => {
-                if (element["price"] < element["minimalPriceForIncome"]) {
-                    const content = {
-                        "offer_id": element["offer_id"],
-                        "old_price": "0",
-                        "premium_price": "0",
-                        "price": element["minimalPriceForIncome"].toString(),
-                        "product_id": element["id"]
-                    }
-                    if (element["price"] === 999) {
-                        dispatch(sendPrice(pricesBody))
-                        element["price"] = []
-                    }
 
-                    pricesBody["prices"].push(content)
+        Object.keys(listModels).forEach(item => {
+            listModels[item].forEach(element => {
+                let newPrice = element["price"]
+                switch (true){
+                    case (element["price"] < element["minimalPriceForIncome"]
+                        && !(element["price_index"] >= 1.6) ) :
+                        createPrice(element, element["minimalPriceForIncome"]);
+                        break;
+                    case (element["price_index"] > 1.7
+                        && element["price"] > element["minimalPriceForIncome"] ):
+                        newPrice -= Math.round((newPrice/100) * 5)
+                        createPrice(element, newPrice);
+                        break;
+                    case (element["price_index"] === 1.7
+                        && element["price"] > element["minimalPriceForIncome"] ):
+                        newPrice -= Math.round((newPrice/100) * 2)
+                        createPrice(element, newPrice);
+                        break;
+                    case (element["price_index"] < 1.0):
+                        newPrice +=  Math.round((newPrice/100) * 5)
+                        createPrice(element, newPrice);
+                        break;
+                    case (element["price_index"] === 1.0
+                        || element["price_index"] <= 1.5):
+                        newPrice +=  Math.round((newPrice/100) * 2)
+                        createPrice(element, newPrice);
+                        break;
+                    default:
+                        return
                 }
             })
         })
+        let requestJourney = []
+        for (let i = 0; oldPricesJournal.length > i; i++) {
+            requestJourney.push(oldPricesJournal[i])
+            if (requestJourney.length === 250) {
+                const responseServer = await request("/api/price/send_price", "POST", requestJourney)
+                console.log(responseServer)
+                requestJourney = []
+            }
+        }
+        const responseServer = await request("/api/price/send_price", "POST", requestJourney)
+        console.log(responseServer)
         dispatch(sendPrice(pricesBody))
     }
 
@@ -115,8 +171,8 @@ const CommandPanel = () => {
                     <button
                         className="green waves-effect waves-light btn darken-3"
                         onClick={handlerImportRequest}
-                        disabled={isLoading}
-                        // disabled={true}
+                        // disabled={isLoading}
+                        disabled={true}
 
                     >Импортировать товары</button>
 
@@ -141,16 +197,6 @@ const CommandPanel = () => {
                     >Отправить новую цену</button>
 
                 </div>
-
-                <div className="card-action center">
-                    <button
-                        className="pink waves-effect waves-light btn lighten-2"
-                        onClick={handlerGetPurchasePrice}
-
-                    >Получить данные отбазы данных</button>
-
-                </div>
-
 
                 <div className="card-action center">
                     <button

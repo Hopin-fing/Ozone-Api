@@ -10,15 +10,6 @@ const List = ({match}) => {
     const urlName = match.params.name
     const dispatch = useDispatch();
 
-
-    console.log('urlName ', urlName)
-
-
-    // useEffect(() => {
-    //     console.log('edjsfhsdfdhshfj')
-    //     // dispatch(getListModel(urlName))
-    // }, [])
-
     dispatch(getListModel(urlName))
 
     const products = useSelector(({products}) => products.listModel);
@@ -57,7 +48,7 @@ const List = ({match}) => {
                                     <td>?????</td>
 
                                     <td>
-                                        <Link to={`/product/` + item.id}>
+                                        <Link to={{pathname:`/product/` + item.id, model: urlName}}>
                                             <i className="material-icons">chevron_right</i>
                                         </Link>
                                     </td>

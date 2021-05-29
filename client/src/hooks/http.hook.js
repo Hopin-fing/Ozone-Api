@@ -10,11 +10,7 @@ export const useHttp = () => {
             url,
             method = 'GET',
             body= null,
-            headers = {
-                "Client-Id": 52496,
-                "Api-Key":"4d9d2744-e2c4-4e6d-900a-a0f54b0af790",
-                "Content-Type":"application/json"
-            }) => {
+            headers = {}) => {
         setLoading(true)
 
         try {
@@ -23,8 +19,9 @@ export const useHttp = () => {
                 headers['Content-Type'] = 'application/json'
             }
 
+
            const response = await fetch( url, {method, body, headers})
-           const data = await  response.json()
+           const data = await response.json()
 
             if(!response.ok) {
                 throw new Error(data.message || 'Ошибка')

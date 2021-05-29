@@ -1,7 +1,5 @@
 import axios from "axios";
 
-
-const  testBodyRequest = require('../../test/badRequest.json')
 const REACT_APP_CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const REACT_APP_API_KEY = process.env.REACT_APP_API_KEY;
 
@@ -12,6 +10,17 @@ const headers = {
     "Retry-After": 2000
 }
 
+const bodyRequestInfoList = {
+    "offer_id": [],
+    "product_id": [],
+    "sku": []
+}
+
+const sendRequestPost = async (url, body) => {
+    return axios.post(url, body, {headers})
+}
+
+
 export const setLoading = () => ({
     type: 'SET_LOADING'
 })
@@ -20,41 +29,39 @@ export const endLoading = () => ({
     type: 'END_LOADING'
 })
 
-export const testRequest = bodyRequest =>  async () => {
-    const response = await axios.post(
-        `https://api-seller.ozon.ru/v2/category/attribute/values`,
-        bodyRequest,
-        {headers}).then(data => console.log(data.data))
+export const getComissions = bodyRequest => async () => {
+    const url = "https://api-seller.ozon.ru/v2/product/info"
+    const response = await sendRequestPost(url, bodyRequest)
 
+
+    return {
+        type: 'GET_COMISSIONS',
+        payload: response.data.result
+    }
+
+}
+
+export const testRequest = bodyRequest => async () => {
+    const url = "https://api-seller.ozon.ru/v2/product/info/list"
+    await sendRequestPost(url, bodyRequest).then(data => console.log(data.data))
 
 }
 
 export const importProduct = bodyRequest => async dispatch => {
     dispatch(setLoading())
-    // console.log(testBodyRequest)
-    //         const response = await axios.post(
-    //             `https://api-seller.ozon.ru/v2/product/import`,
-    //             testBodyRequest,
-    //             {headers})
-    //
-    // console.log(response.data);
-
-
 
     let reqLog = []
 
+    const url = "https://api-seller.ozon.ru/v2/product/import"
+
     const addError = (item) => {
         reqLog.push(item)
-        console.log('Errrorr')
+        console.log('Error!')
     }
 
     for (const item of bodyRequest)  {
         try {
-            const response = await axios.post(
-                `https://api-seller.ozon.ru/v2/product/import`,
-                item.request,
-                {headers})
-
+            const response = await sendRequestPost(url, item.request)
             console.log(response.data);
 
             if (response.data.result.task_id === 0) {
@@ -68,10 +75,7 @@ export const importProduct = bodyRequest => async dispatch => {
     while(reqLog.length !== 0) {
         for (const item of reqLog) {
             try {
-                const response = await axios.post(
-                    `https://api-seller.ozon.ru/v2/product/import`,
-                    item.request,
-                    {headers})
+                const response =  await sendRequestPost(url, item.request)
 
                 if (response.data.result.task_id === 0) {
                     addError(item)
@@ -89,22 +93,24 @@ export const importProduct = bodyRequest => async dispatch => {
 }
 
 
-export const fetchProductInfo = bodyRequest =>  async (dispatch) => {
+export const fetchProductInfo = data =>  async (dispatch) => {
     dispatch(setLoading())
 
-    const response = await axios.post(
-        `https://api-seller.ozon.ru/v2/product/info/list`,
-        bodyRequest,
-        {headers})
+    const url = "https://api-seller.ozon.ru/v2/product/info/list"
+    const arrResponseData = []
 
-    dispatch(addProductInfo(response.data))
+    for(const [index, element] of data.entries()) {
+        if(index % 999 === 0 && index !== 0) {
+            const response = await sendRequestPost(url, bodyRequestInfoList)
+            bodyRequestInfoList.offer_id = []
+            arrResponseData.push(response.data.result.items)
+        }
+        bodyRequestInfoList.offer_id.push(element.art.toString())
+    }
 
-}
-
-export const fetchPurchasePrice = bodyRequest =>  async (dispatch) => {
-
-
-    // const resp = await response.json()
+    const response = await sendRequestPost(url, bodyRequestInfoList)
+    arrResponseData.push(response.data.result.items)
+    dispatch(addProductInfo(arrResponseData.flat()))
 
 }
 
@@ -116,33 +122,46 @@ export const getPrices = () => ({
 
 export const sendPrice = bodyRequest =>  async (dispatch) =>{
     dispatch(setLoading())
+    console.log("bodyRequest.length", bodyRequest.length)
+    const url = "https://api-seller.ozon.ru/v1/product/import/prices"
 
-    console.log(bodyRequest)
+    const arrResponseData = {"prices" : []}
 
-    await axios.post(
-        `https://api-seller.ozon.ru/v1/product/import/prices`,
-        bodyRequest,
-        {headers}).then(data => console.log(data.data))
+    for(const [index, element] of bodyRequest.entries()) {
+        if(index % 999 === 0 && index !== 0) {
+            console.log(arrResponseData)
+            const response = await sendRequestPost(url, arrResponseData)
+            arrResponseData.prices = []
+            console.log(response.data)
+            // arrResponseData.prices.push(response.data.result.items)
+        }
+        try{
+            arrResponseData.prices.push(element)
+        }catch (e) {
+            console.log(element)
+        }
+        
+    }
+
+
+    await sendRequestPost(url, arrResponseData).then(data => console.log(data.data))
 
     dispatch(endLoading())
-
-
-    // dispatch(addProductInfo(response.data))
 
 }
 
 export const openTables = () => ({
     type: 'OPEN_TABLES'
-
 })
 
-
+export const getPriceJournal = data => ({
+    type: 'GET_PRICE_JOURNAL',
+    payload: data
+})
 
 export const setNewPrice = () => ({
     type: 'SET_NEW_PRICE'
 })
-
-
 
 export const getListModel = name =>  ({
     type: 'GET_LIST_MODEL',
@@ -156,6 +175,6 @@ export const getProduct = id =>  ({
 
 export const addProductInfo = productInfo => ({
     type: 'ADD_PRODUCT_INFO',
-    payload: productInfo.result.items
+    payload: productInfo
 })
 

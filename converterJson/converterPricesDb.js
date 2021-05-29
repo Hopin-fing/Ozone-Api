@@ -1,7 +1,6 @@
 const fs = require('fs');
 const originalDB = require('./dataServer/dataOzonAdminPanel.json')
 const pricesDB = require('./dataServer/pricesDB.json')
-const result = require('./dataServer/result.json')
 
 const rewriteJson = () => {
     const data = []
@@ -59,7 +58,7 @@ const rewriteJson = () => {
     })
     // console.log(data)
 
-    fs.writeFile ('./dataServer/sourcePrices.json', JSON.stringify(data), function(err) {
+    fs.writeFile ('../client/src/data/responseData/sourcePrices.json', JSON.stringify(data), function(err) {
             if (err) console.log(err) ;
             console.log('complete');
         }

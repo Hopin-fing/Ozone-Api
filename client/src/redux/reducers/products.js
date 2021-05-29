@@ -5,6 +5,7 @@ const initialState = {
     listModels: [],
     listModel: {},
     allItems: [],
+    pricesJournal:[],
     loading: false,
     isOpen: false
 }
@@ -15,14 +16,16 @@ const productsReducer = (state = initialState, action) => {
         case 'OPEN_TABLES':
             return {
                 ...state,
-                isOpen: true
+                isOpen: true,
+                loading: true
             }
         case 'ADD_PRODUCT_INFO': {
 
-            const listModel = {
-                ...state.listModels
-            }
+            const allItems = [...state.allItems]
+            const listModels = {...state.listModels}
+
             action.payload.forEach(item => {
+                allItems.push(item)
                 if(!("check" in item)) {
                     const addPurchasePrice = obj => {
                         try{
@@ -38,29 +41,28 @@ const productsReducer = (state = initialState, action) => {
                             checkingObj["PurchasePrice"] = Number(addPurchasePrice(item))
                             checkingObj["price"] = parseInt(checkingObj["price"])
                             checkingObj["income"] = checkingObj["price"] - checkingObj["PurchasePrice"]
-                            checkingObj["minimalPriceForIncome"] = checkingObj["PurchasePrice"] + 333
+                            checkingObj["minimalPriceForIncome"] = checkingObj["PurchasePrice"] + 200
                             checkingObj["check"] = true
                             return true
                         }
                         return false
                     }
                     const name = item.name.replace(/\/.*$/, "").trim().replace(/ /g, "_")
-                    if(listModel[name]) return  listModel[name] = action.payload.filter(checkingName =>
+                    if(listModels[name]) return  listModels[name] = action.payload.filter(checkingName =>
                         isEqualName(name, checkingName ))
                         .concat(...state.listModels[name]) // сложение с предыдущим вызовом
-                    listModel[name] = action.payload.filter(checkingName => isEqualName(name, checkingName ))
+                    listModels[name] = action.payload.filter(checkingName => isEqualName(name, checkingName ))
                 }
             })
 
             return {
                 ...state,
-                listModels: listModel,
-                allItems: action.payload,
-                loading: false,
+                listModels,
+                allItems,
+                loading: false
 
             }
         }
-
 
         case 'GET_LIST_MODEL': {
             const arrModels = []
@@ -72,6 +74,20 @@ const productsReducer = (state = initialState, action) => {
                 ...state,
                 listModel: arrModels,
                 loading: false
+            }
+        }
+
+        case 'GET_COMISSIONS': {
+            const item = {...state.item}
+
+            console.log("item ", item)
+
+            item["commissions"] = action.payload
+
+
+            return {
+                ...state,
+                item
             }
         }
 
@@ -92,13 +108,21 @@ const productsReducer = (state = initialState, action) => {
             }
 
         case 'GET_PRODUCT':
-            const objProduct = state.listModel.find(x => x.id === Number(action.payload) )
 
+            const objProduct = state.listModel.find(x => x.id === Number(action.payload) )
             return {
                 ...state,
                 item: objProduct,
                 loading: false
             }
+
+        case 'GET_PRICE_JOURNAL':
+
+            return {
+                ...state,
+                pricesJournal: action.payload
+            }
+
         case 'SET_LOADING':
             return {
                 ...state,

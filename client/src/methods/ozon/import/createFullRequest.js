@@ -87,60 +87,24 @@ const CreateFullRequest = () => {
                     }
                 }
 
-                itemFinal.barcode = newItem.barcode
-
-                if (  newItem.barcode === "730821680654") {
-                    console.log("name ", newItem.name)
-                }
-
-                itemFinal.depth = newItem.packDepth
-                itemFinal["dimension_unit"] = newItem.packDepthUnit
-                itemFinal.height = newItem.packHeight
-                itemFinal.name = newItem.name
-                itemFinal.price = newItem.price
-                if (typeof newItem.image == "object" && "main" in newItem.image) { //Происходит фильтрация внутри объекта с ключом "img" в файле "modelsinfo.json"
-                    itemFinal.images.push(newItem.image["main"])
-                    if (isColored) {
-                        try {
-                            if (newItem.image["additional"]["allColors"]){
-                                newItem.image["additional"]["allColors"].forEach((element) => {
-                                    itemFinal.images.push(element)
-                                })
-                            }
-                            newItem.image["additional"][newItem.colorName].forEach((element) => {
-                                itemFinal.images.push(element)
-                            })
-                        } catch {}
-
-                    }
-                    if(!isColored) {
-                    newItem.image["additional"].forEach((element) => {
-                        itemFinal.images.push(element)
-                    })
-                    }
-                    searchAttrById(4194).value = newItem.image["main"]
-
-                }
-                if (typeof newItem.image === "object" && "30" in newItem.image) {
-                    searchAttrById(4194).value = newItem.image[newData[index].packAmount]
-                }
-                if (typeof newItem.image !== "object") {
-                    itemFinal.images.push(newItem.image)
-                    searchAttrById(4194).value = newItem.image
-                }
-
-                itemFinal.weight = newItem.packWeight
-                itemFinal.width = newItem.packWidth
-                itemFinal["offer_id"] = newItem.article
-                itemFinal["category_id"] = newItem.typeProductId
-
-                searchAttrById(85).value = newItem.brand
-                searchAttrById(4191).value = newItem.description
-                searchAttrById(4384).value = newItem.equipment
-
                 let createAttrObj = (idCategory, dictionaryValueId, value) => { //Происходит добавление нового атребута в значение ключа "attributes"
-                    if(Array.isArray(dictionaryValueId))   {
-                        const arrComplexValue = []
+                    const arrComplexValue = []
+                    if(Array.isArray(dictionaryValueId) && idCategory === 4195)  {
+                        let stringUrl = ""
+                        dictionaryValueId.forEach( (item, indexValue) => {
+                            0 === indexValue ? stringUrl += item : stringUrl += " " + item
+                        })
+                        return {
+                            "complex_id": 0,
+                            "id": idCategory,
+                            "values": [{
+                                "dictionary_value_id": 0,
+                                "value": stringUrl
+                            }]
+                        }
+                    }
+                    if(Array.isArray(dictionaryValueId))  {
+
                         dictionaryValueId.forEach( item => {
                             arrComplexValue.push({
                                 "dictionary_value_id": item,
@@ -165,6 +129,66 @@ const CreateFullRequest = () => {
                         }
                     }
                 }
+
+                itemFinal.barcode = newItem.barcode
+
+                if (  newItem.barcode === "730821680654") {
+                    console.log("name ", newItem.name)
+                }
+
+                itemFinal.depth = newItem.packDepth
+                itemFinal["dimension_unit"] = newItem.packDepthUnit
+                itemFinal.height = newItem.packHeight
+                itemFinal.name = newItem.name
+                itemFinal.price = newItem.price
+                if (typeof newItem.image == "object" && "main" in newItem.image) { //Происходит фильтрация внутри объекта с ключом "img" в файле "modelsinfo.json"
+                    itemFinal.images.push(newItem.image["main"])
+                    if (isColored) {
+                        try {
+                            const arrAllImages = newItem.image["additional"]["allColors"]
+                            const arrEveryImages = newItem.image["additional"][newItem.colorName]
+                            if (arrAllImages){
+                                itemFinal.attributes.push(createAttrObj(4195, arrAllImages, ""))
+                            }
+
+                            itemFinal.attributes.push(createAttrObj(4195, arrEveryImages, ""))
+
+                            // newItem.image["additional"][newItem.colorName].forEach((element) => {
+                            //     itemFinal.images.push(element)
+                            // })
+                        } catch {}
+
+                    }
+                    if(!isColored) {
+                        // console.log("images has!!")
+                        const arrAddImages = newItem.image["additional"]
+                        itemFinal.attributes.push( createAttrObj(4195, arrAddImages, ""))
+
+                        // newItem.image["additional"].forEach((element) => {
+                        //     itemFinal.images.push(element)
+                        // })
+                    }
+                    searchAttrById(4194).value = newItem.image["main"]
+
+                }
+                if (typeof newItem.image === "object" && "30" in newItem.image) {
+                    searchAttrById(4194).value = newItem.image[newData[index].packAmount]
+                }
+                if (typeof newItem.image !== "object") {
+                    itemFinal.images.push(newItem.image)
+                    searchAttrById(4194).value = newItem.image
+                }
+
+                itemFinal.weight = newItem.packWeight
+                itemFinal.width = newItem.packWidth
+                itemFinal["offer_id"] = newItem.article
+                itemFinal["category_id"] = newItem.typeProductId
+
+                searchAttrById(85).value = newItem.brand
+                searchAttrById(4191).value = newItem.description
+                searchAttrById(4384).value = newItem.equipment
+
+
 
                 // const addEveryItem = (value, idCategory, attrValue = "") => {
                 //     if(Array.isArray(value)) {
@@ -228,6 +252,7 @@ const CreateFullRequest = () => {
                 itemFinal.attributes.push(createAttrObj(4389,newItem.idCountry, ""))
                 itemFinal.attributes.push(createAttrObj(8789,0, "Регистрационное удостоверение"))
                 itemFinal.attributes.push(createAttrObj(8790,0, newItem.urlPdf))
+                itemFinal.attributes.push(createAttrObj(95,0, newItem.line))
 
                 if (isColored) {
                     itemFinal.attributes.push(createAttrObj(59, newItem.colorId, ""))

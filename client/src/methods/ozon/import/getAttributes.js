@@ -289,6 +289,7 @@ const GetAttributes = (indexItem, sourceData) => {
 
             name += `  / ${optPwr}/ ${radCurvature}/` // Дополнительная информация к названию
 
+            const line = searchValue(flagGroup,"flag", "line");
             const idTypeAttr = searchValue(flagGroup,"flag", "typeAttr");
             const idMaterial = searchValue(flagGroup,"flag", "idMaterial",  brand);
             const idFeatures = searchValue(flagGroup,"flag", "features",  brand);
@@ -297,6 +298,7 @@ const GetAttributes = (indexItem, sourceData) => {
             const isColored = searchValue(flagGroup,"flag", "type",  brand) === "цветные"
             const isMultifocal = nameOriginal.includes("мультифокальные")
             const isForAstigmatism = nameOriginal.includes("астигматизм")
+
 
 
             const objRequest = {
@@ -310,6 +312,7 @@ const GetAttributes = (indexItem, sourceData) => {
                 idTypeAttr,
                 article,
                 urlPdf,
+                line,
                 brand,
                 name,
                 description,

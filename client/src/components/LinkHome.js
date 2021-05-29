@@ -6,7 +6,7 @@ const LinkHome = () => {
         <div className="row">
             <div className="col s8 offset-s2 text-center">
                 <Link to="/">
-                    <div className="link-home">Стартовая страница</div>
+                    <div className="link-link-nav">Стартовая страница</div>
                 </Link>
             </div>
 
