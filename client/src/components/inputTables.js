@@ -10,26 +10,24 @@ const InputTables = ({item}) => {
     const dispatch = useDispatch();
 
 
-    const bodyRequestPrice = {
-        "prices": [
+    const bodyRequestPrice =  [
             {
-                "offer_id": "0",
+                "offer_id": item["offer_id"],
                 "old_price": "0",
                 "premium_price": "0",
-                "price": "99999999",
-                "product_id": 70946605
+                "price": value.toString(),
+                "product_id": item["id"]
             }
         ]
-    }
 
     const onSubmit = event => {
         if(event.key !== 'Enter') {
             return
         }
 
-        if(value.trim()) {
-            console.log("Все вводится - ", value )
+        if(value.toString().trim()) {
             dispatch(sendPrice(bodyRequestPrice))
+            setValue(value)
             setInputActive( false)
         }
 
@@ -40,15 +38,20 @@ const InputTables = ({item}) => {
         setInputActive(true)
     }
 
+    const onChangeHandler = event => {
+        const result = event.target.value.replace(/[^\d]/g, "")
+        setValue(result)
+    }
+
     return (
         <td className="cursor-pointer" onClick={handlerInput}>
             {inputActive
                 ? <input
-                    onChange={event => setValue(event.target.value.replace(/[^\d]/g, ""))}
+                    onChange={event => onChangeHandler(event)}
                     type="text"
                     value={value}
                     onKeyPress={onSubmit}/>
-                :parseInt(item.price) }
+                :value }
         </td>
     );
 };

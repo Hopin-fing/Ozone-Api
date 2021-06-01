@@ -19,6 +19,16 @@ const productsReducer = (state = initialState, action) => {
                 isOpen: true,
                 loading: true
             }
+
+        case 'RESET_DATA': {
+            return {
+                item: {},
+                listModels: [],
+                listModel: {},
+                allItems: [],
+                pricesJournal:[],
+            }
+        }
         case 'ADD_PRODUCT_INFO': {
 
             const allItems = [...state.allItems]
@@ -77,19 +87,49 @@ const productsReducer = (state = initialState, action) => {
             }
         }
 
-        case 'GET_COMISSIONS': {
+        case 'GET_COMMISSIONS':
+
             const item = {...state.item}
 
-            console.log("item ", item)
+            item["commissions"] = action.payload.commissions
+            return {
+                ...state,
+                item: item
+            }
 
-            item["commissions"] = action.payload
+        case 'SEND_PRICE':
+            const allItems = [...state.allItems]
+            const listModels = {...state.listModels}
+            const objRequest = action.payload
 
+            const objAllItems =  allItems.find( x => x["offer_id"] === objRequest["offer_id"])
+            let objListModels
+
+            for( let key in listModels) {
+                const result = listModels[key].find( x => x["offer_id"] === objRequest["offer_id"])
+                if(result) objListModels = result
+            }
+            // listModels.forEach(item => {
+            //     const result = item.find( x => x["id"] === objRequest["id"])
+            //     if(result) return objListModels = result
+            // })
+
+
+
+
+
+            objAllItems.price = Number(objRequest["price"])
+            objListModels.price = Number(objRequest["price"])
+
+            console.log("objAllItems.price" , objAllItems.price)
+            console.log("objListModels.price" , objListModels.price)
 
             return {
                 ...state,
-                item
+                allItems,
+                listModels
             }
-        }
+
 
         case 'GET_PRICES':
             const objWrongPrices = []
@@ -117,7 +157,6 @@ const productsReducer = (state = initialState, action) => {
             }
 
         case 'GET_PRICE_JOURNAL':
-
             return {
                 ...state,
                 pricesJournal: action.payload

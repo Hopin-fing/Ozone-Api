@@ -10,11 +10,6 @@ const headers = {
     "Retry-After": 2000
 }
 
-const bodyRequestInfoList = {
-    "offer_id": [],
-    "product_id": [],
-    "sku": []
-}
 
 const sendRequestPost = async (url, body) => {
     return axios.post(url, body, {headers})
@@ -29,15 +24,15 @@ export const endLoading = () => ({
     type: 'END_LOADING'
 })
 
-export const getComissions = bodyRequest => async () => {
+export const getCommissions = bodyRequest => async dispatch => {
     const url = "https://api-seller.ozon.ru/v2/product/info"
     const response = await sendRequestPost(url, bodyRequest)
 
 
-    return {
-        type: 'GET_COMISSIONS',
+    dispatch({
+        type: 'GET_COMMISSIONS',
         payload: response.data.result
-    }
+    })
 
 }
 
@@ -93,15 +88,24 @@ export const importProduct = bodyRequest => async dispatch => {
 }
 
 
-export const fetchProductInfo = data =>  async (dispatch) => {
+export const fetchProductInfo = data =>  async dispatch => {
     dispatch(setLoading())
 
     const url = "https://api-seller.ozon.ru/v2/product/info/list"
     const arrResponseData = []
+    const bodyRequestInfoList = {
+        "offer_id": [],
+        "product_id": [],
+        "sku": []
+    }
 
     for(const [index, element] of data.entries()) {
         if(index % 999 === 0 && index !== 0) {
+
+            console.log("bodyRequestInfoList", bodyRequestInfoList)
             const response = await sendRequestPost(url, bodyRequestInfoList)
+
+
             bodyRequestInfoList.offer_id = []
             arrResponseData.push(response.data.result.items)
         }
@@ -122,10 +126,10 @@ export const getPrices = () => ({
 
 export const sendPrice = bodyRequest =>  async (dispatch) =>{
     dispatch(setLoading())
-    console.log("bodyRequest.length", bodyRequest.length)
     const url = "https://api-seller.ozon.ru/v1/product/import/prices"
 
     const arrResponseData = {"prices" : []}
+
 
     for(const [index, element] of bodyRequest.entries()) {
         if(index % 999 === 0 && index !== 0) {
@@ -144,7 +148,19 @@ export const sendPrice = bodyRequest =>  async (dispatch) =>{
     }
 
 
-    await sendRequestPost(url, arrResponseData).then(data => console.log(data.data))
+    const response = await sendRequestPost(url, arrResponseData)
+
+    console.log("response", response.data.result[0])
+
+    if (response.data.result[0].updated) {
+        dispatch({
+            type: 'SEND_PRICE',
+            payload: bodyRequest[0]
+        })
+        console.log("Цена обновилась!")
+
+    }
+    if (!response.data.result[0].updated) {console.log("Что то произошло не так!")}
 
     dispatch(endLoading())
 
@@ -152,6 +168,10 @@ export const sendPrice = bodyRequest =>  async (dispatch) =>{
 
 export const openTables = () => ({
     type: 'OPEN_TABLES'
+})
+
+export const resetData = () => ({
+    type: 'RESET_DATA'
 })
 
 export const getPriceJournal = data => ({

@@ -5,9 +5,15 @@ import {Link} from "react-router-dom";
 
 const Tables = ({products} ) => {
 
-    const commission = arrPrice => {
-        const price =  averagePrice(arrPrice)
-        return Math.floor((price * 20)/100)
+    const minPrice = arrModels => {
+
+
+        let arrPrices = []
+        arrModels.forEach(model => {
+            arrPrices.push(model["price"])
+        })
+
+        return Math.min.apply(null, arrPrices)
     }
 
     const averagePrice = arrPrice => {
@@ -65,7 +71,7 @@ const Tables = ({products} ) => {
                                  <td>{item.replace(/_/g, " ")}</td>
                                  <td>{`${averagePrice(products[item])} р.`}</td>
                                  <td>{`${maxPurchasePrice(products[item])} р.`}</td>
-                                 <td>{`${commission(products[item])} р.`}</td>
+                                 <td>{`${minPrice(products[item])} р.`}</td>
                                  <td>?????</td>
                                  {/*<td>{item.barcode}</td>*/}
                                  {/*<td>{item.price.replace(/(00$)/ , "" )}</td>*/}

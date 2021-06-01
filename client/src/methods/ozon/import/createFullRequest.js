@@ -2,7 +2,7 @@ import GetAttributes from "./getAttributes";
 import _ from "lodash";
 
 const example = require('./templates/requestImport.json')
-const sourceData = require('../../../data/productDB/Alcon.json')
+const sourceData = require('../../../data/testAlcon.json')
 const oxyCofData = require('../../../data/ozonData/oxygen_transmission.json')
 const optPwrData = require('../../../data/ozonData/optical_power.json')
 const radCurvatureData = require('../../../data/ozonData/radius_curvature.json')

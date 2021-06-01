@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {getComissions, getProduct, setLoading} from "../redux/actions/products";
+import {getCommissions, getProduct, setLoading} from "../redux/actions/products";
 import LinkHome from "../components/LinkHome";
 import LinkList from "../components/LinkList";
 
@@ -10,7 +10,7 @@ const Product = ({match, location}) => {
     const dispatch = useDispatch();
     const urlId = match.params.name
 
-    dispatch(getProduct(urlId))
+
 
     const history = []
     const products = useSelector(({products}) => products.item);
@@ -22,7 +22,18 @@ const Product = ({match, location}) => {
     }
 
 
-    dispatch(getComissions(requestCommissions))
+
+
+
+
+    useEffect(() => {
+        dispatch(getProduct(urlId))
+    }, [])
+
+    useEffect(() => {
+        if(products.offer_id) dispatch(getCommissions(requestCommissions))
+    }, [products.offer_id])
+
 
     const objHistory = data.find( x => x.art === products.offer_id.toString())
 
@@ -30,10 +41,8 @@ const Product = ({match, location}) => {
         history.push(element)
     })
 
-    //TODO: Доделать вывод комиссии для продукта
 
 
-    console.log("products.comissions " , products.comissions)
     return (
         <div>
             <LinkHome/>
@@ -42,16 +51,16 @@ const Product = ({match, location}) => {
                 <div className="col s4 text-center journal">
                     <div className="journal__wrapper">
                         <h5 className="journal__title">Журнал изменения цен</h5>
-                        <ul className="collection">
-                            {history.length !== 0
-                            ? history.map((item, index) => {
+                        {/*<ul className="collection">*/}
+                        {/*    {history.length !== 0*/}
+                        {/*    ? history.map((item, index) => {*/}
 
-                               return <li key={`product-history-${index}`} className="collection-item">{item.data} - {item.price} р.</li>
-                                })
-                                :  <li className="collection-item">Изменений цены не было</li>
-                            }
+                        {/*       return <li key={`product-history-${index}`} className="collection-item">{item.data} - {item.price} р.</li>*/}
+                        {/*        })*/}
+                        {/*        :  <li className="collection-item">Изменений цены не было</li>*/}
+                        {/*    }*/}
 
-                        </ul>
+                        {/*</ul>*/}
                     </div>
 
                 </div>
@@ -62,7 +71,10 @@ const Product = ({match, location}) => {
                         <li>Атрибут: {products.id}</li>
                         <li>Наименование: {products.name}</li>
                         <li>Цена: {`${parseInt(products.price)} р.`}</li>
-                        {/*<li>Коммиссия: {products.с`${parseInt(products.price)} р.`}</li>*/}
+                        <li>Коммиссия: {products.commissions
+                            ?`${parseInt(products.commissions[0].value)} р.`
+                            : `Загрузка ...`
+                        }</li>
                     </ul>
                 </div>
             </div>

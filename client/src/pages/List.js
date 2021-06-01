@@ -23,12 +23,12 @@ const List = ({match}) => {
                         <table className="striped centered">
                             <thead>
                             <tr>
+                                <th>Артикул OZON</th>
                                 <th>Артикул</th>
                                 <th>Название товара</th>
                                 <th>Штрихкод</th>
                                 <th>Цена</th>
                                 <th>Кол-во на складе </th>
-                                <th>Коммисия</th>
 
                                 <th> </th>
 
@@ -38,6 +38,7 @@ const List = ({match}) => {
                             <tbody>
                             {products.map((item,index) =>
                                 <tr key={`product_${index}`}>
+                                    <td>{item.offer_id}</td>
                                     <td>{item.id}</td>
                                     <td>{item.name}</td>
                                     <td>{item.barcode}</td>
@@ -45,7 +46,6 @@ const List = ({match}) => {
 
 
                                     <td>{item.stocks.coming}</td>
-                                    <td>?????</td>
 
                                     <td>
                                         <Link to={{pathname:`/product/` + item.id, model: urlName}}>

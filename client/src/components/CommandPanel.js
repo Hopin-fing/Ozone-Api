@@ -5,7 +5,7 @@ import {
     fetchProductInfo, getPriceJournal,
     getPrices,
     importProduct,
-    openTables,
+    openTables, resetData,
     sendPrice,
     testRequest
 } from "../redux/actions/products";
@@ -55,8 +55,8 @@ const CommandPanel = () => {
     const onOpenTables = async () => {
         try {
             dispatch(openTables())
-            const dataPrices = await request("/api/price/get_price")
-            dispatch(getPriceJournal(dataPrices.docs))
+            // const dataPrices = await request("/api/price/get_price")
+            // dispatch(getPriceJournal(dataPrices.docs))
             dispatch(fetchProductInfo(data))
         }catch (e) {
             console.log("Ошибка :" , e)
@@ -77,6 +77,18 @@ const CommandPanel = () => {
         dispatch(getPrices(productBody))
     }
 
+    const handlerResetData = () => {
+        dispatch(resetData())
+        try {
+            dispatch(openTables())
+            // const dataPrices = await request("/api/price/get_price")
+            // dispatch(getPriceJournal(dataPrices.docs))
+            dispatch(fetchProductInfo(data))
+        }catch (e) {
+            console.log("Ошибка :" , e)
+        }
+    }
+
 
     const handlerSendPrices = async () => {
         const pricesBody = []
@@ -92,22 +104,22 @@ const CommandPanel = () => {
                 "price": priceString,
                 "product_id": element["id"]
             }
-            const actualData = moment().format('MMMM Do YYYY, h:mm:ss a');
-            const elementPriceJournal = oldPricesJournal.find(x => x.art === element["offer_id"])
-            const dataObj = {
-                data : actualData,
-                price : priceString
-            }
-            const productObj = {
-                history : [dataObj],
-                art : element["offer_id"],
-                name : element["name"]
-            }
-            if (elementPriceJournal)  {
-                elementPriceJournal["history"].push(dataObj)
-                if(elementPriceJournal["history"].length > 10) elementPriceJournal["history"].slice(-10)
-            }
-            if (!elementPriceJournal) oldPricesJournal.push(productObj)
+            // const actualData = moment().format('MMMM Do YYYY, h:mm:ss a');
+            // const elementPriceJournal = oldPricesJournal.find(x => x.art === element["offer_id"])
+            // const dataObj = {
+            //     data : actualData,
+            //     price : priceString
+            // }
+            // const productObj = {
+            //     history : [dataObj],
+            //     art : element["offer_id"],
+            //     name : element["name"]
+            // }
+            // if (elementPriceJournal)  {
+            //     elementPriceJournal["history"].push(dataObj)
+            //     if(elementPriceJournal["history"].length > 10) elementPriceJournal["history"].slice(-10)
+            // }
+            // if (!elementPriceJournal) oldPricesJournal.push(productObj)
             pricesBody.push(result)
         }
 
@@ -144,17 +156,17 @@ const CommandPanel = () => {
             })
         })
         let requestJourney = []
-        for (let i = 0; oldPricesJournal.length > i; i++) {
-            requestJourney.push(oldPricesJournal[i])
-            if (requestJourney.length === 250) {
-                const responseServer = await request("/api/price/send_price", "POST", requestJourney)
-                console.log(responseServer)
-                requestJourney = []
-            }
-        }
-        const responseServer = await request("/api/price/send_price", "POST", requestJourney)
-        console.log(responseServer)
-        dispatch(sendPrice(pricesBody))
+        // for (let i = 0; oldPricesJournal.length > i; i++) {
+        //     requestJourney.push(oldPricesJournal[i])
+        //     if (requestJourney.length === 250) {
+        //         const responseServer = await request("/api/price/send_price", "POST", requestJourney)
+        //         console.log(responseServer)
+        //         requestJourney = []
+        //     }
+        // }
+            // const responseServer = await request("/api/price/send_price", "POST", requestJourney)
+            // console.log(responseServer)
+            dispatch(sendPrice(pricesBody))
     }
 
 
@@ -212,7 +224,7 @@ const CommandPanel = () => {
                 <div className="card-action center brown lighten-5">
                     {isOpen ? <button
                         className="indigo waves-effect waves-light btn  darken-1"
-                        onClick={onOpenTables}
+                        onClick={handlerResetData}
                     >Перезагрузить</button> :
                         <button
                             className="indigo waves-effect waves-light btn  darken-1"
