@@ -10,7 +10,7 @@
     "client": "yarn --cwd client start",
     "client:install": "yarn --cwd client install",
     "client:build": "yarn --cwd client build",
-    "dev": " cross-env NODE_ENV=development concurrently \" yarn server\" \" yarn client \"",
+    "dev": " cross-env NODE_ENV=development concurrently \" yarn server\" \" yarn getprice\" \" yarn client \"",
     "converter": "cd converterJson && node converterPricesDb",
     "getprice": "cd getDb && node getDb"
   },

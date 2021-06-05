@@ -50,7 +50,7 @@ router.post('/send_price', async (req, res) => {
         }
         return res.status(200).json({"status" : "ok" })
     }catch (e) {
-        res.status(500).json({ message: ' Some error, try again'})
+        res.status(500).json({ "status": ' error'})
     }
 })
 

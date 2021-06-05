@@ -45,7 +45,7 @@ const List = ({match}) => {
                                     <InputTables item={item} />
 
 
-                                    <td>{item.stocks.coming}</td>
+                                    <td>{item.balance}</td>
 
                                     <td>
                                         <Link to={{pathname:`/product/` + item.id, model: urlName}}>

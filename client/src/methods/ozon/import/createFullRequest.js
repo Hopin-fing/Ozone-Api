@@ -2,7 +2,7 @@ import GetAttributes from "./getAttributes";
 import _ from "lodash";
 
 const example = require('./templates/requestImport.json')
-const sourceData = require('../../../data/testAlcon.json')
+const sourceData = require('../../../data/productDB/Alcon.json')
 const oxyCofData = require('../../../data/ozonData/oxygen_transmission.json')
 const optPwrData = require('../../../data/ozonData/optical_power.json')
 const radCurvatureData = require('../../../data/ozonData/radius_curvature.json')
@@ -89,20 +89,20 @@ const CreateFullRequest = () => {
 
                 let createAttrObj = (idCategory, dictionaryValueId, value) => { //Происходит добавление нового атребута в значение ключа "attributes"
                     const arrComplexValue = []
-                    if(Array.isArray(dictionaryValueId) && idCategory === 4195)  {
-                        let stringUrl = ""
-                        dictionaryValueId.forEach( (item, indexValue) => {
-                            0 === indexValue ? stringUrl += item : stringUrl += " " + item
-                        })
-                        return {
-                            "complex_id": 0,
-                            "id": idCategory,
-                            "values": [{
-                                "dictionary_value_id": 0,
-                                "value": stringUrl
-                            }]
-                        }
-                    }
+                    // if(Array.isArray(dictionaryValueId) && idCategory === 4195)  {
+                    //     let stringUrl = ""
+                    //     dictionaryValueId.forEach( (item, indexValue) => {
+                    //         0 === indexValue ? stringUrl += item : stringUrl += " " + item
+                    //     })
+                    //     return {
+                    //         "complex_id": 0,
+                    //         "id": idCategory,
+                    //         "values": [{
+                    //             "dictionary_value_id": 0,
+                    //             "value": stringUrl
+                    //         }]
+                    //     }
+                    // }
                     if(Array.isArray(dictionaryValueId))  {
 
                         dictionaryValueId.forEach( item => {
@@ -132,10 +132,6 @@ const CreateFullRequest = () => {
 
                 itemFinal.barcode = newItem.barcode
 
-                if (  newItem.barcode === "730821680654") {
-                    console.log("name ", newItem.name)
-                }
-
                 itemFinal.depth = newItem.packDepth
                 itemFinal["dimension_unit"] = newItem.packDepthUnit
                 itemFinal.height = newItem.packHeight
@@ -148,10 +144,14 @@ const CreateFullRequest = () => {
                             const arrAllImages = newItem.image["additional"]["allColors"]
                             const arrEveryImages = newItem.image["additional"][newItem.colorName]
                             if (arrAllImages){
-                                itemFinal.attributes.push(createAttrObj(4195, arrAllImages, ""))
+                                arrAllImages.forEach( item => {
+                                    itemFinal.image.push(item)
+                                })
                             }
 
-                            itemFinal.attributes.push(createAttrObj(4195, arrEveryImages, ""))
+                            arrEveryImages.forEach( item => {
+                                itemFinal.image.push(item)
+                            })
 
                             // newItem.image["additional"][newItem.colorName].forEach((element) => {
                             //     itemFinal.images.push(element)
@@ -160,24 +160,24 @@ const CreateFullRequest = () => {
 
                     }
                     if(!isColored) {
-                        // console.log("images has!!")
                         const arrAddImages = newItem.image["additional"]
-                        itemFinal.attributes.push( createAttrObj(4195, arrAddImages, ""))
 
-                        // newItem.image["additional"].forEach((element) => {
-                        //     itemFinal.images.push(element)
-                        // })
+                        arrAddImages.forEach((element) => {
+                            itemFinal.images.push(element)
+                        })
                     }
                     searchAttrById(4194).value = newItem.image["main"]
 
                 }
                 if (typeof newItem.image === "object" && "30" in newItem.image) {
                     searchAttrById(4194).value = newItem.image[newData[index].packAmount]
+                    itemFinal.images = newItem.image[newData[index].packAmount]
                 }
                 if (typeof newItem.image !== "object") {
                     itemFinal.images.push(newItem.image)
                     searchAttrById(4194).value = newItem.image
                 }
+
 
                 itemFinal.weight = newItem.packWeight
                 itemFinal.width = newItem.packWidth

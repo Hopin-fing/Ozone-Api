@@ -29,6 +29,13 @@ const productsReducer = (state = initialState, action) => {
                 pricesJournal:[],
             }
         }
+
+        case 'ADD_JOURNEY' : {
+            return {
+                ...state
+            }
+        }
+
         case 'ADD_PRODUCT_INFO': {
 
             const allItems = [...state.allItems]
@@ -37,21 +44,35 @@ const productsReducer = (state = initialState, action) => {
             action.payload.forEach(item => {
                 allItems.push(item)
                 if(!("check" in item)) {
-                    const addPurchasePrice = obj => {
-                        try{
-                           return arrPrices.find( x => x["art"].toString() === obj["offer_id"])["BuyingPrice"]
+                    const addAtrDB = obj => {
+                        try {
+
+                            const item = arrPrices.find(x => x["art"].toString() === obj["offer_id"])
+                            const buyingPrice = item["BuyingPrice"]
+                            const balance = item["count"]
+
+                            return {
+                                buyingPrice,
+                                balance,
+                            }
                         } catch (e) {
-                            return null
+                            return {
+                                buyingPrice: null,
+                                balance: null
+                            }
                         }
                     }
 
                     const isEqualName = (originalName, checkingObj) => {
+
                         const checkingName =  checkingObj.name.replace(/\/.*$/, "").trim().replace(/ /g, "_")
                         if(originalName === checkingName) {
-                            checkingObj["PurchasePrice"] = Number(addPurchasePrice(item))
+
+                            checkingObj["PurchasePrice"] = Number(addAtrDB(checkingObj)["buyingPrice"])
                             checkingObj["price"] = parseInt(checkingObj["price"])
+                            checkingObj["balance"] = Number(addAtrDB(checkingObj)["balance"])
                             checkingObj["income"] = checkingObj["price"] - checkingObj["PurchasePrice"]
-                            checkingObj["minimalPriceForIncome"] = checkingObj["PurchasePrice"] + 200
+                            checkingObj["minimalPriceForIncome"] = checkingObj["PurchasePrice"] + 170
                             checkingObj["check"] = true
                             return true
                         }
@@ -120,9 +141,6 @@ const productsReducer = (state = initialState, action) => {
 
             objAllItems.price = Number(objRequest["price"])
             objListModels.price = Number(objRequest["price"])
-
-            console.log("objAllItems.price" , objAllItems.price)
-            console.log("objListModels.price" , objListModels.price)
 
             return {
                 ...state,

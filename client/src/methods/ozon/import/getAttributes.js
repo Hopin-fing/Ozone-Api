@@ -94,8 +94,20 @@ const GetAttributes = (indexItem, sourceData) => {
         if(barcode === null) {
             return null
         }
-        return barcode.slice(-9)
+        return barcode.slice(-10)
     }
+
+    const createNewBarcode  = barcode =>{
+
+
+
+        const firstPart = barcode.slice(0, 3)
+        const secondPart = barcode.slice(-9)
+
+        return secondPart + firstPart
+    }
+
+
 
     const searchValue = (value, inputKey, outputKey,brand = null, count = false ) => {
 
@@ -146,10 +158,24 @@ const GetAttributes = (indexItem, sourceData) => {
         }
 
 
-
-
+        const changeUnitLang = (unit) => {
+            switch (unit) {
+                case "cm":
+                case "mm":
+                    return unit;
+                case "см":
+                    return "cm";
+                case "мм":
+                    return "mm"
+                default:
+                    return
+            }
+        }
         const multiplicationToMm = (unit, value) => {
             if (unit === "см" || unit === "cm" ) {
+                return value
+            }
+            if (unit === "мм" || unit === "mm" ) {
                 return value * 10
             }
         }
@@ -179,11 +205,15 @@ const GetAttributes = (indexItem, sourceData) => {
         }
 
         const searchAddition = (string) => {
-            let result = ''
+            let result = {}
             arrAddition.result.forEach(element => {
                 if(element.value === "MID") element.value = "MED"
-                if(string.includes(element.value)) result = element.id
+                if(string.includes(element.value)) result = {
+                    id: element.id,
+                    value:  element.value
+                }
             })
+
 
             return result
         }
@@ -199,18 +229,18 @@ const GetAttributes = (indexItem, sourceData) => {
 
 
 
-        const packHeightUnit = searchAttr( 'Высота упаковки', 0, "units");
+        const packHeightUnit = changeUnitLang(searchAttr( 'Высота упаковки', 0, "units"));
         const packHeight = multiplicationToMm(
             packHeightUnit,
             searchAttr( 'Высота упаковки', 0, "count"),
         );
 
-        const packDepthUnit = searchAttr( 'Глубина упаковки', 0, "units");
+        const packDepthUnit = changeUnitLang(searchAttr( 'Глубина упаковки', 0, "units"));
         const calculatePackDepth = multiplicationToMm(
             packDepthUnit,
             searchAttr( 'Глубина упаковки', 0, "count")
         )
-        const packDepth = calculatePackDepth > 50 ? 50 : calculatePackDepth
+        const packDepth = (calculatePackDepth > 5) && (packDepthUnit === "cm") ? 5 : calculatePackDepth
 
         let barcode  = sourceData[index].nomenclatures[0].variations[0].barcodes;
         let isEmpty = false
@@ -222,7 +252,8 @@ const GetAttributes = (indexItem, sourceData) => {
             isEmpty = true
         }
 
-        const article = isEmpty ? null : "100" + cleaningBarcode(barcode);
+        const article = isEmpty ? null : "10" + cleaningBarcode(barcode);
+        barcode = "LINZA" +  createNewBarcode(barcode)
 
         const price  = sourceData[index].nomenclatures[0].variations[0].addin[0].params[0].count.toString();
 
@@ -343,10 +374,14 @@ const GetAttributes = (indexItem, sourceData) => {
 
 
 
+
+
             if(isMultifocal)  {
                 const addition = searchAddition(nameOriginal)
-                objRequest.idAddition = addition
-                objRequest.name += ` ${addition}/`
+                objRequest.idAddition = addition.id
+                objRequest.name += ` ${addition.value}/`
+
+                console.log("objRequest.name", objRequest.name)
             }
             if(isColored) {
                 const colorInfo = searchColor(nameOriginal);
@@ -367,6 +402,7 @@ const GetAttributes = (indexItem, sourceData) => {
                 objRequest.lensesCYL = lensesCYL
                 if(lensesAx !== null && lensesCYL !== null) {
                     objRequest.name += ` AX:${lensesAx}/ CYL:${lensesCYL} `
+                    objRequest.flagGroup += ` AX:${lensesAx}/ CYL:${lensesCYL} `
                 }
 
 
@@ -378,6 +414,7 @@ const GetAttributes = (indexItem, sourceData) => {
                         .replace(/ \/\D*/g, "")
                     objRequest.lensesAx = lensesAx
                     objRequest.name += ` AX:${lensesAx}/`
+                    objRequest.flagGroup += ` AX:${lensesAx}/`
                 }
 
                 if(objRequest.lensesCYL === null) {
@@ -398,7 +435,6 @@ const GetAttributes = (indexItem, sourceData) => {
         }
 
     }
-    console.log("arrAllAttr", arrAllAttr)
 
     return arrAllAttr
 

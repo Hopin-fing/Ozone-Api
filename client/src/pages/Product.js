@@ -1,20 +1,21 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {getCommissions, getProduct, setLoading} from "../redux/actions/products";
 import LinkHome from "../components/LinkHome";
 import LinkList from "../components/LinkList";
 
-const Product = ({match, location}) => {
+const Product =  React.memo(function Product ({match, location}) {
 
     const dispatch = useDispatch();
     const urlId = match.params.name
 
 
 
-    const history = []
+
     const products = useSelector(({products}) => products.item);
     const data = useSelector(({products}) => products.pricesJournal);
+    const [history, setHistory] = useState( [])
     const requestCommissions = {
         "offer_id": products.offer_id,
         "product_id": products.id,
@@ -30,17 +31,24 @@ const Product = ({match, location}) => {
         dispatch(getProduct(urlId))
     }, [])
 
+
+
     useEffect(() => {
-        if(products.offer_id) dispatch(getCommissions(requestCommissions))
+        if(products.offer_id) {
+            dispatch(getCommissions(requestCommissions))
+            const objHistory = data.find( x => x.art === products.offer_id.toString())
+
+
+            const result = []
+
+            if (objHistory) objHistory.history.forEach( element => {
+                result.push(element)
+                setHistory(result)
+            })
+
+        }
+
     }, [products.offer_id])
-
-
-    const objHistory = data.find( x => x.art === products.offer_id.toString())
-
-    if (objHistory) objHistory.history.forEach( element => {
-        history.push(element)
-    })
-
 
 
     return (
@@ -51,16 +59,15 @@ const Product = ({match, location}) => {
                 <div className="col s4 text-center journal">
                     <div className="journal__wrapper">
                         <h5 className="journal__title">Журнал изменения цен</h5>
-                        {/*<ul className="collection">*/}
-                        {/*    {history.length !== 0*/}
-                        {/*    ? history.map((item, index) => {*/}
+                        <ul className="collection">
+                            {history.length !== 0
+                            ? history.map((item, index) => {
+                               return <li key={`product-history-${index}`} className="collection-item">{item.data} - {item.price} р.</li>
+                                })
+                                :  <li className="collection-item">Изменений цены не было</li>
+                            }
 
-                        {/*       return <li key={`product-history-${index}`} className="collection-item">{item.data} - {item.price} р.</li>*/}
-                        {/*        })*/}
-                        {/*        :  <li className="collection-item">Изменений цены не было</li>*/}
-                        {/*    }*/}
-
-                        {/*</ul>*/}
+                        </ul>
                     </div>
 
                 </div>
@@ -80,6 +87,6 @@ const Product = ({match, location}) => {
             </div>
         </div>
     );
-};
+});
 
 export default Product;

@@ -2,8 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 
 
-
 const Tables = ({products} ) => {
+
+    //TODO: Не изменяется минимальные цены у каждой категории при обновлении самих цен
 
     const minPrice = arrModels => {
 
