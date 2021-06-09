@@ -94,7 +94,7 @@ const GetAttributes = (indexItem, sourceData) => {
         if(barcode === null) {
             return null
         }
-        return barcode.slice(-10)
+        return barcode.slice(-9)
     }
 
     const createNewBarcode  = barcode =>{
@@ -252,7 +252,7 @@ const GetAttributes = (indexItem, sourceData) => {
             isEmpty = true
         }
 
-        const article = isEmpty ? null : "10" + cleaningBarcode(barcode);
+        const article = isEmpty ? null : "100" + cleaningBarcode(barcode);
         barcode = "LINZA" +  createNewBarcode(barcode)
 
         const price  = sourceData[index].nomenclatures[0].variations[0].addin[0].params[0].count.toString();
@@ -314,7 +314,7 @@ const GetAttributes = (indexItem, sourceData) => {
             const daysReplace  = doOzonFormat("Режим замены", searchAttr( "Режим замены"));
             const packWeight  = searchAttr( 'Вес товара с упаковкой (г)', 0, "count");
             const moistureCont  = searchAttr( 'Влагосодержание', 0, "count").toString();
-            const modelProduct = `Контактные линзы ${brand} ${name}`
+            let modelProduct = `Контактные линзы ${brand} ${name} ${radCurvature} /`
 
             const image  = searchValue(flagGroup,"flag", "img", brand, packAmount);
 
@@ -380,6 +380,7 @@ const GetAttributes = (indexItem, sourceData) => {
                 const addition = searchAddition(nameOriginal)
                 objRequest.idAddition = addition.id
                 objRequest.name += ` ${addition.value}/`
+                objRequest.modelProduct +=  ` ${addition.value}`
 
                 console.log("objRequest.name", objRequest.name)
             }
@@ -392,6 +393,7 @@ const GetAttributes = (indexItem, sourceData) => {
                 objRequest.colorName = colorName
                 objRequest.colorId = colorId
                 objRequest.colorProductNameId = arrIdColorOzon.result.find(x => x.value === colorName).id
+                objRequest.modelProduct += ` ${colorName}`
             }
             if(isForAstigmatism) {
 
@@ -400,33 +402,53 @@ const GetAttributes = (indexItem, sourceData) => {
 
                 objRequest.lensesAx = lensesAx
                 objRequest.lensesCYL = lensesCYL
+
+                const addAttrInfo = (attr, value, string) => {
+                    objRequest[attr] = value
+                    objRequest.name += ` ${string}:${value}/`
+                    objRequest.flagGroup += ` ${string}:${value}/`
+                }
+
                 if(lensesAx !== null && lensesCYL !== null) {
                     objRequest.name += ` AX:${lensesAx}/ CYL:${lensesCYL} `
                     objRequest.flagGroup += ` AX:${lensesAx}/ CYL:${lensesCYL} `
+                    objRequest.modelProduct += ` AX:${lensesAx}/ CYL:${lensesCYL} `
                 }
 
 
-
-                if(objRequest.lensesAx === null) {
+                if(objRequest.lensesAx === null && objRequest.lensesCYL !== null) {
                     lensesAx = nameOriginal
                         .replace(/^\D*\S*(?!AX:)/g, "")
                         .replace(/( CYL:\S*\s+\D*)/g, "")
                         .replace(/ \/\D*/g, "")
-                    objRequest.lensesAx = lensesAx
-                    objRequest.name += ` AX:${lensesAx}/`
-                    objRequest.flagGroup += ` AX:${lensesAx}/`
+                    addAttrInfo("lensesAx", lensesAx, "AX")
+                    objRequest.modelProduct += ` AX:${lensesAx}/`
                 }
 
-                if(objRequest.lensesCYL === null) {
-
+                if(objRequest.lensesCYL === null && objRequest.lensesAx !== null) {
                     lensesCYL = nameOriginal
                         .replace(/^\D*\S*(?!CYL:)/g, "")
                         .replace(/[^,]*$/g, "")
                         .replace(/ CYL:/g, "")
                         .replace(/,/g, "")
+                    addAttrInfo("lensesCYL", lensesCYL, "CYL")
+                    objRequest.modelProduct += ` CYL:${lensesCYL} `
 
-                    objRequest.lensesCYL = lensesCYL
-                    objRequest.name += ` CYL:${lensesCYL}/`
+                }
+                if( objRequest.lensesAx === null && objRequest.lensesCYL === null) {
+                    lensesAx = nameOriginal
+                        .replace(/^\D*\S*(?!AX:)/g, "")
+                        .replace(/( CYL:\S*\s+\D*)/g, "")
+                        .replace(/ \/\D*/g, "")
+                    addAttrInfo("lensesAx", lensesAx, "AX")
+                    lensesCYL = nameOriginal
+                        .replace(/^\D*\S*(?!CYL:)/g, "")
+                        .replace(/[^,]*$/g, "")
+                        .replace(/ CYL:/g, "")
+                        .replace(/,/g, "")
+                    addAttrInfo("lensesCYL", lensesCYL, "CYL")
+                    objRequest.modelProduct += ` AX:${lensesAx}/ CYL:${lensesCYL} `
+
                 }
 
             }

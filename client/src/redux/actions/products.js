@@ -62,6 +62,7 @@ export const importStocks = bodyRequest => async () => {
     }
     console.log("bodyRequest ", bodyRequest)
     console.log("arrResponseData ", arrResponseData)
+    if(arrResponseData.stocks.length === 0 ) return
     await sendRequestPost(url, arrResponseData).then(data => console.log(data.data))
 }
 
@@ -159,7 +160,6 @@ export const sendPrice = (bodyRequest, countRequest = "single") =>  async (dispa
             const response = await sendRequestPost(url, arrResponseData)
             arrResponseData.prices = []
             console.log(response.data)
-            // arrResponseData.prices.push(response.data.result.items)
         }
         try{
             arrResponseData.prices.push(element)

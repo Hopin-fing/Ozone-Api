@@ -35,7 +35,7 @@ const Tables = ({products} ) => {
     const maxPurchasePrice = arrModels => {
         let arrPrices = []
         arrModels.forEach(model => {
-            arrPrices.push(model["PurchasePrice"])
+            arrPrices.push(model["purchasePrice"])
         })
         return Math.max.apply(null, arrPrices)
     }

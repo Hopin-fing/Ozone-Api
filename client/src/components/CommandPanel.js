@@ -85,8 +85,8 @@ const CommandPanel = () => {
     const onOpenTables = async () => {
         try {
             dispatch(openTables())
-            // const dataPrices = await request("/api/price/get_price")
-            // dispatch(getPriceJournal(dataPrices.docs))
+            const dataPrices = await request("/api/price/get_price")
+            dispatch(getPriceJournal(dataPrices.docs))
             dispatch(fetchProductInfo(data))
 
 
@@ -95,6 +95,36 @@ const CommandPanel = () => {
         }
 
     }
+
+    const createPrice = (element, price, oldPricesJournal, pricesBody) => {
+        const priceString = price.toString()
+        const result = {
+            "offer_id": element["offer_id"],
+            "old_price": "0",
+            "premium_price": "0",
+            "price": priceString,
+            "product_id": element["id"]
+        }
+        const actualData = moment().format('MMMM Do YYYY, h:mm:ss a');
+        const elementPriceJournal = oldPricesJournal.find(x => x.art === element["offer_id"])
+        const dataObj = {
+            data : actualData,
+            price : priceString
+        }
+        const productObj = {
+            history : [dataObj],
+            art : element["offer_id"],
+            name : element["name"]
+        }
+        if (elementPriceJournal)  {
+            elementPriceJournal["history"].push(dataObj)
+            if(elementPriceJournal["history"].length > 10)  elementPriceJournal["history"] = elementPriceJournal["history"].slice(-10)
+
+        }
+        if (!elementPriceJournal) oldPricesJournal.push(productObj)
+        pricesBody.push(result)
+    }
+
 
     const handlerImportRequest = () => {
         const request = CreateFullRequest()
@@ -123,38 +153,10 @@ const CommandPanel = () => {
 
 
     const handlerSendPrices = async () => {
+
         const pricesBody = []
         const oldPricesJournal = pricesJournal
 
-
-        const createPrice = (element, price) => {
-            const priceString = price.toString()
-            const result = {
-                "offer_id": element["offer_id"],
-                "old_price": "0",
-                "premium_price": "0",
-                "price": priceString,
-                "product_id": element["id"]
-            }
-            const actualData = moment().format('MMMM Do YYYY, h:mm:ss a');
-            const elementPriceJournal = oldPricesJournal.find(x => x.art === element["offer_id"])
-            const dataObj = {
-                data : actualData,
-                price : priceString
-            }
-            const productObj = {
-                history : [dataObj],
-                art : element["offer_id"],
-                name : element["name"]
-            }
-            if (elementPriceJournal)  {
-                elementPriceJournal["history"].push(dataObj)
-                if(elementPriceJournal["history"].length > 10)  elementPriceJournal["history"] = elementPriceJournal["history"].slice(-10)
-
-            }
-            if (!elementPriceJournal) oldPricesJournal.push(productObj)
-            pricesBody.push(result)
-        }
         const addError = (item) => {
             reqLog.push(item)
             console.log('Error!')
@@ -172,33 +174,33 @@ const CommandPanel = () => {
                     return Math.round(value / 10) * 10;
                 }
                 switch (true){
-                    case (element["price"] < element["minimalPriceForIncome"]
-                        && !(element["price_index"] >= 1.6) ) :
-                        createPrice(element, element["minimalPriceForIncome"]);
+                    case (element["price"] < minimalPrice
+                        && !(element["price_index"] >= 1.06) ) :
+                        createPrice(element, minimalPrice, oldPricesJournal, pricesBody);
                         break;
-                    case (element["price_index"] > 1.7
-                        && element["price"] > element["minimalPriceForIncome"] ):
+                    case (element["price_index"] > 1.07
+                        && element["price"] > minimalPrice ):
                         newPrice -= createPercent(newPrice, 3)
                         newPrice =  round10(newPrice)
 
-                        createPrice(element, newPrice);
+                        createPrice(element, newPrice, oldPricesJournal, pricesBody);
                         break;
-                    case (element["price_index"] === 1.7
-                        && element["price"] > element["minimalPriceForIncome"] ):
+                    case (element["price_index"] === 1.07
+                        && element["price"] > minimalPrice ):
                         newPrice -= createPercent(newPrice, 2)
                         newPrice =  round10(newPrice)
-                        createPrice(element, newPrice);
+                        createPrice(element, newPrice, oldPricesJournal, pricesBody);
                         break;
                     case (element["price_index"] < 1.0):
                         newPrice +=  createPercent(newPrice, 3)
                         newPrice =  round10(newPrice)
-                        createPrice(element, newPrice);
+                        createPrice(element, newPrice, oldPricesJournal, pricesBody);
                         break;
                     case (element["price_index"] === 1.0
-                        || element["price_index"] <= 1.5):
+                        || element["price_index"] <= 1.05):
                         newPrice +=  createPercent(newPrice, 2)
                         newPrice =  round10(newPrice)
-                        createPrice(element, newPrice);
+                        createPrice(element, newPrice, oldPricesJournal, pricesBody);
                         break;
                     default:
                         return
@@ -209,40 +211,50 @@ const CommandPanel = () => {
         let reqLog = []
 
         dispatch(sendPrice(pricesBody, "allRequests"))
-        // for (let i = 0; oldPricesJournal.length > i; i++) { // Делим запрос на запросы по 150 элементов
-        //     requestJourney.push(oldPricesJournal[i])
-        //     if (requestJourney.length === 150) {
-        //         const responseServer = await request("/api/price/send_price", "POST", requestJourney)
-        //         console.log(responseServer)
-        //         if(requestJourney["status"] === "error") addError(requestJourney)
-        //         requestJourney = []
-        //     }
-        // }
-        // while(reqLog.length !== 0) {
-        //     for (const item of reqLog) {
-        //         try {
-        //             const response =  await request("/api/price/send_price", "POST", item)
-        //             if (response["status"] === "error") {
-        //                 addError(item)
-        //             }
-        //             reqLog = reqLog.slice(1)
-        //
-        //         } catch (e) {
-        //             console.log("Повторная ошибка" , e)
-        //         }
-        //     }
-        // }
+        for (let i = 0; oldPricesJournal.length > i; i++) { // Делим запрос на запросы по 150 элементов
+            requestJourney.push(oldPricesJournal[i])
+            if (requestJourney.length === 150) {
+                const responseServer = await request("/api/price/send_price", "POST", requestJourney)
+                console.log(responseServer)
+                if(requestJourney["status"] === "error") addError(requestJourney)
+                requestJourney = []
+            }
+        }
+        while(reqLog.length !== 0) {
+            for (const item of reqLog) {
+                try {
+                    const response =  await request("/api/price/send_price", "POST", item)
+                    if (response["status"] === "error") {
+                        addError(item)
+                    }
+                    reqLog = reqLog.slice(1)
+
+                } catch (e) {
+                    console.log("Повторная ошибка" , e)
+                }
+            }
+        }
         dispatch(setLoading())
-        // const responseServer = await request("/api/price/send_price", "POST", requestJourney)
+        const responseServer = await request("/api/price/send_price", "POST", requestJourney)
         dispatch(fetchProductInfo(data))
-        // console.log(responseServer)
+        console.log(responseServer)
         console.log("Запись журнала успешно закончена!")
         dispatch(endLoading())
 
 
     }
 
+    const handlerSendMinPrice = async () => {
+        const pricesBody = []
+        const oldPricesJournal = pricesJournal
+        Object.keys(listModels).forEach(item => {
+            listModels[item].forEach(element => {
+                let minimalPrice = element["minimalPriceForIncome"]
+                createPrice(element, minimalPrice, oldPricesJournal, pricesBody);
+            })
 
+        })
+    }
 
 
     return (

@@ -11,8 +11,6 @@ const Product =  React.memo(function Product ({match, location}) {
     const urlId = match.params.name
 
 
-
-
     const products = useSelector(({products}) => products.item);
     const data = useSelector(({products}) => products.pricesJournal);
     const [history, setHistory] = useState( [])
@@ -21,9 +19,6 @@ const Product =  React.memo(function Product ({match, location}) {
         "product_id": products.id,
         "sku": 0
     }
-
-
-
 
 
 
@@ -37,8 +32,6 @@ const Product =  React.memo(function Product ({match, location}) {
         if(products.offer_id) {
             dispatch(getCommissions(requestCommissions))
             const objHistory = data.find( x => x.art === products.offer_id.toString())
-
-
             const result = []
 
             if (objHistory) objHistory.history.forEach( element => {

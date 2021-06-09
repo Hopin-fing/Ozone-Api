@@ -68,11 +68,14 @@ const productsReducer = (state = initialState, action) => {
                         const checkingName =  checkingObj.name.replace(/\/.*$/, "").trim().replace(/ /g, "_")
                         if(originalName === checkingName) {
 
-                            checkingObj["PurchasePrice"] = Number(addAtrDB(checkingObj)["buyingPrice"])
-                            checkingObj["price"] = parseInt(checkingObj["price"])
+                            checkingObj["purchasePrice"] = Number(addAtrDB(checkingObj)["buyingPrice"])
+                            const purchasePrice = checkingObj["purchasePrice"]
+                            const currentPrice = parseInt(checkingObj["price"])
+                            checkingObj["price"] = currentPrice
+                            let commission = Math.ceil(20 + 45 + currentPrice/100*5 + currentPrice/100*4.4 + (currentPrice-purchasePrice)/100*3)
                             checkingObj["balance"] = Number(addAtrDB(checkingObj)["balance"])
-                            checkingObj["income"] = checkingObj["price"] - checkingObj["PurchasePrice"]
-                            checkingObj["minimalPriceForIncome"] = checkingObj["PurchasePrice"] + 170
+                            checkingObj["income"] = checkingObj["price"] - checkingObj["purchasePrice"] - commission
+                            checkingObj["minimalPriceForIncome"] = checkingObj["purchasePrice"] + commission + 150
                             checkingObj["check"] = true
                             return true
                         }

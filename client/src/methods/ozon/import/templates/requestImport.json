@@ -175,41 +175,12 @@
       ],
       "barcode": "string",
       "category_id": 17035115,
-      "complex_attributes": [
-        {
-          "attributes": [
-            {
-              "complex_id": 0,
-              "id": 0,
-              "values": [
-                {
-                  "dictionary_value_id": 0,
-                  "value": "string"
-                }
-              ]
-            }
-          ]
-        }
-      ],
       "depth": 20,
       "dimension_unit": "mm",
       "height": 60,
-      "image_group_id": "0",
       "images": [],
-      "images360": [
-        ""
-      ],
       "name": "Контактные линзы Maxima Optics Maxima контактные линзы 55 Comfort Plus 6шт / 8.6 Ежемесячные, -0.50 / 14,2 / 8.6, 6 шт.",
       "offer_id": "19342360",
-      "old_price": "",
-      "pdf_list": [
-        {
-          "index": 0,
-          "name": "string",
-          "src_url": "string"
-        }
-      ],
-      "premium_price": "string",
       "price": "1321",
       "vat": "0",
       "weight": 30,
