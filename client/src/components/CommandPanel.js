@@ -100,7 +100,9 @@ const CommandPanel = () => {
         const priceString = price.toString()
         const result = {
             "offer_id": element["offer_id"],
-            "old_price": "0",
+            "old_price": Number(element["oldPrice"]) >  priceString
+                ? element["oldPrice"]
+                : "0",
             "premium_price": "0",
             "price": priceString,
             "product_id": element["id"]
@@ -165,42 +167,43 @@ const CommandPanel = () => {
 
         Object.keys(listModels).forEach(item => {
             listModels[item].forEach(element => {
-                let newPrice = element["price"]
-                let minimalPrice = element["minimalPriceForIncome"]
+                let price = element["price"]
+                let minPrice = element["minPrice"]
+                let maxPrice = minPrice + 200
+                let priceIndex = element["price_index"]
+                let recommendedPrice = Number(parseInt(element["recommended_price"]))
                 const createPercent = (price , percent) => {
                    return Math.round((price/100) * percent)
                 }
                 const round10 = value => {
                     return Math.round(value / 10) * 10;
                 }
-                switch (true){
-                    case (element["price"] < minimalPrice
-                        && !(element["price_index"] >= 1.06) ) :
-                        createPrice(element, minimalPrice, oldPricesJournal, pricesBody);
+                switch (true) {
+                    case(priceIndex >= 1.07
+                        && minPrice === price):
                         break;
-                    case (element["price_index"] > 1.07
-                        && element["price"] > minimalPrice ):
-                        newPrice -= createPercent(newPrice, 3)
-                        newPrice =  round10(newPrice)
-
-                        createPrice(element, newPrice, oldPricesJournal, pricesBody);
+                    case (priceIndex > 1.07
+                        && price > minPrice) :
+                        if(recommendedPrice >= minPrice) createPrice(element, recommendedPrice, pricesBody);
+                        createPrice(element, minPrice, pricesBody);
                         break;
-                    case (element["price_index"] === 1.07
-                        && element["price"] > minimalPrice ):
-                        newPrice -= createPercent(newPrice, 2)
-                        newPrice =  round10(newPrice)
-                        createPrice(element, newPrice, oldPricesJournal, pricesBody);
+                    case (priceIndex === 1.07):
+                        createPrice(element, minPrice, pricesBody);
                         break;
-                    case (element["price_index"] < 1.0):
-                        newPrice +=  createPercent(newPrice, 3)
-                        newPrice =  round10(newPrice)
-                        createPrice(element, newPrice, oldPricesJournal, pricesBody);
+                    case (priceIndex >= 1
+                        && priceIndex <= 1.05):
+                        price +=  createPercent(price, 1)
+                        price =  round10(price)
+                        if(price <= maxPrice) createPrice(element, price, pricesBody);
                         break;
-                    case (element["price_index"] === 1.0
-                        || element["price_index"] <= 1.05):
-                        newPrice +=  createPercent(newPrice, 2)
-                        newPrice =  round10(newPrice)
-                        createPrice(element, newPrice, oldPricesJournal, pricesBody);
+                    case (priceIndex === 0) :
+                        minPrice += 50
+                        if(minPrice !== price) createPrice(element, minPrice, pricesBody);
+                        break;
+                    case (priceIndex < 1.0
+                        && priceIndex !== 0
+                        && recommendedPrice >= minPrice):
+                        if(recommendedPrice !== price) createPrice(element, recommendedPrice, pricesBody);
                         break;
                     default:
                         return

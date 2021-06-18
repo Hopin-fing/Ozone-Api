@@ -12,7 +12,7 @@
     "client:build": "yarn --cwd client build",
     "dev": " cross-env NODE_ENV=development concurrently \" yarn server\" \" yarn getprice\" \" yarn client \"",
     "converter": "cd converterJson && node converterPricesDb",
-    "getprice": "cd getDb && node getDb"
+    "getprice": "cd getDB && node getDb"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
