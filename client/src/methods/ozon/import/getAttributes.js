@@ -318,7 +318,7 @@ const GetAttributes = (indexItem, sourceData) => {
 
             const image  = searchValue(flagGroup,"flag", "img", brand, packAmount);
 
-            name += `  / ${optPwr}/ ${radCurvature}/` // Дополнительная информация к названию
+            name += ` , ${optPwr}/ ${radCurvature}/` // Дополнительная информация к названию
 
             const line = searchValue(flagGroup,"flag", "line");
             const idTypeAttr = searchValue(flagGroup,"flag", "typeAttr");

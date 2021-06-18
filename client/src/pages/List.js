@@ -45,7 +45,7 @@ const List = ({match}) => {
                                        price={item.price}
                                        purchasePrice={item.purchasePrice}
                                        balance={item.balance}
-                                       minimalPriceForIncome={item.minimalPriceForIncome}
+                                       minPrice={item.minPrice}
                                        url ={urlName}/>
                             )}
                             </tbody>

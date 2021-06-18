@@ -5,7 +5,7 @@ import moment from "moment";
 import {useHttp} from "../hooks/http.hook";
 import {Link} from "react-router-dom";
 
-const TabelRow = ({index, offerId, id, name, price, purchasePrice, minimalPriceForIncome, barcode, balance, url}) => {
+const TabelRow = ({index, offerId, id, name, price, purchasePrice, minPrice, barcode, balance, url}) => {
 
     const [inputActive, setInputActive] = useState( false)
     const [value, setValue] = useState(parseInt(price))
@@ -66,7 +66,7 @@ const TabelRow = ({index, offerId, id, name, price, purchasePrice, minimalPriceF
             setValue(value)
             let commission = Math.ceil(20 + 45 + value/100*5 + value/100*4.4 + (value-purchasePrice)/100*3)
 
-            minimalPriceForIncome = purchasePrice + commission
+            minPrice = purchasePrice + commission
             setInputActive( false)
 
         }
@@ -106,7 +106,7 @@ const TabelRow = ({index, offerId, id, name, price, purchasePrice, minimalPriceF
                 </td>
 
             }
-            <td>{minimalPriceForIncome}</td>
+            <td>{minPrice}</td>
             <td>{balance}</td>
 
             <td>

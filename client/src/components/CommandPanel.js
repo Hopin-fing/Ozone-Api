@@ -26,6 +26,7 @@ const CommandPanel = () => {
     const listModels = useSelector(({products}) => products.listModels);
     const pricesJournal = useSelector(({products}) => products.pricesJournal);
     const allItems = useSelector(({products}) => products.allItems);
+    const oldPricesJournal = pricesJournal
 
 
 
@@ -96,7 +97,7 @@ const CommandPanel = () => {
 
     }
 
-    const createPrice = (element, price, oldPricesJournal, pricesBody) => {
+    const createPrice = (element, price, oldPricesJournal = null, pricesBody) => {
         const priceString = price.toString()
         const result = {
             "offer_id": element["offer_id"],
@@ -179,31 +180,34 @@ const CommandPanel = () => {
                     return Math.round(value / 10) * 10;
                 }
                 switch (true) {
+                    case(minPrice > price):
+                        createPrice(element, minPrice, oldPricesJournal, pricesBody);
+                        break;
                     case(priceIndex >= 1.07
                         && minPrice === price):
                         break;
                     case (priceIndex > 1.07
                         && price > minPrice) :
-                        if(recommendedPrice >= minPrice) createPrice(element, recommendedPrice, pricesBody);
-                        createPrice(element, minPrice, pricesBody);
+                        if(recommendedPrice >= minPrice) createPrice(element, recommendedPrice, oldPricesJournal, pricesBody);
+                        createPrice(element, minPrice, oldPricesJournal, pricesBody);
                         break;
                     case (priceIndex === 1.07):
-                        createPrice(element, minPrice, pricesBody);
+                        createPrice(element, minPrice, oldPricesJournal, pricesBody);
                         break;
                     case (priceIndex >= 1
                         && priceIndex <= 1.05):
                         price +=  createPercent(price, 1)
                         price =  round10(price)
-                        if(price <= maxPrice) createPrice(element, price, pricesBody);
+                        if(price <= maxPrice) createPrice(element, price, oldPricesJournal, pricesBody);
                         break;
                     case (priceIndex === 0) :
                         minPrice += 50
-                        if(minPrice !== price) createPrice(element, minPrice, pricesBody);
+                        if(minPrice !== price) createPrice(element, minPrice, oldPricesJournal, pricesBody);
                         break;
                     case (priceIndex < 1.0
                         && priceIndex !== 0
                         && recommendedPrice >= minPrice):
-                        if(recommendedPrice !== price) createPrice(element, recommendedPrice, pricesBody);
+                        if(recommendedPrice !== price) createPrice(element, recommendedPrice, oldPricesJournal, pricesBody);
                         break;
                     default:
                         return
@@ -216,7 +220,7 @@ const CommandPanel = () => {
         dispatch(sendPrice(pricesBody, "allRequests"))
         for (let i = 0; oldPricesJournal.length > i; i++) { // Делим запрос на запросы по 150 элементов
             requestJourney.push(oldPricesJournal[i])
-            if (requestJourney.length === 150) {
+            if (requestJourney.length === 100) {
                 const responseServer = await request("/api/price/send_price", "POST", requestJourney)
                 console.log(responseServer)
                 if(requestJourney["status"] === "error") addError(requestJourney)
@@ -252,7 +256,7 @@ const CommandPanel = () => {
         const oldPricesJournal = pricesJournal
         Object.keys(listModels).forEach(item => {
             listModels[item].forEach(element => {
-                let minimalPrice = element["minimalPriceForIncome"]
+                let minimalPrice = element["minPrice"]
                 createPrice(element, minimalPrice, oldPricesJournal, pricesBody);
             })
 

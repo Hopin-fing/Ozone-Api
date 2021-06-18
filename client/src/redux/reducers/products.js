@@ -65,7 +65,7 @@ const productsReducer = (state = initialState, action) => {
 
                     const isEqualName = (originalName, checkingObj) => {
 
-                        const checkingName =  checkingObj.name.replace(/\/.*$/, "").trim().replace(/ /g, "_")
+                        const checkingName =  checkingObj.name.replace(/,.*$/, "").trim().replace(/ /g, "_")
                         if(originalName === checkingName) {
 
                             checkingObj["purchasePrice"] = Number(addAtrDB(checkingObj)["buyingPrice"])
@@ -75,13 +75,13 @@ const productsReducer = (state = initialState, action) => {
                             let commission = Math.ceil(20 + 45 + currentPrice/100*5 + currentPrice/100*4.4 + (currentPrice-purchasePrice)/100*3)
                             checkingObj["balance"] = Number(addAtrDB(checkingObj)["balance"])
                             checkingObj["income"] = checkingObj["price"] - checkingObj["purchasePrice"] - commission
-                            checkingObj["minimalPriceForIncome"] = checkingObj["purchasePrice"] + commission + 150
+                            checkingObj["minPrice"] = checkingObj["purchasePrice"] + commission + 100
                             checkingObj["check"] = true
                             return true
                         }
                         return false
                     }
-                    const name = item.name.replace(/\/.*$/, "").trim().replace(/ /g, "_")
+                    const name = item.name.replace(/,.*$/, "").trim().replace(/ /g, "_")
                     if(listModels[name]) return  listModels[name] = action.payload.filter(checkingName =>
                         isEqualName(name, checkingName ))
                         .concat(...state.listModels[name]) // сложение с предыдущим вызовом
@@ -156,7 +156,7 @@ const productsReducer = (state = initialState, action) => {
             const objWrongPrices = []
             Object.keys(state.listModels).forEach( model => {
                 state.listModels[model].forEach(product => {
-                    const minPrice = product["minimalPriceForIncome"]
+                    const minPrice = product["minPrice"]
                     const price = product["price"]
                     if (minPrice > price) objWrongPrices.push(product)
                 })
