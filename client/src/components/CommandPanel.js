@@ -3,7 +3,7 @@ import CreateFullRequest from "../methods/ozon/import/createFullRequest";
 import {useDispatch, useSelector} from "react-redux";
 import {
     endLoading,
-    fetchProductInfo, getPriceJournal,
+    getProductInfo, getPriceJournal,
     getPrices,
     importProduct, importStocks,
     openTables, resetData,
@@ -77,6 +77,7 @@ const CommandPanel = () => {
             console.log("allItems ", allItems)
             console.log("arrStocks ", arrStocks)
             dispatch(importStocks(arrStocks))
+
         }
     }, [allItems])
 
@@ -88,9 +89,7 @@ const CommandPanel = () => {
             dispatch(openTables())
             const dataPrices = await request("/api/price/get_price")
             dispatch(getPriceJournal(dataPrices.docs))
-            dispatch(fetchProductInfo(data))
-
-
+            dispatch(getProductInfo(data))
         }catch (e) {
             console.log("Ошибка :" , e)
         }
@@ -108,6 +107,7 @@ const CommandPanel = () => {
             "price": priceString,
             "product_id": element["id"]
         }
+
         const actualData = moment().format('MMMM Do YYYY, h:mm:ss a');
         const elementPriceJournal = oldPricesJournal.find(x => x.art === element["offer_id"])
         const dataObj = {
@@ -148,7 +148,8 @@ const CommandPanel = () => {
             dispatch(openTables())
             const dataPrices = await request("/api/price/get_price")
             dispatch(getPriceJournal(dataPrices.docs))
-            dispatch(fetchProductInfo(data))
+            dispatch(getProductInfo(data))
+            dispatch(endLoading(data))
         }catch (e) {
             console.log("Ошибка :" , e)
         }
@@ -165,14 +166,21 @@ const CommandPanel = () => {
             console.log('Error!')
         }
 
+        const checkOldPrices = (ozonPrice, myPrice, curPrice) => {
+            if(curPrice >= myPrice) return false
+            return !(ozonPrice.replace(/\..*$/, "") === myPrice) && ozonPrice
+        }
+
 
         Object.keys(listModels).forEach(item => {
             listModels[item].forEach(element => {
                 let price = element["price"]
                 let minPrice = element["minPrice"]
-                let maxPrice = minPrice + 200
-                let priceIndex = element["price_index"]
+                let priceIndex = Number(element["price_index"])
                 let recommendedPrice = Number(parseInt(element["recommended_price"]))
+                let maxPrice = recommendedPrice
+                    + Math.floor(recommendedPrice * 0.06)
+                const isChangeOldPrice  = checkOldPrices(element["old_price"], element["oldPrice"], price)
                 const createPercent = (price , percent) => {
                    return Math.round((price/100) * percent)
                 }
@@ -188,26 +196,45 @@ const CommandPanel = () => {
                         break;
                     case (priceIndex > 1.07
                         && price > minPrice) :
-                        if(recommendedPrice >= minPrice) createPrice(element, recommendedPrice, oldPricesJournal, pricesBody);
+                        if(recommendedPrice > minPrice) {
+                            createPrice(element, recommendedPrice, oldPricesJournal, pricesBody);
+                            break;
+                        }
                         createPrice(element, minPrice, oldPricesJournal, pricesBody);
                         break;
                     case (priceIndex === 1.07):
-                        createPrice(element, minPrice, oldPricesJournal, pricesBody);
+                        if((recommendedPrice > minPrice
+                            && recommendedPrice !== price)
+                            || isChangeOldPrice
+                        ) {
+                            createPrice(element, recommendedPrice, oldPricesJournal, pricesBody);
+                            break;
+                        }
+                        if((price !== minPrice // дополнительная проверка для предотвращения отправки с повторной информацией
+                            && recommendedPrice !== price)
+                            || isChangeOldPrice) createPrice(element, minPrice, oldPricesJournal, pricesBody);
+                        // может также отправить инфу, если изменена старая цена
                         break;
                     case (priceIndex >= 1
                         && priceIndex <= 1.05):
                         price +=  createPercent(price, 1)
                         price =  round10(price)
-                        if(price <= maxPrice) createPrice(element, price, oldPricesJournal, pricesBody);
+                        if(price <= maxPrice
+                            || isChangeOldPrice) {
+                            console.log("maxPrice", maxPrice)
+                            createPrice(element, price, oldPricesJournal, pricesBody);
+                        }
                         break;
                     case (priceIndex === 0) :
                         minPrice += 50
-                        if(minPrice !== price) createPrice(element, minPrice, oldPricesJournal, pricesBody);
+                        if(minPrice !== price
+                            || isChangeOldPrice) createPrice(element, minPrice, oldPricesJournal, pricesBody);
                         break;
-                    case (priceIndex < 1.0
+                    case (priceIndex < 1
                         && priceIndex !== 0
                         && recommendedPrice >= minPrice):
-                        if(recommendedPrice !== price) createPrice(element, recommendedPrice, oldPricesJournal, pricesBody);
+                        if(recommendedPrice !== price
+                            || isChangeOldPrice) createPrice(element, recommendedPrice, oldPricesJournal, pricesBody);
                         break;
                     default:
                         return
@@ -217,13 +244,14 @@ const CommandPanel = () => {
         let requestJourney = []
         let reqLog = []
 
+        if(pricesBody.length === 0) return console.log("Все товары уже обновлены!")
         dispatch(sendPrice(pricesBody, "allRequests"))
-        for (let i = 0; oldPricesJournal.length > i; i++) { // Делим запрос на запросы по 150 элементов
+        for (let i = 0; oldPricesJournal.length > i; i++) { // Делим запрос на запросы по 100 элементов
             requestJourney.push(oldPricesJournal[i])
             if (requestJourney.length === 100) {
                 const responseServer = await request("/api/price/send_price", "POST", requestJourney)
-                console.log(responseServer)
-                if(requestJourney["status"] === "error") addError(requestJourney)
+
+                if(responseServer["status"] === "error") addError(requestJourney)
                 requestJourney = []
             }
         }
@@ -243,24 +271,11 @@ const CommandPanel = () => {
         }
         dispatch(setLoading())
         const responseServer = await request("/api/price/send_price", "POST", requestJourney)
-        dispatch(fetchProductInfo(data))
+        dispatch(resetData())
+        dispatch(getProductInfo(data, true))
         console.log(responseServer)
         console.log("Запись журнала успешно закончена!")
         dispatch(endLoading())
-
-
-    }
-
-    const handlerSendMinPrice = async () => {
-        const pricesBody = []
-        const oldPricesJournal = pricesJournal
-        Object.keys(listModels).forEach(item => {
-            listModels[item].forEach(element => {
-                let minimalPrice = element["minPrice"]
-                createPrice(element, minimalPrice, oldPricesJournal, pricesBody);
-            })
-
-        })
     }
 
 
@@ -306,6 +321,7 @@ const CommandPanel = () => {
                     <button
                         className="purple waves-effect waves-light btn darken-3"
                         onClick={handlerTestRequest}
+                        disabled={isLoading}
 
                     >Тестовый запрос</button>
 
@@ -317,10 +333,12 @@ const CommandPanel = () => {
                     {isOpen ? <button
                         className="indigo waves-effect waves-light btn  darken-1"
                         onClick={handlerResetData}
+                        disabled={isLoading}
                     >Перезагрузить</button> :
                         <button
                             className="indigo waves-effect waves-light btn  darken-1"
                             onClick={onOpenTables}
+                            disabled={isLoading}
                         >Загрузить таблицу</button>
                     }
 

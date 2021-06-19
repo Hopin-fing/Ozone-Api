@@ -103,7 +103,6 @@ const GetAttributes = (indexItem, sourceData) => {
 
         const firstPart = barcode.slice(0, 3)
         const secondPart = barcode.slice(-9)
-
         return secondPart + firstPart
     }
 
@@ -226,9 +225,6 @@ const GetAttributes = (indexItem, sourceData) => {
 
         const description = searchAttr( 'Описание');
         const equipment = searchAttr( 'Комплектация');
-
-
-
         const packHeightUnit = changeUnitLang(searchAttr( 'Высота упаковки', 0, "units"));
         const packHeight = multiplicationToMm(
             packHeightUnit,
@@ -318,8 +314,9 @@ const GetAttributes = (indexItem, sourceData) => {
 
             const image  = searchValue(flagGroup,"flag", "img", brand, packAmount);
 
-            name += ` , ${optPwr}/ ${radCurvature}/` // Дополнительная информация к названию
+            name += `, ${optPwr}/ ${radCurvature}/` // Дополнительная информация к названию
 
+            let attrWitchName = name.replace(/\//g , "," )
             const line = searchValue(flagGroup,"flag", "line");
             const idTypeAttr = searchValue(flagGroup,"flag", "typeAttr");
             const idMaterial = searchValue(flagGroup,"flag", "idMaterial",  brand);
@@ -346,6 +343,7 @@ const GetAttributes = (indexItem, sourceData) => {
                 line,
                 brand,
                 name,
+                attrWitchName,
                 description,
                 equipment,
                 diameter,
@@ -369,11 +367,7 @@ const GetAttributes = (indexItem, sourceData) => {
                 radCurvature,
                 packAmount,
                 wearMode
-
             }
-
-
-
 
 
             if(isMultifocal)  {
@@ -381,6 +375,7 @@ const GetAttributes = (indexItem, sourceData) => {
                 objRequest.idAddition = addition.id
                 objRequest.name += ` ${addition.value}/`
                 objRequest.modelProduct +=  ` ${addition.value}`
+                objRequest.attrWitchName +=  objRequest.name.replace(/\//g , ",")
 
                 console.log("objRequest.name", objRequest.name)
             }
@@ -413,6 +408,7 @@ const GetAttributes = (indexItem, sourceData) => {
                     objRequest.name += ` AX:${lensesAx}/ CYL:${lensesCYL} `
                     objRequest.flagGroup += ` AX:${lensesAx}/ CYL:${lensesCYL} `
                     objRequest.modelProduct += ` AX:${lensesAx}/ CYL:${lensesCYL} `
+                    objRequest.attrWitchName +=  objRequest.name.replace(/\//g , ",")
                 }
 
 
@@ -423,6 +419,7 @@ const GetAttributes = (indexItem, sourceData) => {
                         .replace(/ \/\D*/g, "")
                     addAttrInfo("lensesAx", lensesAx, "AX")
                     objRequest.modelProduct += ` AX:${lensesAx}/`
+                    objRequest.attrWitchName +=  objRequest.modelProduct.replace(/\//g , ",")
                 }
 
                 if(objRequest.lensesCYL === null && objRequest.lensesAx !== null) {
@@ -433,7 +430,7 @@ const GetAttributes = (indexItem, sourceData) => {
                         .replace(/,/g, "")
                     addAttrInfo("lensesCYL", lensesCYL, "CYL")
                     objRequest.modelProduct += ` CYL:${lensesCYL} `
-
+                    objRequest.attrWitchName +=  objRequest.modelProduct.replace(/\//g , ",")
                 }
                 if( objRequest.lensesAx === null && objRequest.lensesCYL === null) {
                     lensesAx = nameOriginal
@@ -448,7 +445,7 @@ const GetAttributes = (indexItem, sourceData) => {
                         .replace(/,/g, "")
                     addAttrInfo("lensesCYL", lensesCYL, "CYL")
                     objRequest.modelProduct += ` AX:${lensesAx}/ CYL:${lensesCYL} `
-
+                    objRequest.attrWitchName +=  objRequest.modelProduct.replace(/\//g , ",")
                 }
 
             }

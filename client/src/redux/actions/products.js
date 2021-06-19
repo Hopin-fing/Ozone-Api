@@ -15,7 +15,6 @@ const sendRequestPost = async (url, body) => {
     return axios.post(url, body, {headers})
 }
 
-
 export const setLoading = () => ({
     type: 'SET_LOADING'
 })
@@ -27,7 +26,6 @@ export const endLoading = () => ({
 export const getCommissions = bodyRequest => async dispatch => {
     const url = "https://api-seller.ozon.ru/v2/product/info"
     const response = await sendRequestPost(url, bodyRequest)
-
 
     dispatch({
         type: 'GET_COMMISSIONS',
@@ -112,7 +110,7 @@ export const importProduct = bodyRequest => async dispatch => {
 }
 
 
-export const fetchProductInfo = data =>  async dispatch => {
+export const getProductInfo = (data, isNewPrice = false) => async dispatch => {
     dispatch(setLoading())
 
     const url = "https://api-seller.ozon.ru/v2/product/info/list"
@@ -125,9 +123,7 @@ export const fetchProductInfo = data =>  async dispatch => {
 
     for(const [index, element] of data.entries()) {
         if(index % 999 === 0 && index !== 0) {
-
             const response = await sendRequestPost(url, bodyRequestInfoList)
-
 
             bodyRequestInfoList.offer_id = []
             arrResponseData.push(response.data.result.items)
@@ -138,7 +134,15 @@ export const fetchProductInfo = data =>  async dispatch => {
     const response = await sendRequestPost(url, bodyRequestInfoList)
     console.log("response", response)
     arrResponseData.push(response.data.result.items)
-    dispatch(addProductInfo(arrResponseData.flat()))
+
+    if(!isNewPrice) dispatch({
+        type: 'GET_PRODUCT_INFO',
+        payload: arrResponseData.flat()
+    })
+    if(isNewPrice) dispatch({
+        type: 'GET_NEW_PRICE',
+        payload: arrResponseData.flat()
+    })
 
 }
 
@@ -151,15 +155,13 @@ export const getPrices = () => ({
 export const sendPrice = (bodyRequest, countRequest = "single") =>  async (dispatch) =>{
     dispatch(setLoading())
     const url = "https://api-seller.ozon.ru/v1/product/import/prices"
-
     const arrResponseData = {"prices" : []}
 
+    console.log("price bodyRequest", bodyRequest)
     for(const [index, element] of bodyRequest.entries()) {
         if(index % 999 === 0 && index !== 0) {
-            console.log(arrResponseData)
             const response = await sendRequestPost(url, arrResponseData)
             arrResponseData.prices = []
-            console.log(response.data)
         }
         try{
             arrResponseData.prices.push(element)
@@ -172,7 +174,6 @@ export const sendPrice = (bodyRequest, countRequest = "single") =>  async (dispa
 
     const response = await sendRequestPost(url, arrResponseData)
 
-
     if (response.data.result[0].updated) {
         dispatch({
             type: 'SEND_PRICE',
@@ -182,7 +183,6 @@ export const sendPrice = (bodyRequest, countRequest = "single") =>  async (dispa
     }
     if(countRequest === "single") dispatch(endLoading())
     if (!response.data.result[0].updated) {console.log("Что то произошло не так!")}
-
 
 
 }
@@ -212,10 +212,5 @@ export const getListModel = name =>  ({
 export const getProduct = id =>  ({
     type: 'GET_PRODUCT',
     payload: id
-})
-
-export const addProductInfo = productInfo => ({
-    type: 'ADD_PRODUCT_INFO',
-    payload: productInfo
 })
 

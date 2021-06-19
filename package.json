@@ -10,10 +10,10 @@
     "client": "yarn --cwd client start",
     "client:install": "yarn --cwd client install",
     "client:build": "yarn --cwd client build",
-    "dev": " yarn getprice && yarn env ",
+    "dev": " yarn getdbinfo && yarn env ",
     "env": " cross-env NODE_ENV=development concurrently \" yarn server\" \" yarn client \"",
     "converter": "cd converterJson && node converterPricesDb",
-    "getprice": "cd getDB && node index"
+    "getdbinfo": "cd getDB && node index"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

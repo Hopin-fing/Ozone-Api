@@ -10,6 +10,70 @@ const initialState = {
     isOpen: false
 }
 
+const addProductInfo = (allItems, listModels, data , state) => {
+
+    data.forEach(item => {
+        allItems.push(item)
+        if(!("check" in item)) {
+            const addAtrDB = obj => {
+                try {
+                    const item = arrPrices.find(x => x["art"].toString() === obj["offer_id"])
+                    const buyingPrice = item["BuyingPrice"]
+                    const balance = item["count"]
+                    const oldPrice = item["CurrentPrice"]
+
+                    return {
+                        buyingPrice,
+                        balance,
+                        oldPrice
+                    }
+                } catch (e) {
+                    return {
+                        buyingPrice: null,
+                        balance: null,
+                        oldPrice: null
+                    }
+                }
+            }
+
+            const isEqualName = (originalName, checkingObj) => {
+
+                const checkingName =  checkingObj.name.replace(/,.*$/, "").trim().replace(/ /g, "_")
+                if(originalName === checkingName) {
+
+                    checkingObj["purchasePrice"] = Number(addAtrDB(checkingObj)["buyingPrice"])
+                    const purchasePrice = checkingObj["purchasePrice"]
+                    const currentPrice = parseInt(checkingObj["price"])
+                    checkingObj["price"] = currentPrice
+                    let commission = Math.ceil(20 + 45 + currentPrice/100*5 + currentPrice/100*4.4 + (currentPrice-purchasePrice)/100*3)
+                    checkingObj["balance"] = Number(addAtrDB(checkingObj)["balance"])
+                    checkingObj["income"] = checkingObj["price"] - checkingObj["purchasePrice"] - commission
+                    checkingObj["minPrice"] = checkingObj["purchasePrice"] + commission + 100
+                    if(addAtrDB(checkingObj)["oldPrice"] !== null ) {
+                        checkingObj["oldPrice"] = checkingObj["price"] === Number(addAtrDB(checkingObj)["oldPrice"])
+                            ? null
+                            : addAtrDB(checkingObj)["oldPrice"].toString()
+                    }
+                    checkingObj["check"] = true
+                    return true
+                }
+                return false
+            }
+            const name = item.name.replace(/,.*$/, "").trim().replace(/ /g, "_")
+            if(listModels[name]) return  listModels[name] = data.filter(checkingName =>
+                isEqualName(name, checkingName ))
+                .concat(...state.listModels[name]) // сложение с предыдущим вызовом
+            listModels[name] = data.filter(checkingName => isEqualName(name, checkingName ))
+        }
+    })
+
+    return{
+        allItems,
+        listModels
+    }
+
+}
+
 const productsReducer = (state = initialState, action) => {
     switch (action.type) {
 
@@ -27,6 +91,7 @@ const productsReducer = (state = initialState, action) => {
                 listModel: {},
                 allItems: [],
                 pricesJournal:[],
+                isOpen: true
             }
         }
 
@@ -36,65 +101,28 @@ const productsReducer = (state = initialState, action) => {
             }
         }
 
-        case 'ADD_PRODUCT_INFO': {
-
+        case 'GET_PRODUCT_INFO': {
             const allItems = [...state.allItems]
             const listModels = {...state.listModels}
-
-            action.payload.forEach(item => {
-                allItems.push(item)
-                if(!("check" in item)) {
-                    const addAtrDB = obj => {
-                        try {
-
-                            const item = arrPrices.find(x => x["art"].toString() === obj["offer_id"])
-                            const buyingPrice = item["BuyingPrice"]
-                            const balance = item["count"]
-
-                            return {
-                                buyingPrice,
-                                balance,
-                            }
-                        } catch (e) {
-                            return {
-                                buyingPrice: null,
-                                balance: null
-                            }
-                        }
-                    }
-
-                    const isEqualName = (originalName, checkingObj) => {
-
-                        const checkingName =  checkingObj.name.replace(/,.*$/, "").trim().replace(/ /g, "_")
-                        if(originalName === checkingName) {
-
-                            checkingObj["purchasePrice"] = Number(addAtrDB(checkingObj)["buyingPrice"])
-                            const purchasePrice = checkingObj["purchasePrice"]
-                            const currentPrice = parseInt(checkingObj["price"])
-                            checkingObj["price"] = currentPrice
-                            let commission = Math.ceil(20 + 45 + currentPrice/100*5 + currentPrice/100*4.4 + (currentPrice-purchasePrice)/100*3)
-                            checkingObj["balance"] = Number(addAtrDB(checkingObj)["balance"])
-                            checkingObj["income"] = checkingObj["price"] - checkingObj["purchasePrice"] - commission
-                            checkingObj["minPrice"] = checkingObj["purchasePrice"] + commission + 100
-                            checkingObj["check"] = true
-                            return true
-                        }
-                        return false
-                    }
-                    const name = item.name.replace(/,.*$/, "").trim().replace(/ /g, "_")
-                    if(listModels[name]) return  listModels[name] = action.payload.filter(checkingName =>
-                        isEqualName(name, checkingName ))
-                        .concat(...state.listModels[name]) // сложение с предыдущим вызовом
-                    listModels[name] = action.payload.filter(checkingName => isEqualName(name, checkingName ))
-                }
-            })
+            const result = addProductInfo(allItems, listModels, action.payload, state)
 
             return {
                 ...state,
-                listModels,
-                allItems,
+                listModels: result.listModels,
+                allItems: result.allItems,
                 loading: false
+            }
+        }
 
+        case 'GET_NEW_PRICE': {
+            const allItems = [...state.allItems]
+            const listModels = {...state.listModels}
+            const result = addProductInfo(allItems, listModels, action.payload, state)
+
+            return {
+                ...state,
+                listModels: result.listModels,
+                allItems: result.allItems,
             }
         }
 
@@ -133,14 +161,6 @@ const productsReducer = (state = initialState, action) => {
                 const result = listModels[key].find( x => x["offer_id"] === objRequest["offer_id"])
                 if(result) objListModels = result
             }
-            // listModels.forEach(item => {
-            //     const result = item.find( x => x["id"] === objRequest["id"])
-            //     if(result) return objListModels = result
-            // })
-
-
-
-
 
             objAllItems.price = Number(objRequest["price"])
             objListModels.price = Number(objRequest["price"])
@@ -148,7 +168,8 @@ const productsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 allItems,
-                listModels
+                listModels,
+                loading: true
             }
 
 

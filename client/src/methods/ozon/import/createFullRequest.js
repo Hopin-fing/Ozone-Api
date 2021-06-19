@@ -89,20 +89,6 @@ const CreateFullRequest = () => {
 
                 let createAttrObj = (idCategory, dictionaryValueId, value) => { //Происходит добавление нового атребута в значение ключа "attributes"
                     const arrComplexValue = []
-                    // if(Array.isArray(dictionaryValueId) && idCategory === 4195)  {
-                    //     let stringUrl = ""
-                    //     dictionaryValueId.forEach( (item, indexValue) => {
-                    //         0 === indexValue ? stringUrl += item : stringUrl += " " + item
-                    //     })
-                    //     return {
-                    //         "complex_id": 0,
-                    //         "id": idCategory,
-                    //         "values": [{
-                    //             "dictionary_value_id": 0,
-                    //             "value": stringUrl
-                    //         }]
-                    //     }
-                    // }
                     if(Array.isArray(dictionaryValueId))  {
 
                         dictionaryValueId.forEach( item => {
@@ -131,7 +117,6 @@ const CreateFullRequest = () => {
                 }
 
                 itemFinal.barcode = newItem.barcode
-
                 itemFinal.depth = newItem.packDepth
                 itemFinal["dimension_unit"] = newItem.packDepthUnit
                 itemFinal.height = newItem.packHeight
@@ -185,6 +170,7 @@ const CreateFullRequest = () => {
                 itemFinal["category_id"] = newItem.typeProductId
 
                 searchAttrById(85).value = newItem.brand
+                searchAttrById(4180).value = newItem.attrWitchName
                 searchAttrById(4191).value = newItem.description
                 searchAttrById(4384).value = newItem.equipment
 
