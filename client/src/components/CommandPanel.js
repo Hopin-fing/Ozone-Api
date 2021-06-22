@@ -16,6 +16,7 @@ import moment from "moment";
 const REACT_APP_WAREHOUSE_ID_MANEJ22 = process.env.REACT_APP_WAREHOUSE_ID_MANEJ22;
 
 const data = require("../data/responseData/sourcePrices.json")
+const testBody = require("../data/testAlcon.json")
 
 const CommandPanel = () => {
 
@@ -28,9 +29,10 @@ const CommandPanel = () => {
     const allItems = useSelector(({products}) => products.allItems);
     const oldPricesJournal = pricesJournal
 
-
-
     const {request} = useHttp()
+
+    let requestJourney = []
+    let reqLog = []
 
     const bodyRequestInfoList = {
         "offer_id": [],
@@ -38,11 +40,11 @@ const CommandPanel = () => {
         "sku": []
     }
 
-    const testBody = {
-        "offer_id": "100566929009",
-        "product_id": 0,
-        "sku": 0
-    }
+    // const testBody = {
+    //     "offer_id": "100566929009",
+    //     "product_id": 0,
+    //     "sku": 0
+    // }
 
 
     const productBody = {
@@ -241,8 +243,7 @@ const CommandPanel = () => {
                 }
             })
         })
-        let requestJourney = []
-        let reqLog = []
+
 
         if(pricesBody.length === 0) return console.log("Все товары уже обновлены!")
         dispatch(sendPrice(pricesBody, "allRequests"))

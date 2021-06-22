@@ -35,7 +35,7 @@ export const getCommissions = bodyRequest => async dispatch => {
 }
 
 export const testRequest = bodyRequest => async () => {
-    const url = "https://api-seller.ozon.ru/v2/product/info"
+    const url = "https://api-seller.ozon.ru/v2/product/import"
     await sendRequestPost(url, bodyRequest).then(data => console.log(data.data))
 
 }

@@ -1,544 +1,307 @@
-[
-  {
-    "id": "438332da-ea4d-5620-9fd3-1db4c7a376e8",
-    "imtId": 14030816,
-    "userId": 0,
-    "supplierId": "632a39df-0358-5bc6-ba3d-7f209cdc049c",
-    "imtSupplierId": 0,
-    "object": "Контактные линзы",
-    "parent": "Здоровье",
-    "countryProduction": "Малайзия",
-    "supplierVendorCode": "",
-    "addin": [
-      {
-        "type": "Бренд",
-        "params": [
-          {
-            "value": "Alcon"
-          }
-        ]
-      },
-      {
-        "type": "Наименование",
-        "params": [
-          {
-            "value": "Контактные линзы для астигматизма / D:-8.00, CYL:-2.25, AX:160 / Air Optix Astigmatism HydraGlyde"
-          }
-        ]
-      },
-      {
-        "type": "Описание",
-        "params": [
-          {
-            "value": "Линзы AIR OPTIX FOR ASTIGMATISM обеспечивают комфорт и четкое зрение для людей с астигматизмом. Особая форма позволяет линзе всегда оставаться на месте, обеспечивая необходимую четкость зрения на протяжении всего срока ношения."
-          }
-        ]
-      },
-      {
-        "type": "Тнвэд",
-        "params": [
-          {
-            "value": "9001300000"
-          }
-        ]
-      },
-      {
-        "type": "Состав",
-        "params": [
-          {
-            "value": "гидрогель",
-            "count": 100,
-            "units": "%"
-          }
-        ]
-      },
-      {
-        "type": "Комплектация",
-        "params": [
-          {
-            "value": "контактные линзы"
-          }
-        ]
-      },
-      {
-        "type": "Ширина упаковки",
-        "params": [
-          {
-            "count": 10,
-            "units": "см"
-          }
-        ]
-      },
-      {
-        "type": "Количество предметов в упаковке",
-        "params": [
-          {
-            "value": "3 шт."
-          }
-        ]
-      },
-      {
-        "type": "Ось линзы",
-        "params": [
-          {
-            "value": "160"
-          }
-        ]
-      },
-      {
-        "type": "Тип линз",
-        "params": [
-          {
-            "value": "торические"
-          }
-        ]
-      },
-      {
-        "type": "Коэффициент пропускания кислорода",
-        "params": [
-          {
-            "count": 110,
-            "units": "Dk/t"
-          }
-        ]
-      },
-      {
-        "type": "Режим замены",
-        "params": [
-          {
-            "value": "1 месяц"
-          }
-        ]
-      },
-      {
-        "type": "Глубина упаковки",
-        "params": [
-          {
-            "count": 3,
-            "units": "см"
-          }
-        ]
-      },
-      {
-        "type": "Хрупкость",
-        "params": [
-          {
-            "value": "не хрупкое"
-          }
-        ]
-      },
-      {
-        "type": "Влагосодержание",
-        "params": [
-          {
-            "count": 33,
-            "units": "%"
-          }
-        ]
-      },
-      {
-        "type": "Диаметр МКЛ",
-        "params": [
-          {
-            "count": 14.5,
-            "units": "мм"
-          }
-        ]
-      },
-      {
-        "type": "Режим ношения",
-        "params": [
-          {
-            "value": "дневной"
-          }
-        ]
-      },
-      {
-        "type": "Оптическая сила",
-        "params": [
-          {
-            "value": "-8.0"
-          }
-        ]
-      },
-      {
-        "type": "Высота упаковки",
-        "params": [
-          {
-            "count": 15,
-            "units": "см"
-          }
-        ]
-      },
-      {
-        "type": "Транспортировка",
-        "params": [
-          {
-            "value": "не опасный груз"
-          }
-        ]
-      },
-      {
-        "type": "Вес товара с упаковкой (г)",
-        "params": [
-          {
-            "count": 20,
-            "units": "г"
-          }
-        ]
-      },
-      {
-        "type": "Радиус кривизны",
-        "params": [
-          {
-            "value": "8.7"
-          }
-        ]
-      },
-      {
-        "type": "Оптическая сила цилиндра",
-        "params": [
-          {
-            "value": "-2.25"
-          }
-        ]
-      }
-    ],
-    "nomenclatures": [
-      {
-        "id": "d4dbb96b-4509-4b4b-9a90-96cd72c1e09a",
-        "nmId": 18890003,
-        "vendorCode": "822079174",
-        "variations": [
-          {
-            "id": "9596a35f-0347-4143-98d6-3b63563c40ad",
-            "chrtId": 50849520,
-            "barcodes": [
-              "730822079174"
-            ],
-            "addin": [
-              {
-                "type": "Розничная цена",
-                "params": [
-                  {
-                    "count": 2190
-                  }
-                ]
-              }
-            ],
-            "errors": null
-          }
-        ],
-        "addin": [
-          {
-            "type": "Коллекция",
-            "params": [
-              {
-                "value": "Базовая коллекция"
-              }
-            ]
-          },
-          {
-            "type": "Основной цвет",
-            "params": [
-              {
-                "value": "прозрачный"
-              }
-            ]
-          },
-          {
-            "type": "Фото",
-            "params": [
-              {
-                "value": "https://img2.wildberries.ru/big/new/18890000/18890003-1.jpg"
-              },
-              {
-                "value": "https://img2.wildberries.ru/big/new/18890000/18890003-2.jpg"
-              },
-              {
-                "value": "https://img2.wildberries.ru/big/new/18890000/18890003-3.jpg"
-              },
-              {
-                "value": "https://img2.wildberries.ru/big/new/18890000/18890003-4.jpg"
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "createdAt": "2021-01-27T16:24:34Z",
-    "updatedAt": "2021-03-07T18:02:51Z",
-    "uploadID": "00000000-0000-0000-0000-000000000000"
-  },
-  {
-    "id": "bbbece5d-e515-5e74-b47f-790c1d74b0b6",
-    "imtId": 14030776,
-    "userId": 0,
-    "supplierId": "632a39df-0358-5bc6-ba3d-7f209cdc049c",
-    "imtSupplierId": 0,
-    "object": "Контактные линзы",
-    "parent": "Здоровье",
-    "countryProduction": "Малайзия",
-    "supplierVendorCode": "",
-    "addin": [
-      {
-        "type": "Бренд",
-        "params": [
-          {
-            "value": "Alcon"
-          }
-        ]
-      },
-      {
-        "type": "Наименование",
-        "params": [
-          {
-            "value": "Контактные линзы для астигматизма / D:-8.00, CYL:-0.75, AX:90 / Air Optix Astigmatism HydraGlyde"
-          }
-        ]
-      },
-      {
-        "type": "Описание",
-        "params": [
-          {
-            "value": "Линзы AIR OPTIX FOR ASTIGMATISM обеспечивают комфорт и четкое зрение для людей с астигматизмом. Особая форма позволяет линзе всегда оставаться на месте, обеспечивая необходимую четкость зрения на протяжении всего срока ношения."
-          }
-        ]
-      },
-      {
-        "type": "Тнвэд",
-        "params": [
-          {
-            "value": "9001300000"
-          }
-        ]
-      },
-      {
-        "type": "Состав",
-        "params": [
-          {
-            "value": "гидрогель",
-            "count": 100,
-            "units": "%"
-          }
-        ]
-      },
-      {
-        "type": "Комплектация",
-        "params": [
-          {
-            "value": "контактные линзы"
-          }
-        ]
-      },
-      {
-        "type": "Диаметр МКЛ",
-        "params": [
-          {
-            "count": 14.5,
-            "units": "мм"
-          }
-        ]
-      },
-      {
-        "type": "Режим ношения",
-        "params": [
-          {
-            "value": "дневной"
-          }
-        ]
-      },
-      {
-        "type": "Оптическая сила",
-        "params": [
-          {
-            "value": "-8.0"
-          }
-        ]
-      },
-      {
-        "type": "Количество предметов в упаковке",
-        "params": [
-          {
-            "value": "3 шт."
-          }
-        ]
-      },
-      {
-        "type": "Коэффициент пропускания кислорода",
-        "params": [
-          {
-            "count": 110,
-            "units": "Dk/t"
-          }
-        ]
-      },
-      {
-        "type": "Вес товара с упаковкой (г)",
-        "params": [
-          {
-            "count": 20,
-            "units": "г"
-          }
-        ]
-      },
-      {
-        "type": "Высота упаковки",
-        "params": [
-          {
-            "count": 15,
-            "units": "см"
-          }
-        ]
-      },
-      {
-        "type": "Глубина упаковки",
-        "params": [
-          {
-            "count": 3,
-            "units": "см"
-          }
-        ]
-      },
-      {
-        "type": "Радиус кривизны",
-        "params": [
-          {
-            "value": "8.7"
-          }
-        ]
-      },
-      {
-        "type": "Оптическая сила цилиндра",
-        "params": [
-          {
-            "value": "-0.75"
-          }
-        ]
-      },
-      {
-        "type": "Транспортировка",
-        "params": [
-          {
-            "value": "не опасный груз"
-          }
-        ]
-      },
-      {
-        "type": "Хрупкость",
-        "params": [
-          {
-            "value": "не хрупкое"
-          }
-        ]
-      },
-      {
-        "type": "Режим замены",
-        "params": [
-          {
-            "value": "1 месяц"
-          }
-        ]
-      },
-      {
-        "type": "Ширина упаковки",
-        "params": [
-          {
-            "count": 10,
-            "units": "см"
-          }
-        ]
-      },
-      {
-        "type": "Тип линз",
-        "params": [
-          {
-            "value": "торические"
-          }
-        ]
-      },
-      {
-        "type": "Влагосодержание",
-        "params": [
-          {
-            "count": 33,
-            "units": "%"
-          }
-        ]
-      },
-      {
-        "type": "Ось линзы",
-        "params": [
-          {
-            "value": "90"
-          }
-        ]
-      }
-    ],
-    "nomenclatures": [
-      {
-        "id": "026abc17-ff6a-4dc7-be23-a81a9c6ec905",
-        "nmId": 18889963,
-        "vendorCode": "822078566",
-        "variations": [
-          {
-            "id": "e6112b95-9fdc-4874-81fa-8e312ae818c6",
-            "chrtId": 50849480,
-            "barcodes": [
-              "730822078566"
-            ],
-            "addin": [
-              {
-                "type": "Розничная цена",
-                "params": [
-                  {
-                    "count": 2190
-                  }
-                ]
-              }
-            ],
-            "errors": null
-          }
-        ],
-        "addin": [
-          {
-            "type": "Коллекция",
-            "params": [
-              {
-                "value": "Базовая коллекция"
-              }
-            ]
-          },
-          {
-            "type": "Основной цвет",
-            "params": [
-              {
-                "value": "прозрачный"
-              }
-            ]
-          },
-          {
-            "type": "Фото",
-            "params": [
-              {
-                "value": "https://img2.wildberries.ru/big/new/18880000/18889963-1.jpg"
-              },
-              {
-                "value": "https://img2.wildberries.ru/big/new/18880000/18889963-2.jpg"
-              },
-              {
-                "value": "https://img2.wildberries.ru/big/new/18880000/18889963-3.jpg"
-              },
-              {
-                "value": "https://img2.wildberries.ru/big/new/18880000/18889963-4.jpg"
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "createdAt": "2021-01-27T16:24:34Z",
-    "updatedAt": "2021-03-07T18:34:05Z",
-    "uploadID": "00000000-0000-0000-0000-000000000000"
-  }
-]
+{
+  "items": [
+    {
+      "attributes": [
+        {
+          "complex_id": 0,
+          "id": 85,
+          "values": [
+            {
+              "dictionary_value_id": 0,
+              "value": "Alcon"
+            }
+          ]
+        },
+        {
+          "complex_id": 0,
+          "id": 4191,
+          "values": [
+            {
+              "dictionary_value_id": 0,
+              "value": "AIR OPTIX HydraGlyde Multifocal обеспечат неизменно четкое зрение для людей с пресбиопией. Вы сможете без труда читать любой мелкий текст — в меню, на экране компьютера или мобильного телефона. Благодаря технологии точного оптического профиля в одной линзе совмещены несколько зон с различной оптической силой, что обеспечивает стабильно четкое зрение на всех расстояниях. Непрерывный комфорт с 1-го по 30-й день. Пропускают в 5 раз больше кислорода через линзу по сравнению с традиционными мягкими контактными линзами. Во всех контактных линзах семейства AIR OPTIX используется технология плазменной обработки поверхности, которая обеспечивает cоздание защитного увлажняющего слоя. Это обеспечивает непрерывный комфорт в течение месяца ношения. Плавные переходы между разными оптическими силами и неизменный уровень комфорта на протяжени всего периода ношения."
+            }
+          ]
+        },
+        {
+          "complex_id": 0,
+          "id": 4180,
+          "values": [
+            {
+              "dictionary_value_id": 0,
+              "value": "Мультифокальные линзы, Alcon, AX:180, CYL:-2.25, -7.50"
+            }
+          ]
+        },
+        {
+          "id": 4194,
+          "values": [
+            {
+              "value": "http://images.vfl.ru/ii/1620915155/20f4cdfc/34440634_m.jpg"
+            }
+          ]
+        },
+        {
+          "complex_id": 0,
+          "id": 4384,
+          "values": [
+            {
+              "dictionary_value_id": 0,
+              "value": "контактные линзы"
+            }
+          ]
+        },
+        {
+          "complex_id": 0,
+          "id": 7694,
+          "values": [
+            {
+              "dictionary_value_id": 416884905,
+              "value": "1 месяц"
+            }
+          ]
+        },
+        {
+          "complex_id": 0,
+          "id": 7696,
+          "values": [
+            {
+              "dictionary_value_id": 43042,
+              "value": "Пролонгированный"
+            }
+          ]
+        },
+        {
+          "complex_id": 0,
+          "id": 7701,
+          "values": [
+            {
+              "dictionary_value_id": 81564,
+              "value": "+0.50"
+            }
+          ]
+        },
+        {
+          "complex_id": 0,
+          "id": 7702,
+          "values": [
+            {
+              "dictionary_value_id": 81102,
+              "value": "8.6"
+            }
+          ]
+        },
+        {
+          "complex_id": 0,
+          "id": 7703,
+          "values": [
+            {
+              "dictionary_value_id": 0,
+              "value": "14"
+            }
+          ]
+        },
+        {
+          "complex_id": 0,
+          "id": 7704,
+          "values": [
+            {
+              "dictionary_value_id": 45583,
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "complex_id": 0,
+          "id": 7706,
+          "values": [
+            {
+              "dictionary_value_id": 0,
+              "value": "33"
+            }
+          ]
+        },
+        {
+          "complex_id": 0,
+          "id": 7709,
+          "values": [
+            {
+              "dictionary_value_id": 45538,
+              "value": "110"
+            }
+          ]
+        },
+        {
+          "complex_id": 0,
+          "id": 8205,
+          "values": [
+            {
+              "dictionary_value_id": 0,
+              "value": "1095"
+            }
+          ]
+        },
+        {
+          "complex_id": 0,
+          "id": 8229,
+          "values": [
+            {
+              "dictionary_value_id": 34255927,
+              "value": ""
+            }
+          ]
+        },
+        {
+          "complex_id": 0,
+          "id": 9048,
+          "values": [
+            {
+              "dictionary_value_id": 0,
+              "value": "Контактные линзы Alcon Air Optix Hydraglyde Multifocal"
+            }
+          ]
+        },
+        {
+          "complex_id": 0,
+          "id": 9782,
+          "values": [
+            {
+              "dictionary_value_id": 970661099,
+              "value": "Не опасен"
+            }
+          ]
+        },
+        {
+          "complex_id": 0,
+          "id": 10289,
+          "values": [
+            {
+              "dictionary_value_id": 0,
+              "value": "Air Optix Hydraglyde Multifocal"
+            }
+          ]
+        },
+        {
+          "complex_id": 7707,
+          "id": 7707,
+          "values": [
+            {
+              "dictionary_value_id": 234888291,
+              "value": ""
+            },
+            {
+              "dictionary_value_id": 234888290,
+              "value": ""
+            }
+          ]
+        },
+        {
+          "complex_id": 0,
+          "id": 7708,
+          "values": [
+            {
+              "dictionary_value_id": 81717,
+              "value": ""
+            }
+          ]
+        },
+        {
+          "complex_id": 0,
+          "id": 9237,
+          "values": [
+            {
+              "dictionary_value_id": 34039989,
+              "value": ""
+            }
+          ]
+        },
+        {
+          "complex_id": 0,
+          "id": 7705,
+          "values": [
+            {
+              "dictionary_value_id": 30682,
+              "value": ""
+            }
+          ]
+        },
+        {
+          "complex_id": 0,
+          "id": 4389,
+          "values": [
+            {
+              "dictionary_value_id": 90339,
+              "value": ""
+            }
+          ]
+        },
+        {
+          "complex_id": 0,
+          "id": 8789,
+          "values": [
+            {
+              "dictionary_value_id": 0,
+              "value": "Регистрационное удостоверение"
+            }
+          ]
+        },
+        {
+          "complex_id": 0,
+          "id": 8790,
+          "values": [
+            {
+              "dictionary_value_id": 0,
+              "value": "http://viplinza.ru/images/cert/Alcon/AirOptixAqua,Hydraglyde,Mult-Reg.pdf"
+            }
+          ]
+        },
+        {
+          "complex_id": 0,
+          "id": 95,
+          "values": [
+            {
+              "dictionary_value_id": 0,
+              "value": "Air Optix Plus HydraGlyde Multifocal"
+            }
+          ]
+        },
+        {
+          "complex_id": 0,
+          "id": 10096,
+          "values": [
+            {
+              "dictionary_value_id": 61572,
+              "value": "Прозрачный"
+            }
+          ]
+        },
+        {
+          "complex_id": 0,
+          "id": 10097,
+          "values": [
+            {
+              "dictionary_value_id": 0,
+              "value": "Прозрачный"
+            }
+          ]
+        }
+      ],
+      "barcode": "LINZA566929689846",
+      "category_id": 17035115,
+      "depth": 5,
+      "dimension_unit": "cm",
+      "height": 5,
+      "images": [
+        "http://images.vfl.ru/ii/1620915155/20f4cdfc/34440634_m.jpg",
+        "http://images.vfl.ru/ii/1620915155/a405e2fd/34440635_m.jpg",
+        "http://images.vfl.ru/ii/1620915156/c9f997ad/34440636_m.jpg"
+      ],
+      "name": "Air Optix Hydraglyde Multifocal  / +0.50/ 8.6/ MED/",
+      "offer_id": "100566929689",
+      "price": "1460",
+      "vat": "0",
+      "weight": 30,
+      "weight_unit": "g",
+      "width": 10
+    }
+  ]
+}
