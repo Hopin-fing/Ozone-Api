@@ -5,6 +5,7 @@ const router = Router()
 
 
 router.get('/get_price', async (req, res) => {
+    console.log("catch request")
     try{
         const docs = await Price.find();
         return res.status(200).json({docs})

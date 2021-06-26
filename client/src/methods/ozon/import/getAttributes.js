@@ -3,9 +3,13 @@ import React from 'react';
 const GetAttributes = (indexItem, sourceData) => {
 
     const arrModels = require("./dataTransferAttributes/modelsInfo.json")
+    const arrNCModels = require("./dataTransferAttributes/specialModels/NeoCosmo.json")
     const arrColors = require("./dataTransferAttributes/modelsColor.json")
+    const arrOxyCof = require("./dataTransferAttributes/modelsOxyCof.json")
+    const arrPackAmount = require("./dataTransferAttributes/modelsPackAmount.json")
     const arrIdColorOzon = require("../../../data/ozonData/nameColor.json")
     const arrAddition = require("../../../data/ozonData/addition.json")
+
     const arrFlagCurrent = require("./dataTransferAttributes/modelsFlagCurrect.json")
 
     const arrAllAttr = []
@@ -33,23 +37,25 @@ const GetAttributes = (indexItem, sourceData) => {
             return result
         }
 
+        if(brand === "NeoCosmo") {
+            arrNCModels.forEach(item => {
+                //TODO: закончил писать космо в субботу тут
+            })
+        }
 
 
-
-        for (let i = 0; arrModels.length >= i; i++ ) {
+        arrModels.forEach(item => {
             try{
-                const regex = new RegExp(arrModels[i].flag)
-                if ( regex.test(string)) {
-                    return arrModels[i].flag
-                }
-            }catch (e) {
+                const regex = new RegExp(item.flag)
+                if (regex.test(string)) return item.flag
+            }catch {
                 if(brand === "Alcon" && isColoredWB === "цветные") { //В базе данных были линзы без названия модели и так к ним добавляется бренд Air Optix Colors
-
                     return "Air Optix Colors"
                 }
-               return checkFlag()
+                return checkFlag()
             }
-        }
+        })
+
 
 
 
@@ -90,17 +96,10 @@ const GetAttributes = (indexItem, sourceData) => {
     }
 
     const cleaningBarcode = (barcode) => {
-
-        if(barcode === null) {
-            return null
-        }
-        return barcode.slice(-9)
+        return barcode === null ? null : barcode.slice(-9)
     }
 
     const createNewBarcode  = barcode =>{
-
-
-
         const firstPart = barcode.slice(0, 3)
         const secondPart = barcode.slice(-9)
         return secondPart + firstPart
@@ -136,7 +135,7 @@ const GetAttributes = (indexItem, sourceData) => {
             secondIndex = 0,
             valueParam = "value") => {
 
-            const attr = sourceData[index].addin.find(x => x.type === typeAttr)
+            const attr = sourceData[index].wbCard.addin.find(x => x.type === typeAttr)
 
             try {
                 if (( attr.params[0].value === 'Acuvue for Astigmatism') && typeAttr === "Бренд") return "ACUVUE"
@@ -184,7 +183,8 @@ const GetAttributes = (indexItem, sourceData) => {
                 if(oldFormat === "00" ) {
                     return "0.00"
                 }
-                return oldFormat.replace(/(\.5$)/ , ".50" ).replace(/(\.0$)/ , ".00" );
+                if(!oldFormat.includes(".") && !oldFormat.includes(",")) return oldFormat + ".00"
+                return oldFormat.replace(/(\.5$|,5$)/ , ".50" ).replace(/(\.0$|,0$)/ , ".00" );
             }
 
             if(attr === 'Режим замены') {
@@ -197,7 +197,17 @@ const GetAttributes = (indexItem, sourceData) => {
                 return oldFormat
             }
         }
-        const typeProduct =  sourceData[index].object
+        const typeProduct =  sourceData[index].wbCard.object
+
+        const checkOxyCof = (oxyCof) => {
+            const result = arrOxyCof.find(item => item.oxyCof === oxyCof)
+            return result ? result.oxyCofOzon : oxyCof
+        }
+
+        const checkPackAmount = (article) => {
+            const result = arrPackAmount.find(item => item.art === article)
+            return result ? result.count : null
+        }
 
         const checkSolutions = (type) => {
             return type === "Растворы для контактных линз"
@@ -206,13 +216,14 @@ const GetAttributes = (indexItem, sourceData) => {
         const searchAddition = (string) => {
             let result = {}
             arrAddition.result.forEach(element => {
+                string = string.toUpperCase()
                 if(element.value === "MID") element.value = "MED"
                 if(string.includes(element.value)) result = {
                     id: element.id,
                     value:  element.value
                 }
             })
-
+            console.log("Addition ", result)
 
             return result
         }
@@ -220,7 +231,7 @@ const GetAttributes = (indexItem, sourceData) => {
         const isSolutions = checkSolutions(typeProduct)
 
 
-        const brand = searchAttr( 'Бренд').replace(/\+/ , " + " ); // Плюс добавлен для
+        let brand = searchAttr( 'Бренд').replace(/\+/ , " + " ); // Плюс добавлен для
         // именения компании Bausch+Lomb на + с отступами между словами
 
         const description = searchAttr( 'Описание');
@@ -238,7 +249,7 @@ const GetAttributes = (indexItem, sourceData) => {
         )
         const packDepth = (calculatePackDepth > 5) && (packDepthUnit === "cm") ? 5 : calculatePackDepth
 
-        let barcode  = sourceData[index].nomenclatures[0].variations[0].barcodes;
+        let barcode  = sourceData[index].wbCard.nomenclatures[0].variations[0].barcodes;
         let isEmpty = false
 
         if(barcode.length !== 0) {
@@ -251,7 +262,7 @@ const GetAttributes = (indexItem, sourceData) => {
         const article = isEmpty ? null : "100" + cleaningBarcode(barcode);
         barcode = "LINZA" +  createNewBarcode(barcode)
 
-        const price  = sourceData[index].nomenclatures[0].variations[0].addin[0].params[0].count.toString();
+        const price  = sourceData[index].wbCard.nomenclatures[0].variations[0].addin[0].params[0].count.toString();
 
         // if (isSolutions) {
         //     const name = searchAttr( 'Ключевые слова', 2,);
@@ -287,6 +298,7 @@ const GetAttributes = (indexItem, sourceData) => {
             const isColorWB = searchAttr( 'Тип линз')
             const flagGroup = searchGlobalFlag(nameOriginal, isColorWB, brand);
             let name = flagGroup;
+            brand = searchValue(flagGroup,"flag", "brand", brand) // берем точный бренд если из бд взят неверный
 
             const typeProductId = searchValue(flagGroup,"flag", "id", brand);
 
@@ -298,13 +310,18 @@ const GetAttributes = (indexItem, sourceData) => {
                 )
             );
 
-            const oxyCof = Math.floor(searchAttr( 'Коэффициент пропускания кислорода', 0, "count")).toString();
+            let oxyCof = Math.floor(searchAttr( 'Коэффициент пропускания кислорода', 0, "count")).toString();
+            oxyCof = checkOxyCof(oxyCof)
             const diameter = Math.floor(searchAttr( 'Диаметр МКЛ', 0, "count")).toString();
             const radCurvature = searchAttr( 'Радиус кривизны');
             const oldFormatOptPwr = searchAttr( 'Оптическая сила', 0)
             const optPwr = doOzonFormat("Оптическая сила", oldFormatOptPwr)
 
-            const packAmount  = searchAttr('Количество предметов в упаковке') ? searchAttr('Количество предметов в упаковке').replace(/\D/g,'') : null;
+
+
+            const packAmount  = searchAttr('Количество предметов в упаковке')
+                ? searchAttr('Количество предметов в упаковке').replace(/\D/g,'')
+                : checkPackAmount(article);
 
             const wearMode  = capitalizeFirstLetter(searchAttr( 'Режим ношения'));
             const daysReplace  = doOzonFormat("Режим замены", searchAttr( "Режим замены"));
@@ -318,7 +335,7 @@ const GetAttributes = (indexItem, sourceData) => {
 
             let attrWitchName = name.replace(/\//g , "," )
             const line = searchValue(flagGroup,"flag", "line");
-            const idTypeAttr = searchValue(flagGroup,"flag", "typeAttr");
+            const idTypeAttr = searchValue(flagGroup,"flag", "typeAttr"); //Тип линз (мультифокальные, астигматика)
             const idMaterial = searchValue(flagGroup,"flag", "idMaterial",  brand);
             const idFeatures = searchValue(flagGroup,"flag", "features",  brand);
             const idCountry = searchValue(flagGroup,"flag", "countryId",  brand);
@@ -377,7 +394,6 @@ const GetAttributes = (indexItem, sourceData) => {
                 objRequest.modelProduct +=  ` ${addition.value}`
                 objRequest.attrWitchName +=  objRequest.name.replace(/\//g , ",")
 
-                console.log("objRequest.name", objRequest.name)
             }
             if(isColored) {
                 const colorInfo = searchColor(nameOriginal);

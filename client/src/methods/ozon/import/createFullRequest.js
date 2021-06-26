@@ -23,14 +23,6 @@ const CreateFullRequest = () => {
 
     const newData = GetAttributes(sourceData.length , sourceData)
 
-    // const arrAttrId = {      Id для запросов по атрибутам оставил для справочной информации
-    //     oxyCof : 7709,
-    //     optPwr : 7701,
-    //     radCurvature : 7702,
-    //     packAmount : 7704,
-    //     wearMode : 7696,
-    //     daysReplace : 7694
-    // }
     let newIndex = 0 // добавил новый индекс для того чтобы обнулять его при достижении итемов в запросе до сотки, а исходный индекс будет с того же место перебирать элементы бд
     let numberItem = 100;
 
@@ -80,7 +72,9 @@ const CreateFullRequest = () => {
                             return (source.result.find(x => x.value === newData[index][item].trim()).id)
                         }catch (e) {
                             console.log("item: ", [item])
+                            console.log("арт: ", newItem.article)
                             console.log("index: ", [index])
+                            console.log("newItem.name ",  newItem.name)
                             console.log("newData[index][item] ",  newData[index][item])
                         }
                         return source.result.find(x => x.value === newData[index][item].trim()).id

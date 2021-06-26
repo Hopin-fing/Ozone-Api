@@ -41,9 +41,11 @@ const CommandPanel = () => {
     }
 
     // const testBody = {
-    //     "offer_id": "100566929009",
-    //     "product_id": 0,
-    //     "sku": 0
+    //     "attribute_id": 7707,
+    //     "category_id": 17035115,
+    //     "language": "DEFAULT",
+    //     "last_value_id": 0,
+    //     "limit": 50
     // }
 
 

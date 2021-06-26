@@ -1,13 +1,12 @@
 const express = require('express')
 const config = require('config')
 const mongoose = require('mongoose')
-const Price = require('./models/Price')
 
 const app = express()
 
 app.use(express.json({extended: true}))
 app.use('/api/price', require('./routes/price.routes'))
-
+app.use('/api/product', require('./routes/products.routes'))
 
 const PORT = config.get('port') || 5000
 
@@ -19,7 +18,6 @@ async function start() {
             useCreateIndex: true
         })
 
-
         app.listen(PORT, () => console.log(`App has been started on port ${PORT}...`))
 
 
@@ -30,4 +28,7 @@ async function start() {
 }
 
 start()
+
+exports.start = start
+
 

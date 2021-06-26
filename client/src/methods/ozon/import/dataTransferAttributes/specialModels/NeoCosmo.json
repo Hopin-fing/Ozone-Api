@@ -1,0 +1,15 @@
+[
+  {"flag" : "Neo Cosmo", "brand": "Neo Cosmo", "line" : "Air Optix Colors", "typeAttr" : 93515, "type" : "цветные", "typeColorLen" : 90294, "urlPdf": "http://viplinza.ru/images/cert/Alcon/AirOptixColors-Reg.pdf", "id" : 17035114, "countryId": 90299, "idMaterial" : 39094, "features": 234888291,
+    "img" : {"main": "http://images.vfl.ru/ii/1620976405/745d188d/34447620_m.jpg", "additional" : {
+      "allColors" : ["http://images.vfl.ru/ii/1620979051/3f5ff5fa/34448455_m.jpg", "http://images.vfl.ru/ii/1620979052/569522d6/34448456_m.jpg", "http://images.vfl.ru/ii/1620979052/29a99a4e/34448457_m.jpg", "http://images.vfl.ru/ii/1620979052/2d991aef/34448458_m.jpg", "http://images.vfl.ru/ii/1620979052/f2e4037d/34448459_m.jpg", "http://images.vfl.ru/ii/1620979053/7659605a/34448460_m.jpg", "http://images.vfl.ru/ii/1620979053/f9541001/34448461_m.jpg"],
+      "фиолетовый" : ["http://images.vfl.ru/ii/1620979279/f29bda8c/34448527_m.jpg"],
+      "голубой" : ["http://images.vfl.ru/ii/1620979280/558da971/34448528_m.jpg"],
+      "темно-коричневый" : ["http://images.vfl.ru/ii/1620979280/558da971/34448528_m.jpg"],
+      "темно-зеленый" : ["http://images.vfl.ru/ii/1620979280/8392bc2c/34448530_m.jpg", "http://images.vfl.ru/ii/1620979281/2379efef/34448535_m.jpg"],
+      "медь" : ["http://images.vfl.ru/ii/1620979280/af453762/34448531_m.jpg"],
+      "темно-синий" : ["http://images.vfl.ru/ii/1620979280/de7cbffa/34448532_m.jpg"],
+      "бирюзовый" : ["http://images.vfl.ru/ii/1620979280/4ad7cda2/34448533_m.jpg"],
+      "синий" : ["http://images.vfl.ru/ii/1620979280/250afad3/34448534_m.jpg"],
+      "серый" : ["http://images.vfl.ru/ii/1620979281/685d3b0d/34448536_m.jpg"]
+    }}}
+]

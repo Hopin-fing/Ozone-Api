@@ -2,25 +2,20 @@ const {Router} = require('express')
 const Product = require('../models/Product')
 const router = Router()
 
-// /api/auth/Product
 
-// router.post('/product', async (req, res) => {
-//
-//         try{
-//
-//
-//         const product  = await Product.findOne({art : 194905800696})
-//
-//         if(product) {
-//             console.log("Its work!!")
-//         }
-//
-//         await product.save()
-//
-//         res.status(201).json({message: 'Отзыв оставлен'})
-//     }catch (e) {
-//         res.status(500).json({ message: ' Some error, try again'})
-//     }
-// })
+router.post('/get_cards', async (req, res) => {
+    const result = []
+    try{
+        for(const [index,element] of req.body.entries()) {
+            const product = await Product.findOne({art_wb: Number(element)})
+            if(product) result.push(product)
+        }
+        return res.status(200).json({result})
+    }catch (e) {
+        console.log("Error message" , e)
+        res.status(500).json({ "status": ' error'})
+    }
+
+})
 
 module.exports = router

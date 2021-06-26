@@ -12,4 +12,4 @@ const prodListSchema = new Schema({
     isClone: Boolean
 })
 
-module.exports = model('Product', prodListSchema)
+module.exports = model('productslists', prodListSchema)
