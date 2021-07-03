@@ -16,7 +16,7 @@ import moment from "moment";
 const REACT_APP_WAREHOUSE_ID_MANEJ22 = process.env.REACT_APP_WAREHOUSE_ID_MANEJ22;
 
 const data = require("../data/responseData/sourcePrices.json")
-const testBody = require("../data/testAlcon.json")
+// const testBody = require("../data/testRequest.json")
 
 const CommandPanel = () => {
 
@@ -40,13 +40,13 @@ const CommandPanel = () => {
         "sku": []
     }
 
-    // const testBody = {
-    //     "attribute_id": 7707,
-    //     "category_id": 17035115,
-    //     "language": "DEFAULT",
-    //     "last_value_id": 0,
-    //     "limit": 50
-    // }
+    const testBody = {
+        "attribute_id": 7707,
+        "category_id": 17035115,
+        "language": "DEFAULT",
+        "last_value_id": 0,
+        "limit": 50
+    }
 
 
     const productBody = {
@@ -89,14 +89,14 @@ const CommandPanel = () => {
     const existListModels = Object.keys(listModels).length
 
     const onOpenTables = async () => {
+        dispatch(openTables())
         try {
-            dispatch(openTables())
             const dataPrices = await request("/api/price/get_price")
             dispatch(getPriceJournal(dataPrices.docs))
-            dispatch(getProductInfo(data))
         }catch (e) {
             console.log("Ошибка :" , e)
         }
+        dispatch(getProductInfo(data))
 
     }
 
@@ -148,15 +148,17 @@ const CommandPanel = () => {
 
     const handlerResetData = async () => {
         dispatch(resetData())
+
+        dispatch(openTables())
         try {
-            dispatch(openTables())
             const dataPrices = await request("/api/price/get_price")
             dispatch(getPriceJournal(dataPrices.docs))
-            dispatch(getProductInfo(data))
-            dispatch(endLoading(data))
         }catch (e) {
             console.log("Ошибка :" , e)
         }
+        dispatch(getProductInfo(data))
+        dispatch(endLoading(data))
+
     }
 
 

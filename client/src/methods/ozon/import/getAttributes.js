@@ -2,15 +2,17 @@ import React from 'react';
 
 const GetAttributes = (indexItem, sourceData) => {
 
-    const arrModels = require("./dataTransferAttributes/modelsInfo.json")
-    const arrNCModels = require("./dataTransferAttributes/specialModels/NeoCosmo.json")
-    const arrColors = require("./dataTransferAttributes/modelsColor.json")
-    const arrOxyCof = require("./dataTransferAttributes/modelsOxyCof.json")
-    const arrPackAmount = require("./dataTransferAttributes/modelsPackAmount.json")
+    const arrModels = require("./data/models/modelsInfo.json")
+    const arrSpecModels = {}
+    const arrSpecBrand = require("./data/models/specialModels/index.json")
+    const arrColors = require("./data/models/modelsColor.json")
+    const arrOxyCof = require("./data/models/modelsOxyCof.json")
+    const arrPackAmount = require("./data/models/modelsPackAmount.json")
     const arrIdColorOzon = require("../../../data/ozonData/nameColor.json")
     const arrAddition = require("../../../data/ozonData/addition.json")
+    arrSpecModels.NeoCosmo = require("./data/models/specialModels/NeoCosmo.json")
 
-    const arrFlagCurrent = require("./dataTransferAttributes/modelsFlagCurrect.json")
+    const arrFlagCurrent = require("./data/models/modelsFlagCurrect.json")
 
     const arrAllAttr = []
 
@@ -37,35 +39,56 @@ const GetAttributes = (indexItem, sourceData) => {
             return result
         }
 
-        if(brand === "NeoCosmo") {
-            arrNCModels.forEach(item => {
-                //TODO: закончил писать космо в субботу тут
+        if(brand === "Neo Cosmo") {
+            let result
+            arrSpecModels.NeoCosmo.forEach( item => {
+                const regex = new RegExp(item.flag)
+
+                if (regex.test(string)) result = item.flag
             })
+            return result
         }
 
 
-        arrModels.forEach(item => {
+        for (let i = 0; arrModels.length >= i; i++ ) {
             try{
-                const regex = new RegExp(item.flag)
-                if (regex.test(string)) return item.flag
-            }catch {
+                const regex = new RegExp(arrModels[i].flag)
+                if ( regex.test(string)) {
+                    return arrModels[i].flag
+                }
+            }catch (e) {
                 if(brand === "Alcon" && isColoredWB === "цветные") { //В базе данных были линзы без названия модели и так к ним добавляется бренд Air Optix Colors
+
                     return "Air Optix Colors"
                 }
                 return checkFlag()
             }
-        })
-
-
-
+        }
 
 
     }
 
-    const searchColor = (string) => {
+    const searchColor = (string, brand) => {
         try {
-            for (let i = 0; arrColors.length > i; i++) {
+            if(brand === "Neo Cosmo"){
+                let result = {
+                    color: "",
+                    id: ""
+                }
+                arrIdColorOzon.result.forEach( item => {
+                    const objColor = string.includes(" " + item.value)
+                    if(objColor) {
 
+                        result = {
+                            color: item.value,
+                            id: item.id
+                        }
+                    }
+                })
+                return result
+            }
+
+            for (let i = 0; arrColors.length > i; i++) {
 
                 const currentValue = string
                     .replace(/[ие]{2}$/g, "ий ")
@@ -73,6 +96,7 @@ const GetAttributes = (indexItem, sourceData) => {
                     .replace(/[рые]{3}$/g, "рый ")
                     .replace(/[дный]{4}$/g, "д ")
                     .toLowerCase()
+
 
 
                 if (currentValue.includes(arrColors[i].color.toLowerCase())) return {
@@ -87,6 +111,7 @@ const GetAttributes = (indexItem, sourceData) => {
 
             }
         }catch (e) {
+            console.log(e)
             console.log("color ", string)
         }
     }
@@ -108,22 +133,24 @@ const GetAttributes = (indexItem, sourceData) => {
 
 
     const searchValue = (value, inputKey, outputKey,brand = null, count = false ) => {
-
         if(brand === "Alcon" && typeof arrModels.find(x => x[inputKey] === value) === undefined) {
             value = "Air Optix Colors"
             return arrModels.find(x => x[inputKey] === value)[outputKey]
         }
         try{
-            const result = arrModels.find(x => x[inputKey] === value)[outputKey]
+            const result = brand === "Neo Cosmo"
+                ? arrSpecModels.NeoCosmo.find(x => x[inputKey] === value)[outputKey]
+                : arrModels.find(x => x[inputKey] === value)[outputKey]
+
+            if(Array.isArray(result)) return result
+            if(typeof result === "object" && !("main" in result)) return result[count]
+            return result
         } catch (e) {
             console.log(value)
             console.log(outputKey)
+            console.log(brand)
         }
 
-        const result = arrModels.find(x => x[inputKey] === value)[outputKey]
-        if(Array.isArray(result)) return result
-        if(typeof result === "object" && !("main" in result)) return result[count]
-        return result
     }
 
 
@@ -223,8 +250,6 @@ const GetAttributes = (indexItem, sourceData) => {
                     value:  element.value
                 }
             })
-            console.log("Addition ", result)
-
             return result
         }
 
@@ -233,34 +258,31 @@ const GetAttributes = (indexItem, sourceData) => {
 
         let brand = searchAttr( 'Бренд').replace(/\+/ , " + " ); // Плюс добавлен для
         // именения компании Bausch+Lomb на + с отступами между словами
-
         const description = searchAttr( 'Описание');
         const equipment = searchAttr( 'Комплектация');
         const packHeightUnit = changeUnitLang(searchAttr( 'Высота упаковки', 0, "units"));
-        const packHeight = multiplicationToMm(
+        const packHeight = Math.floor(multiplicationToMm(
             packHeightUnit,
             searchAttr( 'Высота упаковки', 0, "count"),
-        );
-
+        ));
         const packDepthUnit = changeUnitLang(searchAttr( 'Глубина упаковки', 0, "units"));
-        const calculatePackDepth = multiplicationToMm(
+        const calculatePackDepth = Math.floor(multiplicationToMm(
             packDepthUnit,
             searchAttr( 'Глубина упаковки', 0, "count")
-        )
+        ))
         const packDepth = (calculatePackDepth > 5) && (packDepthUnit === "cm") ? 5 : calculatePackDepth
 
         let barcode  = sourceData[index].wbCard.nomenclatures[0].variations[0].barcodes;
+
         let isEmpty = false
 
-        if(barcode.length !== 0) {
-            barcode = barcode[0].toString()
-        }
-        if(barcode.length === 0) {
-            isEmpty = true
-        }
+        if(barcode.length !== 0) barcode = barcode[0].toString()
+        if(barcode.length === 0) isEmpty = true
 
         const article = isEmpty ? null : "100" + cleaningBarcode(barcode);
         barcode = "LINZA" +  createNewBarcode(barcode)
+
+
 
         const price  = sourceData[index].wbCard.nomenclatures[0].variations[0].addin[0].params[0].count.toString();
 
@@ -291,15 +313,20 @@ const GetAttributes = (indexItem, sourceData) => {
         //     }
         //
         //    arrAllAttr.push(objRequest)
-        // }
+        // }`
 
         if (!isSolutions && !isEmpty) {
             const nameOriginal = searchAttr( 'Наименование');
             const isColorWB = searchAttr( 'Тип линз')
-            const flagGroup = searchGlobalFlag(nameOriginal, isColorWB, brand);
-            let name = flagGroup;
-            brand = searchValue(flagGroup,"flag", "brand", brand) // берем точный бренд если из бд взят неверный
+            const isSpecModel = arrSpecBrand.includes(brand)
+            let flagGroup = searchGlobalFlag(nameOriginal, isColorWB, brand);
+            let name = isSpecModel
+                ? nameOriginal.match(/\/(.*?)\//)[1] + ", " +  brand
+                : flagGroup;
 
+
+
+            brand = searchValue(flagGroup,"flag", "brand", brand) // берем точный бренд если из бд взят неверный
             const typeProductId = searchValue(flagGroup,"flag", "id", brand);
 
             const packWidthUnit = searchAttr( 'Ширина упаковки', 0, "units") === "см"? "cm" : null ;
@@ -331,11 +358,13 @@ const GetAttributes = (indexItem, sourceData) => {
 
             const image  = searchValue(flagGroup,"flag", "img", brand, packAmount);
 
-            name += `, ${optPwr}/ ${radCurvature}/` // Дополнительная информация к названию
+            name += isSpecModel ? `, ${searchColor(nameOriginal, brand).color}` : ""
+            name +=  `, ${optPwr}/ ${radCurvature}/` // Дополнительная информация к названию
 
             let attrWitchName = name.replace(/\//g , "," )
-            const line = searchValue(flagGroup,"flag", "line");
-            const idTypeAttr = searchValue(flagGroup,"flag", "typeAttr"); //Тип линз (мультифокальные, астигматика)
+            const line = searchValue(flagGroup,"flag", "line", brand);
+            const series = searchValue(flagGroup,"flag", "series", brand);
+            const idTypeAttr = searchValue(flagGroup,"flag", "typeAttr" ,brand); //Тип линз (мультифокальные, астигматика)
             const idMaterial = searchValue(flagGroup,"flag", "idMaterial",  brand);
             const idFeatures = searchValue(flagGroup,"flag", "features",  brand);
             const idCountry = searchValue(flagGroup,"flag", "countryId",  brand);
@@ -343,6 +372,7 @@ const GetAttributes = (indexItem, sourceData) => {
             const isColored = searchValue(flagGroup,"flag", "type",  brand) === "цветные"
             const isMultifocal = nameOriginal.includes("мультифокальные")
             const isForAstigmatism = nameOriginal.includes("астигматизм")
+
 
 
 
@@ -358,6 +388,7 @@ const GetAttributes = (indexItem, sourceData) => {
                 article,
                 urlPdf,
                 line,
+                series,
                 brand,
                 name,
                 attrWitchName,
@@ -396,15 +427,18 @@ const GetAttributes = (indexItem, sourceData) => {
 
             }
             if(isColored) {
-                const colorInfo = searchColor(nameOriginal);
+                const colorInfo = searchColor(nameOriginal, brand);
                 const colorName = colorInfo.color
                 const colorId = colorInfo.id
 
-                objRequest.typeColorLen = searchValue(flagGroup,"flag", "typeColorLen");
+                objRequest.typeColorLen = searchValue(flagGroup,"flag", "typeColorLen", brand);
                 objRequest.colorName = colorName
                 objRequest.colorId = colorId
                 objRequest.colorProductNameId = arrIdColorOzon.result.find(x => x.value === colorName).id
                 objRequest.modelProduct += ` ${colorName}`
+                isSpecModel
+                    ? objRequest.flagGroup = searchValue(flagGroup,"flag", "flagForSpec" , brand)
+                    : objRequest.flagGroup += "" // происходить замена флага для специальных массивов, тк свойства у объектов моделей разные
             }
             if(isForAstigmatism) {
 

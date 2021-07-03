@@ -1,8 +1,8 @@
 import GetAttributes from "./getAttributes";
 import _ from "lodash";
 
-const example = require('./templates/requestImport.json')
-const sourceData = require('../../../data/productDB/Alcon.json')
+const example = require('./data/templates/requestImport.json')
+const sourceData = require('../../../data/productDB/CooperVision.json')
 const oxyCofData = require('../../../data/ozonData/oxygen_transmission.json')
 const optPwrData = require('../../../data/ozonData/optical_power.json')
 const radCurvatureData = require('../../../data/ozonData/radius_curvature.json')
@@ -11,7 +11,6 @@ const wearModeData = require('../../../data/ozonData/wear_mode.json')
 const daysReplaceData = require('../../../data/ozonData/days_replace.json')
 const axData = require('../../../data/ozonData/id_ax.json')
 const cylData = require('../../../data/ozonData/id_cyl.json')
-const arrCountry = require("../../../data/ozonData/country.json")
 
 
 const CreateFullRequest = () => {
@@ -71,7 +70,7 @@ const CreateFullRequest = () => {
                         try{
                             return (source.result.find(x => x.value === newData[index][item].trim()).id)
                         }catch (e) {
-                            console.log("item: ", [item])
+                            console.log("item: ", item)
                             console.log("арт: ", newItem.article)
                             console.log("index: ", [index])
                             console.log("newItem.name ",  newItem.name)
@@ -132,9 +131,6 @@ const CreateFullRequest = () => {
                                 itemFinal.image.push(item)
                             })
 
-                            // newItem.image["additional"][newItem.colorName].forEach((element) => {
-                            //     itemFinal.images.push(element)
-                            // })
                         } catch {}
 
                     }
@@ -148,7 +144,8 @@ const CreateFullRequest = () => {
                     searchAttrById(4194).value = newItem.image["main"]
 
                 }
-                if (typeof newItem.image === "object" && "30" in newItem.image) {
+                if (typeof newItem.image === "object" &&
+                    ("30" in newItem.image || "3" in newItem.image )) {
                     searchAttrById(4194).value = newItem.image[newData[index].packAmount]
                     itemFinal.images = newItem.image[newData[index].packAmount]
                 }
@@ -168,22 +165,6 @@ const CreateFullRequest = () => {
                 searchAttrById(4191).value = newItem.description
                 searchAttrById(4384).value = newItem.equipment
 
-
-
-                // const addEveryItem = (value, idCategory, attrValue = "") => {
-                //     if(Array.isArray(value)) {
-                //         value.forEach( item => {
-                //             itemFinal.attributes.push(createAttrObj(idCategory, item, attrValue, idCategory))
-                //         })
-                //     }
-                //     if(!Array.isArray(value)) {
-                //
-                //
-                //         itemFinal.attributes.push(createAttrObj(idCategory, value, attrValue))
-                //     }
-                // }
-
-
                 if (!isSolutions) {
 
                     searchAttrById(7703).value = newItem.diameter
@@ -191,12 +172,6 @@ const CreateFullRequest = () => {
 
                     searchAttrById(9048).value = newItem.modelProduct
                     searchAttrById(10289).value = newItem.flagGroup
-
-                    // if(newItem.flagGroup === "Freshlook Colors"
-                    //     || newItem.flagGroup === "Freshlook ColorBlends"
-                    //     || newItem.flagGroup === "Freshlook Dimensions"
-                    // ) console.log("flag: ", newItem.flagGroup)
-                    //Добавление в финальный запрос значений требующий как value так и id
 
                     searchAttrById(7709).value = newData[index].oxyCof
                     searchAttrById(7709).dictionary_value_id = searchAttrByIdList('oxyCof', oxyCofData)
@@ -232,7 +207,8 @@ const CreateFullRequest = () => {
                 itemFinal.attributes.push(createAttrObj(4389,newItem.idCountry, ""))
                 itemFinal.attributes.push(createAttrObj(8789,0, "Регистрационное удостоверение"))
                 itemFinal.attributes.push(createAttrObj(8790,0, newItem.urlPdf))
-                itemFinal.attributes.push(createAttrObj(95,0, newItem.line))
+                if(newItem.line) itemFinal.attributes.push(createAttrObj(95,0, newItem.line))
+                if(newItem.series) itemFinal.attributes.push(createAttrObj(88,0, newItem.series))
 
                 if (isColored) {
                     itemFinal.attributes.push(createAttrObj(59, newItem.colorId, ""))
@@ -242,7 +218,6 @@ const CreateFullRequest = () => {
                 }
 
                 if (isForAstigmatism) {
-
                     itemFinal.attributes.push(createAttrObj(8745, searchAttrByIdList('lensesAx', axData), ""))
                     itemFinal.attributes.push(createAttrObj(8746, searchAttrByIdList('lensesCYL', cylData), ""))
                 }
