@@ -1,13 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {getListModel} from "../redux/actions/products";
 import {useDispatch, useSelector} from "react-redux";
 import LinkHome from "../components/LinkHome";
-import TabelRow from "../components/TabelRow";
+import TableRow from "../components/TableRow";
 
 const List = ({match}) => {
     const urlName = match.params.name
     const dispatch = useDispatch();
-
     dispatch(getListModel(urlName))
 
     const products = useSelector(({products}) => products.listModel);
@@ -36,7 +35,7 @@ const List = ({match}) => {
 
                             <tbody>
                             {products.map((item,index) =>
-                             <TabelRow key={`product_${index}`}
+                             <TableRow key={`product_${index}`}
                                        index={index}
                                        offerId={item.offer_id}
                                        id={item.id}
@@ -56,7 +55,10 @@ const List = ({match}) => {
                 </div>
 
             </>
-            : null}
+            : <>
+                <LinkHome/>
+                <h5>Модель не найдена</h5>
+            </>}
         </>
     )
 }

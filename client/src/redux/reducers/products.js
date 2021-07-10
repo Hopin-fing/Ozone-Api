@@ -128,9 +128,14 @@ const productsReducer = (state = initialState, action) => {
 
         case 'GET_LIST_MODEL': {
             const arrModels = []
-            state.listModels[action.payload].forEach( product => {
-                arrModels.push(product)
-            })
+            try{
+                state.listModels[action.payload].forEach( product => {
+                    arrModels.push(product)
+                })
+            }catch (e) {
+                console.log("Сообщение об ошибке:", e)
+            }
+
 
             return {
                 ...state,

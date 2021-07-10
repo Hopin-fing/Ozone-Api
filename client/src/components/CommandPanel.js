@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import CreateFullRequest from "../methods/ozon/import/createFullRequest";
 import {useDispatch, useSelector} from "react-redux";
 import {
@@ -16,7 +16,6 @@ import moment from "moment";
 const REACT_APP_WAREHOUSE_ID_MANEJ22 = process.env.REACT_APP_WAREHOUSE_ID_MANEJ22;
 
 const data = require("../data/responseData/sourcePrices.json")
-// const testBody = require("../data/testRequest.json")
 
 const CommandPanel = () => {
 
@@ -31,6 +30,9 @@ const CommandPanel = () => {
 
     const {request} = useHttp()
 
+
+    // TODO: СДЕЛАТЬ ОТПРАВКУ НА СЕРВАК ТАКЖЕ КАК И В КРОНЕ
+
     let requestJourney = []
     let reqLog = []
 
@@ -41,11 +43,6 @@ const CommandPanel = () => {
     }
 
     const testBody = {
-        "attribute_id": 7707,
-        "category_id": 17035115,
-        "language": "DEFAULT",
-        "last_value_id": 0,
-        "limit": 50
     }
 
 
@@ -102,11 +99,10 @@ const CommandPanel = () => {
 
     const createPrice = (element, price, oldPricesJournal = null, pricesBody) => {
         const priceString = price.toString()
+        const oldPrice = price + Math.round(price * (12/100))
         const result = {
             "offer_id": element["offer_id"],
-            "old_price": Number(element["oldPrice"]) >  priceString
-                ? element["oldPrice"]
-                : "0",
+            "old_price": oldPrice.toString(),
             "premium_price": "0",
             "price": priceString,
             "product_id": element["id"]

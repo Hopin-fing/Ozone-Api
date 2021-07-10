@@ -2,7 +2,7 @@ import GetAttributes from "./getAttributes";
 import _ from "lodash";
 
 const example = require('./data/templates/requestImport.json')
-const sourceData = require('../../../data/productDB/CooperVision.json')
+const sourceData = require('../../../data/productDB/Alcon.json')
 const oxyCofData = require('../../../data/ozonData/oxygen_transmission.json')
 const optPwrData = require('../../../data/ozonData/optical_power.json')
 const radCurvatureData = require('../../../data/ozonData/radius_curvature.json')
@@ -35,17 +35,12 @@ const CreateFullRequest = () => {
                 return fullRequest.items.push({})
             }
             fullRequest.items.push(_.cloneDeep(example.items[0]))
-            try{
-                let newItem = newData[index]
-
-            } catch (e) {
-                console.log(newData)
-            }
 
             let newItem = newData[index],
                 itemFinal = fullRequest.items[newIndex],
                 isSolutions = newData[index].isSolutions,
                 isColored = newData[index].isColored,
+                isSpecModel = newData[index].isSpecModel,
                 isForAstigmatism = newData[index].isForAstigmatism
 
 
@@ -115,43 +110,46 @@ const CreateFullRequest = () => {
                 itemFinal.height = newItem.packHeight
                 itemFinal.name = newItem.name
                 itemFinal.price = newItem.price
-                if (typeof newItem.image == "object" && "main" in newItem.image) { //Происходит фильтрация внутри объекта с ключом "img" в файле "modelsinfo.json"
-                    itemFinal.images.push(newItem.image["main"])
-                    if (isColored) {
+                if (typeof newItem.images == "object" && "main" in newItem.images) { //Происходит фильтрация внутри объекта с ключом "img" в файле "modelsinfo.json"
+                    itemFinal.images.push(newItem.images["main"])
+                    const arrAddImages = newItem.images["additional"]
+                    if (isColored && !isSpecModel) {
                         try {
-                            const arrAllImages = newItem.image["additional"]["allColors"]
-                            const arrEveryImages = newItem.image["additional"][newItem.colorName]
+                            const arrAllImages = arrAddImages["allColors"]
+                            const arrEveryImages = arrAddImages[newItem.colorName]
                             if (arrAllImages){
                                 arrAllImages.forEach( item => {
-                                    itemFinal.image.push(item)
+                                    itemFinal.images.push(item)
                                 })
                             }
 
                             arrEveryImages.forEach( item => {
-                                itemFinal.image.push(item)
+                                itemFinal.images.push(item)
                             })
 
-                        } catch {}
+                        } catch(e) {
+                            console.log(itemFinal.name)
+                            console.log(newItem.colorName)
+                            console.log("color error!!!!!")
+                        }
 
                     }
-                    if(!isColored) {
-                        const arrAddImages = newItem.image["additional"]
-
+                    if(!isColored || isSpecModel && arrAddImages) {
                         arrAddImages.forEach((element) => {
                             itemFinal.images.push(element)
                         })
                     }
-                    searchAttrById(4194).value = newItem.image["main"]
+                    searchAttrById(4194).value = newItem.images["main"]
 
                 }
-                if (typeof newItem.image === "object" &&
-                    ("30" in newItem.image || "3" in newItem.image )) {
-                    searchAttrById(4194).value = newItem.image[newData[index].packAmount]
-                    itemFinal.images = newItem.image[newData[index].packAmount]
+                if (typeof newItem.images === "object" &&
+                    ("30" in newItem.images || "3" in newItem.images )) {
+                    searchAttrById(4194).value = newItem.images[newData[index].packAmount]
+                    itemFinal.images = newItem.images[newData[index].packAmount]
                 }
-                if (typeof newItem.image !== "object") {
-                    itemFinal.images.push(newItem.image)
-                    searchAttrById(4194).value = newItem.image
+                if (typeof newItem.images !== "object") {
+                    itemFinal.images.push(newItem.images)
+                    searchAttrById(4194).value = newItem.images
                 }
 
 

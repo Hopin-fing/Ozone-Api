@@ -8,8 +8,8 @@ const REACT_APP_API_KEY_LENSES_COOPER = process.env.REACT_APP_API_KEY_LENSES_COO
 const REACT_APP_API_KEY_EYE_GALLERY = process.env.REACT_APP_API_KEY_EYE_GALLERY;
 
 const headers = {
-    "Client-Id": REACT_APP_CLIENT_ID_LENSES_COOPER,
-    "Api-Key" : REACT_APP_API_KEY_LENSES_COOPER,
+    "Client-Id": REACT_APP_CLIENT_ID_MY_ALCON,
+    "Api-Key" : REACT_APP_API_KEY_MY_ALCON,
     "Content-Type":"application/json",
     "Retry-After": 2000
 }
@@ -42,8 +42,8 @@ export const getCommissions = bodyRequest => async dispatch => {
 }
 
 export const testRequest = bodyRequest => async () => {
-    const url = "https://api-seller.ozon.ru/v1/categories/tree"
-    await sendRequestGet(url).then(data => console.log(data.data))
+    const url = "https://api-seller.ozon.ru/v1/report/postings/create"
+    await sendRequestPost(url, bodyRequest).then(data => console.log(data.data))
 
 }
 

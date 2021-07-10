@@ -1,4 +1,3 @@
-import React from 'react';
 
 const GetAttributes = (indexItem, sourceData) => {
 
@@ -290,7 +289,7 @@ const GetAttributes = (indexItem, sourceData) => {
         //     const name = searchAttr( 'Ключевые слова', 2,);
         //
         //     const flagGroup = searchGlobalFlag(name);
-        //     let image  = searchValue(flagGroup,"flag", "img");
+        //     let images  = searchValue(flagGroup,"flag", "img");
         //
         //     const typeProductId = searchValue(flagGroup,"flag", "id");
         //
@@ -307,7 +306,7 @@ const GetAttributes = (indexItem, sourceData) => {
         //         packDepthUnit,
         //         barcode,
         //         price,
-        //         image,
+        //         images,
         //         typeProductId
         //
         //     }
@@ -323,7 +322,6 @@ const GetAttributes = (indexItem, sourceData) => {
             let name = isSpecModel
                 ? nameOriginal.match(/\/(.*?)\//)[1] + ", " +  brand
                 : flagGroup;
-
 
 
             brand = searchValue(flagGroup,"flag", "brand", brand) // берем точный бренд если из бд взят неверный
@@ -356,10 +354,11 @@ const GetAttributes = (indexItem, sourceData) => {
             const moistureCont  = searchAttr( 'Влагосодержание', 0, "count").toString();
             let modelProduct = `Контактные линзы ${brand} ${name} ${radCurvature} /`
 
-            const image  = searchValue(flagGroup,"flag", "img", brand, packAmount);
+            const images  = searchValue(flagGroup,"flag", "img", brand, packAmount);
 
-            name += isSpecModel ? `, ${searchColor(nameOriginal, brand).color}` : ""
             name +=  `, ${optPwr}/ ${radCurvature}/` // Дополнительная информация к названию
+
+            modelProduct =  isSpecModel ?`Контактные линзы ${brand} ${radCurvature} /` : modelProduct
 
             let attrWitchName = name.replace(/\//g , "," )
             const line = searchValue(flagGroup,"flag", "line", brand);
@@ -377,6 +376,7 @@ const GetAttributes = (indexItem, sourceData) => {
 
 
             const objRequest = {
+                isSpecModel,
                 isMultifocal,
                 isForAstigmatism,
                 isSolutions,
@@ -406,7 +406,7 @@ const GetAttributes = (indexItem, sourceData) => {
                 barcode,
                 price,
                 flagGroup,
-                image,
+                images,
                 typeProductId,
                 modelProduct,
                 oxyCof,
@@ -435,7 +435,7 @@ const GetAttributes = (indexItem, sourceData) => {
                 objRequest.colorName = colorName
                 objRequest.colorId = colorId
                 objRequest.colorProductNameId = arrIdColorOzon.result.find(x => x.value === colorName).id
-                objRequest.modelProduct += ` ${colorName}`
+                objRequest.name += ` ${colorName}`
                 isSpecModel
                     ? objRequest.flagGroup = searchValue(flagGroup,"flag", "flagForSpec" , brand)
                     : objRequest.flagGroup += "" // происходить замена флага для специальных массивов, тк свойства у объектов моделей разные
@@ -499,9 +499,10 @@ const GetAttributes = (indexItem, sourceData) => {
                 }
 
             }
-
             arrAllAttr.push(objRequest)
         }
+
+
 
     }
 

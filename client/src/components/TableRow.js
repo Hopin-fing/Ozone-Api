@@ -5,7 +5,7 @@ import moment from "moment";
 import {useHttp} from "../hooks/http.hook";
 import {Link} from "react-router-dom";
 
-const TabelRow = ({index, offerId, id, name, price, purchasePrice, minPrice, barcode, balance, url}) => {
+const TableRow = ({index, offerId, id, name, price, purchasePrice, minPrice, barcode, balance, url}) => {
 
     const [inputActive, setInputActive] = useState( false)
     const [value, setValue] = useState(parseInt(price))
@@ -15,6 +15,8 @@ const TabelRow = ({index, offerId, id, name, price, purchasePrice, minPrice, bar
     const dispatch = useDispatch();
 
     const {request} = useHttp()
+
+    //TODO: Сделать чтобы при вызове второго инпута закрывался первый
 
 
     const bodyRequestPrice =  [
@@ -120,4 +122,4 @@ const TabelRow = ({index, offerId, id, name, price, purchasePrice, minPrice, bar
     )
 }
 
-export default TabelRow;
+export default TableRow;
