@@ -278,8 +278,10 @@ const GetAttributes = (indexItem, sourceData) => {
         if(barcode.length !== 0) barcode = barcode[0].toString()
         if(barcode.length === 0) isEmpty = true
 
-        const article = isEmpty ? null : "100" + cleaningBarcode(barcode);
-        barcode = "LINZA" +  createNewBarcode(barcode)
+        const article = isEmpty
+                ? null :  brand !== "Neo Cosmo"
+                ? "100" + cleaningBarcode(barcode) : cleaningBarcode(barcode);
+        barcode = brand !== "Neo Cosmo" ? "LINZA" +  createNewBarcode(barcode) : barcode
 
 
 

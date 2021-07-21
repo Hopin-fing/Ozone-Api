@@ -10,8 +10,8 @@ const REACT_APP_API_KEY_EYE_GALLERY = process.env.REACT_APP_API_KEY_EYE_GALLERY;
 const REACT_APP_API_KEY_NEOVISHEN = process.env.REACT_APP_API_KEY_NEOVISHEN;
 
 const headers = {
-    "Client-Id": REACT_APP_CLIENT_ID_LENSES_COOPER,
-    "Api-Key" : REACT_APP_API_KEY_LENSES_COOPER,
+    "Client-Id": REACT_APP_CLIENT_ID_NEOVISHEN,
+    "Api-Key" : REACT_APP_API_KEY_NEOVISHEN,
     "Content-Type":"application/json",
     "Retry-After": 2000
 }
