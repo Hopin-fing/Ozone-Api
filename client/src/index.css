@@ -21,3 +21,20 @@
     padding:  0 5px 10px;
     width: 100%;
 }
+
+.popup {
+    position: absolute;
+    height: 100vh;
+    width: 98vw;
+    left: 0;
+    top: 0;
+    background-color: rgba(0,0,0,.5);
+    cursor: pointer;
+}
+
+.active-input {
+    position: relative;
+    z-index: 1;
+    background-color: white !important;
+    border-radius: 10px !important;
+}

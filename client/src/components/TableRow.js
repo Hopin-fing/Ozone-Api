@@ -16,8 +16,6 @@ const TableRow = ({index, offerId, id, name, price, purchasePrice, minPrice, bar
 
     const {request} = useHttp()
 
-    //TODO: Сделать чтобы при вызове второго инпута закрывался первый
-
 
     const bodyRequestPrice =  [
         {
@@ -80,6 +78,10 @@ const TableRow = ({index, offerId, id, name, price, purchasePrice, minPrice, bar
         setInputActive(true)
     }
 
+    const handlerPopupExit = () => {
+        setInputActive(false)
+    }
+
     const onChangeHandler = event => {
         const result = event.target.value.replace(/[^\d]/g, "")
         setValue(result)
@@ -88,6 +90,7 @@ const TableRow = ({index, offerId, id, name, price, purchasePrice, minPrice, bar
 
     return (
         <tr >
+
             <td>{index}</td>
             <td>{offerId}</td>
             <td>{id}</td>
@@ -100,6 +103,7 @@ const TableRow = ({index, offerId, id, name, price, purchasePrice, minPrice, bar
                 : <td className="cursor-pointer" onClick={handlerInput}>
                     {inputActive
                         ? <input
+                            className={"active-input"}
                             onChange={event => onChangeHandler(event)}
                             type="text"
                             value={value}
@@ -116,6 +120,9 @@ const TableRow = ({index, offerId, id, name, price, purchasePrice, minPrice, bar
                     <i className="material-icons">chevron_right</i>
                 </Link>
             </td>
+            {inputActive ?
+                <td onClick={handlerPopupExit} className={"popup"}></td> :
+                null}
         </tr>
 
 

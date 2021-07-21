@@ -1,4 +1,5 @@
 const arrPrices = require("../../data/responseData/sourcePrices.json")
+const overPriceDB = require("../../data/responseData/overPriceBrand.json")
 
 const initialState = {
     item: {},
@@ -43,12 +44,16 @@ const addProductInfo = (allItems, listModels, data , state) => {
 
                     checkingObj["purchasePrice"] = Number(addAtrDB(checkingObj)["buyingPrice"])
                     const purchasePrice = checkingObj["purchasePrice"]
+                    const name = checkingObj["name"]
                     const currentPrice = parseInt(checkingObj["price"])
+                    const isExpensive = overPriceDB.find(item => name.includes(item))
+                    const overPrice = isExpensive ? 500  : 100
+
                     checkingObj["price"] = currentPrice
                     let commission = Math.ceil(20 + 45 + currentPrice/100*5 + currentPrice/100*4.4 + (currentPrice-purchasePrice)/100*3)
                     checkingObj["balance"] = Number(addAtrDB(checkingObj)["balance"])
                     checkingObj["income"] = checkingObj["price"] - checkingObj["purchasePrice"] - commission
-                    checkingObj["minPrice"] = checkingObj["purchasePrice"] + commission + 100
+                    checkingObj["minPrice"] = checkingObj["purchasePrice"] + commission + overPrice
                     if(addAtrDB(checkingObj)["oldPrice"] !== null ) {
                         checkingObj["oldPrice"] = checkingObj["price"] === Number(addAtrDB(checkingObj)["oldPrice"])
                             ? null

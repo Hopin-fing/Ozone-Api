@@ -13,7 +13,8 @@ import {
 import {useHttp} from "../hooks/http.hook";
 import moment from "moment";
 
-const REACT_APP_WAREHOUSE_ID_MANEJ22 = process.env.REACT_APP_WAREHOUSE_ID_MANEJ22;
+// const REACT_APP_WAREHOUSE_ID_MANEJ22 = process.env.REACT_APP_WAREHOUSE_ID_MANEJ22;
+const REACT_APP_WAREHOUSE_ID_NEO_SPB = process.env.REACT_APP_WAREHOUSE_ID_NEO_SPB;
 
 const data = require("../data/responseData/sourcePrices.json")
 
@@ -69,7 +70,7 @@ const CommandPanel = () => {
                         "product_id": productId,
                         "offer_id": offerId,
                         "stock": stock,
-                        "warehouse_id": REACT_APP_WAREHOUSE_ID_MANEJ22
+                        "warehouse_id": REACT_APP_WAREHOUSE_ID_NEO_SPB
                     }
                     if(stock !== stockOzon) arrStocks.push(result)
                 }

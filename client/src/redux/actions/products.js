@@ -3,13 +3,15 @@ import axios from "axios";
 const REACT_APP_CLIENT_ID_MY_ALCON = process.env.REACT_APP_CLIENT_ID_MY_ALCON;
 const REACT_APP_CLIENT_ID_LENSES_COOPER = process.env.REACT_APP_CLIENT_ID_LENSES_COOPER;
 const REACT_APP_CLIENT_ID_EYE_GALLERY = process.env.REACT_APP_CLIENT_ID_EYE_GALLERY;
+const REACT_APP_CLIENT_ID_NEOVISHEN = process.env.REACT_APP_CLIENT_ID_NEOVISHEN;
 const REACT_APP_API_KEY_MY_ALCON = process.env.REACT_APP_API_KEY_MY_ALCON;
 const REACT_APP_API_KEY_LENSES_COOPER = process.env.REACT_APP_API_KEY_LENSES_COOPER;
 const REACT_APP_API_KEY_EYE_GALLERY = process.env.REACT_APP_API_KEY_EYE_GALLERY;
+const REACT_APP_API_KEY_NEOVISHEN = process.env.REACT_APP_API_KEY_NEOVISHEN;
 
 const headers = {
-    "Client-Id": REACT_APP_CLIENT_ID_MY_ALCON,
-    "Api-Key" : REACT_APP_API_KEY_MY_ALCON,
+    "Client-Id": REACT_APP_CLIENT_ID_LENSES_COOPER,
+    "Api-Key" : REACT_APP_API_KEY_LENSES_COOPER,
     "Content-Type":"application/json",
     "Retry-After": 2000
 }
@@ -42,7 +44,7 @@ export const getCommissions = bodyRequest => async dispatch => {
 }
 
 export const testRequest = bodyRequest => async () => {
-    const url = "https://api-seller.ozon.ru/v1/report/postings/create"
+    const url = "https://api-seller.ozon.ru/v1/warehouse/list"
     await sendRequestPost(url, bodyRequest).then(data => console.log(data.data))
 
 }
