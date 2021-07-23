@@ -1,13 +1,11 @@
 import React from 'react';
 import CommandPanel from "../components/CommandPanel";
-import Tables from "../components/Tables";
+import Tabs from "../components/Tabs";
 import {useSelector} from "react-redux";
 
 const Home = () => {
     const loading = useSelector(({products}) => products.loading);
-    const products = useSelector(({products}) => products.listModels);
-
-
+    const productTree = useSelector(({products}) => products.productTree);
 
     return (
         <div>
@@ -23,7 +21,7 @@ const Home = () => {
 
                     </div>
                 </div>
-                : <Tables products={products}/>}
+                : <Tabs productTree={productTree}/>}
         </div>
     );
 };

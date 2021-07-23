@@ -1,7 +1,19 @@
 const {Router} = require('express')
 const Price = require('../models/Price')
+const createFullCardsWB = require("../serverMethods/getDB");
 const router = Router()
 
+
+router.get('/get_sourcePrice', async (req, res) => {
+    try{
+
+        const docs = await createFullCardsWB()
+        return res.status(200).json({docs})
+    }catch (e) {
+        res.status(500).json({ message: ' Some error, try again'})
+    }
+
+})
 
 router.get('/get_price', async (req, res) => {
     try{

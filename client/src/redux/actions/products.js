@@ -1,24 +1,26 @@
 import axios from "axios";
+import cabinetsInfo from "../../methods/clientData";
 
-const REACT_APP_CLIENT_ID_MY_ALCON = process.env.REACT_APP_CLIENT_ID_MY_ALCON;
-const REACT_APP_CLIENT_ID_LENSES_COOPER = process.env.REACT_APP_CLIENT_ID_LENSES_COOPER;
-const REACT_APP_CLIENT_ID_EYE_GALLERY = process.env.REACT_APP_CLIENT_ID_EYE_GALLERY;
-const REACT_APP_CLIENT_ID_NEOVISHEN = process.env.REACT_APP_CLIENT_ID_NEOVISHEN;
-const REACT_APP_API_KEY_MY_ALCON = process.env.REACT_APP_API_KEY_MY_ALCON;
-const REACT_APP_API_KEY_LENSES_COOPER = process.env.REACT_APP_API_KEY_LENSES_COOPER;
-const REACT_APP_API_KEY_EYE_GALLERY = process.env.REACT_APP_API_KEY_EYE_GALLERY;
-const REACT_APP_API_KEY_NEOVISHEN = process.env.REACT_APP_API_KEY_NEOVISHEN;
 
 const headers = {
-    "Client-Id": REACT_APP_CLIENT_ID_NEOVISHEN,
-    "Api-Key" : REACT_APP_API_KEY_NEOVISHEN,
+    "Client-Id": cabinetsInfo.My_Alcon.id,
+    "Api-Key" : cabinetsInfo.My_Alcon.apiKey,
     "Content-Type":"application/json",
     "Retry-After": 2000
 }
 
 
-const sendRequestPost = async (url, body) => {
-    return axios.post(url, body, {headers})
+const sendRequestPost = async (url, body, header = null) => {
+    const customHeaders = headers
+
+    if(header) {
+        customHeaders["Client-Id"] = cabinetsInfo[header].id
+        customHeaders["Api-Key"] = cabinetsInfo[header].apiKey
+    }
+
+    return header
+        ? axios.post(url, body, {headers : customHeaders})
+        : axios.post(url, body, {headers})
 }
 const sendRequestGet = async (url) => {
     return axios.get(url,{headers})
@@ -118,42 +120,69 @@ export const importProduct = bodyRequest => async dispatch => {
 
 }
 
-
 export const getProductInfo = (data, isNewPrice = false) => async dispatch => {
     dispatch(setLoading())
 
     console.log("data", data)
 
+
     const url = "https://api-seller.ozon.ru/v2/product/info/list"
-    const arrResponseData = []
+    const arrResponseData = {
+    }
     const bodyRequestInfoList = {
         "offer_id": [],
         "product_id": [],
         "sku": []
     }
+    const filterResponseData = (nameCabinet, element) => {
 
-    for(const [index, element] of data.entries()) {
-        if(index % 999 === 0 && index !== 0) {
-            const response = await sendRequestPost(url, bodyRequestInfoList)
-
-            bodyRequestInfoList.offer_id = []
-            arrResponseData.push(response.data.result.items)
-        }
-        bodyRequestInfoList.offer_id.push(element.art.toString())
+        Object.keys(arrResponseData).includes(nameCabinet)
+            ? arrResponseData[nameCabinet].push(element)
+            : arrResponseData[nameCabinet] = [element]
     }
 
-    const response = await sendRequestPost(url, bodyRequestInfoList)
-    console.log("response", response)
-    arrResponseData.push(response.data.result.items)
+    const filterCabinet = async cabinet => {
+        bodyRequestInfoList.offer_id = []
+
+        for(let [index, element] of Object.entries(data[cabinet])) {
+            index = Number(index)
+            if(index % 999 === 0 && index !== 0) {
+                // console.log("bodyRequestInfoList", bodyRequestInfoList)
+                const response = await sendRequestPost(url, bodyRequestInfoList, cabinet)
+
+                // console.log("response 999")
+
+                bodyRequestInfoList.offer_id = []
+
+
+                filterResponseData(cabinet, response.data.result.items)
+                // console.log("arrResponseData", arrResponseData)
+            }
+            bodyRequestInfoList.offer_id.push(element.art.toString())
+        }
+
+        const response = await sendRequestPost(url, bodyRequestInfoList, cabinet)
+        filterResponseData(cabinet, response.data.result.items)
+
+        // arrResponseData.push(response.data.result.items)
+
+    }
+
+    for(let i=0; Object.keys(data).length > i ; i++) {
+        await filterCabinet(Object.keys(data)[i])
+        arrResponseData[Object.keys(data)[i]] = arrResponseData[Object.keys(data)[i]].flat()
+    }
+
 
     if(!isNewPrice) dispatch({
         type: 'GET_PRODUCT_INFO',
-        payload: arrResponseData.flat()
+        payload: arrResponseData
     })
-    if(isNewPrice) dispatch({
-        type: 'GET_NEW_PRICE',
-        payload: arrResponseData.flat()
-    })
+    // if(isNewPrice) dispatch({
+    //     type: 'GET_NEW_PRICE',
+    //     payload: arrResponseData.flat()
+    // })
+
 
 }
 

@@ -16,7 +16,7 @@ import moment from "moment";
 // const REACT_APP_WAREHOUSE_ID_MANEJ22 = process.env.REACT_APP_WAREHOUSE_ID_MANEJ22;
 const REACT_APP_WAREHOUSE_ID_NEO_SPB = process.env.REACT_APP_WAREHOUSE_ID_NEO_SPB;
 
-const data = require("../data/responseData/sourcePrices.json")
+// const data = require("../data/responseData/sourcePrices.json")
 
 const CommandPanel = () => {
 
@@ -24,7 +24,7 @@ const CommandPanel = () => {
 
     const isOpen = useSelector(({products}) => products.isOpen);
     const isLoading = useSelector(({products}) => products.loading);
-    const listModels = useSelector(({products}) => products.listModels);
+    const productTree = useSelector(({products}) => products.productTree);
     const pricesJournal = useSelector(({products}) => products.pricesJournal);
     const allItems = useSelector(({products}) => products.allItems);
     const oldPricesJournal = pricesJournal
@@ -84,17 +84,21 @@ const CommandPanel = () => {
     }, [allItems])
 
 
-    const existListModels = Object.keys(listModels).length
+    const existProductTree = Object.keys(productTree).length
 
     const onOpenTables = async () => {
         dispatch(openTables())
         try {
-            const dataPrices = await request("/api/price/get_price")
-            dispatch(getPriceJournal(dataPrices.docs))
+            const dataSourcePrice = await request("/api/price/get_sourcePrice")
+            // console.log(".docs", dataSourcePrice.docs)
+            // const dataPrices = await request("/api/price/get_price")
+            // console.log("dataPrices", dataPrices)
+            // dispatch(getPriceJournal(dataPrices.docs))
+            dispatch(getProductInfo(dataSourcePrice.docs))
         }catch (e) {
             console.log("Ошибка :" , e)
         }
-        dispatch(getProductInfo(data))
+
 
     }
 
@@ -146,15 +150,15 @@ const CommandPanel = () => {
     const handlerResetData = async () => {
         dispatch(resetData())
 
-        dispatch(openTables())
-        try {
-            const dataPrices = await request("/api/price/get_price")
-            dispatch(getPriceJournal(dataPrices.docs))
-        }catch (e) {
-            console.log("Ошибка :" , e)
-        }
-        dispatch(getProductInfo(data))
-        dispatch(endLoading(data))
+        // dispatch(openTables())
+        // try {
+        //     const dataPrices = await request("/api/price/get_price")
+        //     dispatch(getPriceJournal(dataPrices.docs))
+        // }catch (e) {
+        //     console.log("Ошибка :" , e)
+        // }
+        // dispatch(getProductInfo(data))
+        // dispatch(endLoading(data))
 
     }
 
@@ -175,8 +179,8 @@ const CommandPanel = () => {
         }
 
 
-        Object.keys(listModels).forEach(item => {
-            listModels[item].forEach(element => {
+        Object.keys(productTree).forEach(item => {
+            productTree[item].forEach(element => {
                 let price = element["price"]
                 let minPrice = element["minPrice"]
                 let priceIndex = Number(element["price_index"])
@@ -274,7 +278,7 @@ const CommandPanel = () => {
         dispatch(setLoading())
         const responseServer = await request("/api/price/send_price", "POST", requestJourney)
         dispatch(resetData())
-        dispatch(getProductInfo(data, true))
+        // dispatch(getProductInfo(data, true))
         console.log(responseServer)
         console.log("Запись журнала успешно закончена!")
         dispatch(endLoading())
@@ -292,8 +296,8 @@ const CommandPanel = () => {
                     <button
                         className="green waves-effect waves-light btn darken-3"
                         onClick={handlerImportRequest}
-                        disabled={isLoading}
-                        // disabled={true}
+                        // disabled={isLoading}
+                        disabled={true}
 
                     >Импортировать товары</button>
 
@@ -303,7 +307,7 @@ const CommandPanel = () => {
                     <button
                         className="orange waves-effect waves-light btn darken-3"
                         onClick={handlerGetPrices}
-                        disabled={!existListModels || isLoading}
+                        disabled={!existProductTree || isLoading}
 
                     >Получить информацию о неправильных ценах</button>
 
@@ -313,7 +317,7 @@ const CommandPanel = () => {
                     <button
                         className="yellow waves-effect waves-light btn darken-3"
                         onClick={handlerSendPrices}
-                        disabled={!existListModels || isLoading}
+                        disabled={!existProductTree || isLoading}
 
                     >Отправить новую цену</button>
 

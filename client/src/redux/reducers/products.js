@@ -3,7 +3,7 @@ const overPriceDB = require("../../data/responseData/overPriceBrand.json")
 
 const initialState = {
     item: {},
-    listModels: [],
+    productTree: [],
     listModel: {},
     allItems: [],
     pricesJournal:[],
@@ -11,70 +11,79 @@ const initialState = {
     isOpen: false
 }
 
-const addProductInfo = (allItems, listModels, data , state) => {
+const addProductInfo = (allItems, productTree, data , state) => {
 
-    data.forEach(item => {
-        allItems.push(item)
-        if(!("check" in item)) {
-            const addAtrDB = obj => {
-                try {
-                    const item = arrPrices.find(x => x["art"].toString() === obj["offer_id"])
-                    const buyingPrice = item["BuyingPrice"]
-                    const balance = item["count"]
-                    const oldPrice = item["CurrentPrice"]
+    const filterData = nameCabinet => {
+        data[nameCabinet].forEach(item => {
+            allItems.push(item)
+            if(!("check" in item)) {
+                const addAtrDB = obj => {
+                    try {
+                        const item = arrPrices.find(x => x["art"].toString() === obj["offer_id"])
+                        const buyingPrice = item["BuyingPrice"]
+                        const balance = item["count"]
+                        const oldPrice = item["CurrentPrice"]
 
-                    return {
-                        buyingPrice,
-                        balance,
-                        oldPrice
-                    }
-                } catch (e) {
-                    return {
-                        buyingPrice: null,
-                        balance: null,
-                        oldPrice: null
+                        return {
+                            buyingPrice,
+                            balance,
+                            oldPrice
+                        }
+                    } catch (e) {
+                        return {
+                            buyingPrice: null,
+                            balance: null,
+                            oldPrice: null
+                        }
                     }
                 }
-            }
 
-            const isEqualName = (originalName, checkingObj) => {
+                const isEqualName = (originalName, checkingObj) => {
 
-                const checkingName =  checkingObj.name.replace(/,.*$/, "").trim().replace(/ /g, "_")
-                if(originalName === checkingName) {
+                    const checkingName =  checkingObj.name.replace(/,.*$/, "").trim().replace(/ /g, "_")
+                    if(originalName === checkingName) {
 
-                    checkingObj["purchasePrice"] = Number(addAtrDB(checkingObj)["buyingPrice"])
-                    const purchasePrice = checkingObj["purchasePrice"]
-                    const name = checkingObj["name"]
-                    const currentPrice = parseInt(checkingObj["price"])
-                    const isExpensive = overPriceDB.find(item => name.includes(item))
-                    const overPrice = isExpensive ? 500  : 100
+                        checkingObj["purchasePrice"] = Number(addAtrDB(checkingObj)["buyingPrice"])
+                        const purchasePrice = checkingObj["purchasePrice"]
+                        const name = checkingObj["name"]
+                        const currentPrice = parseInt(checkingObj["price"])
+                        const isExpensive = overPriceDB.find(item => name.includes(item))
+                        const overPrice = isExpensive ? 500  : 100
 
-                    checkingObj["price"] = currentPrice
-                    let commission = Math.ceil(20 + 45 + currentPrice/100*5 + currentPrice/100*4.4 + (currentPrice-purchasePrice)/100*3)
-                    checkingObj["balance"] = Number(addAtrDB(checkingObj)["balance"])
-                    checkingObj["income"] = checkingObj["price"] - checkingObj["purchasePrice"] - commission
-                    checkingObj["minPrice"] = checkingObj["purchasePrice"] + commission + overPrice
-                    if(addAtrDB(checkingObj)["oldPrice"] !== null ) {
-                        checkingObj["oldPrice"] = checkingObj["price"] === Number(addAtrDB(checkingObj)["oldPrice"])
-                            ? null
-                            : addAtrDB(checkingObj)["oldPrice"].toString()
+                        checkingObj["price"] = currentPrice
+                        let commission = Math.ceil(20 + 45 + currentPrice/100*5 + currentPrice/100*4.4 + (currentPrice-purchasePrice)/100*3)
+                        checkingObj["balance"] = Number(addAtrDB(checkingObj)["balance"])
+                        checkingObj["income"] = checkingObj["price"] - checkingObj["purchasePrice"] - commission
+                        checkingObj["minPrice"] = checkingObj["purchasePrice"] + commission + overPrice
+                        if(addAtrDB(checkingObj)["oldPrice"] !== null ) {
+                            checkingObj["oldPrice"] = checkingObj["price"] === Number(addAtrDB(checkingObj)["oldPrice"])
+                                ? null
+                                : addAtrDB(checkingObj)["oldPrice"].toString()
+                        }
+                        checkingObj["check"] = true
+                        return true
                     }
-                    checkingObj["check"] = true
-                    return true
+                    return false
                 }
-                return false
+                const name = item.name.replace(/,.*$/, "").trim().replace(/ /g, "_")
+                if(productTree[nameCabinet] && productTree[nameCabinet][name]) return  productTree[nameCabinet][name] = data[nameCabinet].filter(checkingName =>
+                    isEqualName(name, checkingName ))
+                    .concat(...state.productTree[name]) // сложение с предыдущим вызовом
+                if(!productTree[nameCabinet]) productTree[nameCabinet] = {}
+                productTree[nameCabinet][name] = data[nameCabinet].filter(checkingName => isEqualName(name, checkingName ))
             }
-            const name = item.name.replace(/,.*$/, "").trim().replace(/ /g, "_")
-            if(listModels[name]) return  listModels[name] = data.filter(checkingName =>
-                isEqualName(name, checkingName ))
-                .concat(...state.listModels[name]) // сложение с предыдущим вызовом
-            listModels[name] = data.filter(checkingName => isEqualName(name, checkingName ))
-        }
+        })
+    }
+
+
+    Object.keys(data).forEach( nameCabinet => {
+        filterData(nameCabinet)
     })
+
 
     return{
         allItems,
-        listModels
+        productTree
     }
 
 }
@@ -92,7 +101,7 @@ const productsReducer = (state = initialState, action) => {
         case 'RESET_DATA': {
             return {
                 item: {},
-                listModels: [],
+                productTree: [],
                 listModel: {},
                 allItems: [],
                 pricesJournal:[],
@@ -108,12 +117,12 @@ const productsReducer = (state = initialState, action) => {
 
         case 'GET_PRODUCT_INFO': {
             const allItems = [...state.allItems]
-            const listModels = {...state.listModels}
-            const result = addProductInfo(allItems, listModels, action.payload, state)
+            const productTree = {...state.productTree}
+            const result = addProductInfo(allItems, productTree, action.payload, state)
 
             return {
                 ...state,
-                listModels: result.listModels,
+                productTree: result.productTree,
                 allItems: result.allItems,
                 loading: false
             }
@@ -121,12 +130,12 @@ const productsReducer = (state = initialState, action) => {
 
         case 'GET_NEW_PRICE': {
             const allItems = [...state.allItems]
-            const listModels = {...state.listModels}
-            const result = addProductInfo(allItems, listModels, action.payload, state)
+            const productTree = {...state.productTree}
+            const result = addProductInfo(allItems, productTree, action.payload, state)
 
             return {
                 ...state,
-                listModels: result.listModels,
+                productTree: result.productTree,
                 allItems: result.allItems,
             }
         }
@@ -134,7 +143,7 @@ const productsReducer = (state = initialState, action) => {
         case 'GET_LIST_MODEL': {
             const arrModels = []
             try{
-                state.listModels[action.payload].forEach( product => {
+                state.productTree[action.payload].forEach( product => {
                     arrModels.push(product)
                 })
             }catch (e) {
@@ -161,32 +170,32 @@ const productsReducer = (state = initialState, action) => {
 
         case 'SEND_PRICE':
             const allItems = [...state.allItems]
-            const listModels = {...state.listModels}
+            const productTree = {...state.productTree}
             const objRequest = action.payload
 
             const objAllItems =  allItems.find( x => x["offer_id"] === objRequest["offer_id"])
-            let objListModels
+            let objproductTree
 
-            for( let key in listModels) {
-                const result = listModels[key].find( x => x["offer_id"] === objRequest["offer_id"])
-                if(result) objListModels = result
+            for( let key in productTree) {
+                const result = productTree[key].find( x => x["offer_id"] === objRequest["offer_id"])
+                if(result) objproductTree = result
             }
 
             objAllItems.price = Number(objRequest["price"])
-            objListModels.price = Number(objRequest["price"])
+            objproductTree.price = Number(objRequest["price"])
 
             return {
                 ...state,
                 allItems,
-                listModels,
+                productTree,
                 loading: true
             }
 
 
         case 'GET_PRICES':
             const objWrongPrices = []
-            Object.keys(state.listModels).forEach( model => {
-                state.listModels[model].forEach(product => {
+            Object.keys(state.productTree).forEach( model => {
+                state.productTree[model].forEach(product => {
                     const minPrice = product["minPrice"]
                     const price = product["price"]
                     if (minPrice > price) objWrongPrices.push(product)
