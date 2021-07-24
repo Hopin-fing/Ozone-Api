@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {sendPrice} from "../redux/actions/products";
 import moment from "moment";
@@ -121,7 +121,7 @@ const TableRow = ({index, offerId, id, name, price, purchasePrice, minPrice, bar
                 </Link>
             </td>
             {inputActive ?
-                <td onClick={handlerPopupExit} className={"popup"}></td> :
+                <td onClick={handlerPopupExit} className={"popup"}>''</td> :
                 null}
         </tr>
 

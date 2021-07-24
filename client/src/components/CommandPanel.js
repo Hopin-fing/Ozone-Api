@@ -91,9 +91,9 @@ const CommandPanel = () => {
         try {
             const dataSourcePrice = await request("/api/price/get_sourcePrice")
             // console.log(".docs", dataSourcePrice.docs)
-            // const dataPrices = await request("/api/price/get_price")
-            // console.log("dataPrices", dataPrices)
-            // dispatch(getPriceJournal(dataPrices.docs))
+            const dataPrices = await request("/api/price/get_price")
+            console.log("dataPrices", dataPrices)
+            dispatch(getPriceJournal(dataPrices.docs))
             dispatch(getProductInfo(dataSourcePrice.docs))
         }catch (e) {
             console.log("Ошибка :" , e)
@@ -133,7 +133,6 @@ const CommandPanel = () => {
         pricesBody.push(result)
     }
 
-
     const handlerImportRequest = () => {
         const request = CreateFullRequest()
         dispatch(importProduct(request))
@@ -143,22 +142,20 @@ const CommandPanel = () => {
         dispatch(testRequest(testBody))
     }
 
-    const handlerGetPrices = () => {
-        dispatch(getPrices(productBody))
-    }
-
     const handlerResetData = async () => {
         dispatch(resetData())
 
-        // dispatch(openTables())
-        // try {
-        //     const dataPrices = await request("/api/price/get_price")
-        //     dispatch(getPriceJournal(dataPrices.docs))
-        // }catch (e) {
-        //     console.log("Ошибка :" , e)
-        // }
-        // dispatch(getProductInfo(data))
-        // dispatch(endLoading(data))
+        dispatch(openTables())
+        try {
+            const dataSourcePrice = await request("/api/price/get_sourcePrice")
+            const dataPrices = await request("/api/price/get_price")
+            dispatch(getPriceJournal(dataPrices.docs))
+            dispatch(getProductInfo(dataSourcePrice.docs))
+            dispatch(endLoading(dataSourcePrice))
+        }catch (e) {
+            console.log("Ошибка :" , e)
+        }
+
 
     }
 
@@ -300,16 +297,6 @@ const CommandPanel = () => {
                         disabled={true}
 
                     >Импортировать товары</button>
-
-
-                </div>
-                <div className="card-action center">
-                    <button
-                        className="orange waves-effect waves-light btn darken-3"
-                        onClick={handlerGetPrices}
-                        disabled={!existProductTree || isLoading}
-
-                    >Получить информацию о неправильных ценах</button>
 
 
                 </div>

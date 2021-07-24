@@ -1,5 +1,9 @@
 @import "~materialize-css/dist/css/materialize.min.css";
 
+
+.card-auth {
+    border: 1px solid #000000;
+}
 .link-nav {
     margin-bottom: 50px;
 }
@@ -66,7 +70,6 @@
 .tab button.active {
     background-color: #ccc;
 }
-
 
 .tab-content {
     padding: 6px 12px;

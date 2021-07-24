@@ -1,4 +1,3 @@
-const arrPrices = require("../../data/responseData/sourcePrices.json")
 const overPriceDB = require("../../data/responseData/overPriceBrand.json")
 
 const initialState = {
@@ -11,18 +10,20 @@ const initialState = {
     isOpen: false
 }
 
-const addProductInfo = (allItems, productTree, data , state) => {
+const addProductInfo = (allItems, productTree, data , state, arrPrices) => {
 
     const filterData = nameCabinet => {
         data[nameCabinet].forEach(item => {
             allItems.push(item)
             if(!("check" in item)) {
                 const addAtrDB = obj => {
+
                     try {
-                        const item = arrPrices.find(x => x["art"].toString() === obj["offer_id"])
+                        const item = arrPrices[nameCabinet].find(x => x["art"].toString() === obj["offer_id"])
                         const buyingPrice = item["BuyingPrice"]
                         const balance = item["count"]
                         const oldPrice = item["CurrentPrice"]
+
 
                         return {
                             buyingPrice,
@@ -30,6 +31,7 @@ const addProductInfo = (allItems, productTree, data , state) => {
                             oldPrice
                         }
                     } catch (e) {
+                        console.log(e)
                         return {
                             buyingPrice: null,
                             balance: null,
@@ -116,9 +118,10 @@ const productsReducer = (state = initialState, action) => {
         }
 
         case 'GET_PRODUCT_INFO': {
+            const {data, sourcePrice} = action.payload
             const allItems = [...state.allItems]
             const productTree = {...state.productTree}
-            const result = addProductInfo(allItems, productTree, action.payload, state)
+            const result = addProductInfo(allItems, productTree, data, state, sourcePrice )
 
             return {
                 ...state,
@@ -141,11 +144,18 @@ const productsReducer = (state = initialState, action) => {
         }
 
         case 'GET_LIST_MODEL': {
-            const arrModels = []
+            let arrModels
+            let rightCabinet
+            let rightModel
+            Object.keys(state.productTree).map( nameCabinet => {
+                const result = Object.keys(state.productTree[nameCabinet]).find(item => action.payload === item)
+                if(result)  {
+                    rightCabinet = nameCabinet
+                    rightModel = state.productTree[nameCabinet][result]
+                }
+            })
             try{
-                state.productTree[action.payload].forEach( product => {
-                    arrModels.push(product)
-                })
+                arrModels = rightModel
             }catch (e) {
                 console.log("Сообщение об ошибке:", e)
             }
@@ -174,15 +184,17 @@ const productsReducer = (state = initialState, action) => {
             const objRequest = action.payload
 
             const objAllItems =  allItems.find( x => x["offer_id"] === objRequest["offer_id"])
-            let objproductTree
+            let objProductTree
 
-            for( let key in productTree) {
-                const result = productTree[key].find( x => x["offer_id"] === objRequest["offer_id"])
-                if(result) objproductTree = result
-            }
+            Object.keys(productTree).map(nameCabinet => {
+                for( let key in productTree[nameCabinet]) {
+                    const result = productTree[nameCabinet][key].find( x => x["offer_id"] === objRequest["offer_id"])
+                    if(result) objProductTree = result
+                }
+            })
 
             objAllItems.price = Number(objRequest["price"])
-            objproductTree.price = Number(objRequest["price"])
+            objProductTree.price = Number(objRequest["price"])
 
             return {
                 ...state,

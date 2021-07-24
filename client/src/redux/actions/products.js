@@ -57,20 +57,19 @@ export const importStocks = bodyRequest => async () => {
     let arrResponseData = {"stocks" :[]}
 
     for(const [index, element] of bodyRequest.entries()) {
+        try{
         if(index % 99 === 0 && index !== 0) {
             console.log(arrResponseData)
             const response = await sendRequestPost(url, arrResponseData)
             arrResponseData.stocks = []
             console.log(response.data)
         }
-        try{
+
             arrResponseData.stocks.push(element)
         }catch (e) {
             console.log(element)
         }
     }
-    console.log("bodyRequest ", bodyRequest)
-    console.log("arrResponseData ", arrResponseData)
     if(arrResponseData.stocks.length === 0 ) return
     await sendRequestPost(url, arrResponseData).then(data => console.log(data.data))
 }
@@ -123,9 +122,6 @@ export const importProduct = bodyRequest => async dispatch => {
 export const getProductInfo = (data, isNewPrice = false) => async dispatch => {
     dispatch(setLoading())
 
-    console.log("data", data)
-
-
     const url = "https://api-seller.ozon.ru/v2/product/info/list"
     const arrResponseData = {
     }
@@ -150,15 +146,24 @@ export const getProductInfo = (data, isNewPrice = false) => async dispatch => {
                 // console.log("bodyRequestInfoList", bodyRequestInfoList)
                 const response = await sendRequestPost(url, bodyRequestInfoList, cabinet)
 
-                // console.log("response 999")
+                console.log("response 999")
 
                 bodyRequestInfoList.offer_id = []
 
 
                 filterResponseData(cabinet, response.data.result.items)
-                // console.log("arrResponseData", arrResponseData)
+                console.log("arrResponseData", arrResponseData)
             }
-            bodyRequestInfoList.offer_id.push(element.art.toString())
+
+            try {
+                bodyRequestInfoList.offer_id.push(element.art.toString())
+
+            }catch (e) {
+                console.log(e)
+                console.log("element", element)
+            }
+
+
         }
 
         const response = await sendRequestPost(url, bodyRequestInfoList, cabinet)
@@ -176,7 +181,7 @@ export const getProductInfo = (data, isNewPrice = false) => async dispatch => {
 
     if(!isNewPrice) dispatch({
         type: 'GET_PRODUCT_INFO',
-        payload: arrResponseData
+        payload: {data: arrResponseData, sourcePrice: data}
     })
     // if(isNewPrice) dispatch({
     //     type: 'GET_NEW_PRICE',
@@ -200,7 +205,7 @@ export const sendPrice = (bodyRequest, countRequest = "single") =>  async (dispa
     console.log("price bodyRequest", bodyRequest)
     for(const [index, element] of bodyRequest.entries()) {
         if(index % 999 === 0 && index !== 0) {
-            const response = await sendRequestPost(url, arrResponseData)
+            await sendRequestPost(url, arrResponseData)
             arrResponseData.prices = []
         }
         try{

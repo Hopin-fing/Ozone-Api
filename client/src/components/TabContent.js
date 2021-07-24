@@ -2,6 +2,7 @@ import {Link} from "react-router-dom";
 
 const TabContent = ({ title, cabinetInfo }) => {
 
+
     const minPrice = arrModels => {
         let arrPrices = []
         arrModels.forEach(model => {
@@ -37,7 +38,7 @@ const TabContent = ({ title, cabinetInfo }) => {
    return (
 
     <div className="tab-content">
-        <h3>{title}</h3>
+        <h4>{title.replace("_", " ")}</h4>
         <table className="striped centered">
             <thead>
             <tr>
@@ -46,7 +47,6 @@ const TabContent = ({ title, cabinetInfo }) => {
                 <th>Средняя цена за модель</th>
                 <th>Максимальная закупочная цена </th>
                 <th>Минимальная цена</th>
-                <th>Продано за неделю</th>
 
                 {/*<th>Цена</th>*/}
                 {/*<th>Кол-во на складе</th>*/}
@@ -66,7 +66,6 @@ const TabContent = ({ title, cabinetInfo }) => {
                     <td>{`${averagePrice(cabinetInfo[item])} р.`}</td>
                     <td>{`${maxPurchasePrice(cabinetInfo[item])} р.`}</td>
                     <td>{`${minPrice(cabinetInfo[item])} р.`}</td>
-                    <td>?????</td>
                     {/*<td>{item.barcode}</td>*/}
                     {/*<td>{item.price.replace(/(00$)/ , "" )}</td>*/}
                     {/*<td>{item.stocks.coming}</td>*/}

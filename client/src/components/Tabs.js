@@ -1,31 +1,38 @@
 import React, {useEffect, useState} from 'react';
 import TabContent from "./TabContent";
+import _ from "lodash";
 
 const Tabs = ({productTree} ) => {
 
     //TODO: Не изменяется минимальные цены у каждой категории при обновлении самих цен
 
-    const [ active, setActive ] = React.useState(null);
+    const [ active, setActive ] = React.useState(0);
     const openTab = e => setActive(+e.target.dataset.index);
+    const newProductTree = _.cloneDeep(productTree)
+    newProductTree["All_Models"] = {}
+    Object.keys(productTree).map(name => {
+        newProductTree["All_Models"] = Object.assign(newProductTree["All_Models"], productTree[name])
+    })
+    const reversKeys = Object.keys(newProductTree).reverse()
 
-     return (
+    return (
          <> {productTree.length !== 0
          ?<div className="row">
                  <div className="col s12">
-                     <div className="tab">
 
-                         {Object.keys(productTree).map((n, i) => (
+                     <div className="tab">
+                         {reversKeys.map((name, index) => (
                              <button
-                                 className={`tablinks ${i === active ? 'active' : ''}`}
+                                 className={`tablinks ${index   === active ? 'active' : ''}`}
                                  onClick={openTab}
-                                 key={`button-tab-${i}`}
-                                 data-index={i}
-                             >{n}</button>
+                                 key={`button-tab-${index }`}
+                                 data-index={index }
+                             >{name.replace("_", " ")}</button>
                          ))}
                      </div>
-                     {productTree[Object.keys(productTree)[active]]
-                     && <TabContent title = {Object.keys(productTree)[active]}
-                                 cabinetInfo = {productTree[Object.keys(productTree)[active]]}
+                     {newProductTree[reversKeys[active]]
+                     && <TabContent title = {reversKeys[active]}
+                                 cabinetInfo = {newProductTree[reversKeys[active]]}
                      />}
 
                      {/*<Pagination totalRecords={products.result.items.length} />*/}

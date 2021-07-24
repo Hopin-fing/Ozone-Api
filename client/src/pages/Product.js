@@ -9,6 +9,7 @@ const Product =  React.memo(function Product ({match, location}) {
 
     const dispatch = useDispatch();
     const urlId = match.params.name
+    const urlEmptyImg = 'http://images.vfl.ru/ii/1627130916/99d1b9d6/35267436_s.png'
 
 
     const products = useSelector(({products}) => products.item);
@@ -66,7 +67,7 @@ const Product =  React.memo(function Product ({match, location}) {
                 </div>
 
                 <div className="col s8 text-center">
-                    <img src={products.images} alt="test" style={{width: "350px"}}/>
+                    <img src={products.images ? products.images[0] : urlEmptyImg} alt="test" style={{width: "350px"}}/>
                     <ul>
                         <li>Атрибут: {products.id}</li>
                         <li>Наименование: {products.name}</li>
