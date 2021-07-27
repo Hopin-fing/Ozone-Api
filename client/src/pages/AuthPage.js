@@ -13,7 +13,8 @@ export const AuthPage = () => {
 
     const registerHandler = async () => {
         try {
-            const data = await request('/api/auth')
+            const data = await request('/api/auth/register', "POST", {...form})
+            console.log("Data", data)
         }catch (e) {
 
         }
@@ -48,6 +49,10 @@ export const AuthPage = () => {
                     </div>
                     <div className="card-action">
                         <button className="btn green lighten-1">Войти</button>
+                        <button
+                            className="btn yellow lighten-1"
+                            onClick={registerHandler}
+                        >Регистрация</button>
                     </div>
                 </div>
 
