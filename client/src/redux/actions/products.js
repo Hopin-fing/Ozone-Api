@@ -46,7 +46,13 @@ export const getCommissions = bodyRequest => async dispatch => {
 }
 
 export const testRequest = bodyRequest => async () => {
-    const url = "https://api-seller.ozon.ru/v1/warehouse/list"
+    const url = "https://api-seller.ozon.ru/v2/product/import"
+    const headers = {
+        "Client-Id": cabinetsInfo.NeoVishen.id,
+        "Api-Key" : cabinetsInfo.NeoVishen.apiKey,
+        "Content-Type":"application/json",
+        "Retry-After": 2000
+    }
     await sendRequestPost(url, bodyRequest).then(data => console.log(data.data))
 
 }
