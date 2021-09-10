@@ -318,7 +318,9 @@ const GetAttributes = (indexItem, sourceData) => {
         // }`
 
         if (!isSolutions && !isEmpty) {
-            const nameOriginal = searchAttr( 'Наименование');
+            const nameOriginal = searchAttr( 'Наименование')
+            console.log("nameOriginal", nameOriginal)
+
             const isColorWB = searchAttr( 'Тип линз')
             const isSpecModel = arrSpecBrand.includes(brand)
             let flagGroup = searchGlobalFlag(nameOriginal, isColorWB, brand);
@@ -355,7 +357,8 @@ const GetAttributes = (indexItem, sourceData) => {
             const daysReplace  = doOzonFormat("Режим замены", searchAttr( "Режим замены"));
             const packWeight  = searchAttr( 'Вес товара с упаковкой (г)', 0, "count");
             const moistureCont  = searchAttr( 'Влагосодержание', 0, "count").toString();
-            let modelProduct = `Контактные линзы ${brand} ${name}/`
+            // let modelProduct = `Контактные линзы ${brand} ${name}/`
+            let modelProduct = `${brand} ${name}/`
 
             const images  = searchValue(flagGroup,"flag", "img", brand, packAmount);
 
@@ -429,7 +432,11 @@ const GetAttributes = (indexItem, sourceData) => {
                 objRequest.idAddition = addition.id
                 objRequest.name += ` ${addition.value}/`
                 objRequest.attrWitchName +=  objRequest.name.replace(/\//g , ",")
-                if(flagGroup === "Biofinity multifocal") objRequest.name = nameOriginal// исключение для конкретных линз
+                if(flagGroup === "Biofinity multifocal")  {
+                    objRequest.name = nameOriginal
+                    const addInfo = searchAttr( 'Наименование').substr(searchAttr( 'Наименование').indexOf("!") + 1);
+                    objRequest.modelProduct = objRequest.modelProduct + addInfo
+                }// исключение для конкретных линз
             }
             if(isColored) {
                 const colorInfo = searchColor(nameOriginal, brand);

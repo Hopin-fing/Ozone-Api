@@ -17,7 +17,7 @@ import cabinetsInfo from "../methods/clientData";
 
 // const data = require("../data/responseData/sourcePrices.json")
 
-const testBody = require("../data/test.json")
+// const testBody = require("../data/test.json")
 
 const CommandPanel = () => {
 
@@ -42,8 +42,8 @@ const CommandPanel = () => {
         "sku": []
     }
 
-    // const testBody = {
-    // }
+    const testBody = {
+    }
 
 
     const productBody = {

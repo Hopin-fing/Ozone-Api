@@ -2,7 +2,7 @@ import GetAttributes from "./getAttributes";
 import _ from "lodash";
 
 const example = require('./data/templates/requestImport.json')
-const sourceData = require('../../../data/productDB/Alcon.json')
+const sourceData = require('../../../data/productDB/AlconHighNDS.json')
 const oxyCofData = require('../../../data/ozonData/oxygen_transmission.json')
 const optPwrData = require('../../../data/ozonData/optical_power.json')
 const radCurvatureData = require('../../../data/ozonData/radius_curvature.json')
@@ -11,6 +11,7 @@ const wearModeData = require('../../../data/ozonData/wear_mode.json')
 const daysReplaceData = require('../../../data/ozonData/days_replace.json')
 const axData = require('../../../data/ozonData/id_ax.json')
 const cylData = require('../../../data/ozonData/id_cyl.json')
+const vat20 = require('../../../data/productDB/vat_20.json')
 
 
 const CreateFullRequest = () => {
@@ -110,6 +111,8 @@ const CreateFullRequest = () => {
                 itemFinal.height = newItem.packHeight
                 itemFinal.name = newItem.name
                 itemFinal.price = newItem.price
+                if(vat20.find(item => item === itemFinal.barcode)) itemFinal.vat = "0.2"
+                console.log(itemFinal.vat)
                 if (typeof newItem.images == "object" && "main" in newItem.images) { //Происходит фильтрация внутри объекта с ключом "img" в файле "modelsinfo.json"
                     itemFinal.images.push(newItem.images["main"])
                     const arrAddImages = newItem.images["additional"]
@@ -199,7 +202,7 @@ const CreateFullRequest = () => {
 
                 if(newItem.idFeatures) itemFinal.attributes.push(createAttrObj(7707, newItem.idFeatures, ""))
                 if(newItem.idMaterial) itemFinal.attributes.push(createAttrObj(7708, newItem.idMaterial, ""))
-                if(newItem.isMultifocal) itemFinal.attributes.push(createAttrObj(9237, newItem.idAddition, ""))
+                if(newItem.isMultifocal && !newItem.name.includes("Доминантный глаз")) itemFinal.attributes.push(createAttrObj(9237, newItem.idAddition, ""))
 
                 itemFinal.attributes.push(createAttrObj(7705,30682, ""))
                 itemFinal.attributes.push(createAttrObj(4389,newItem.idCountry, ""))

@@ -1,30 +1,5 @@
-import axios from "axios";
 import cabinetsInfo from "../../methods/clientData";
-
-
-const headers = {
-    "Client-Id": cabinetsInfo.My_Alcon.id,
-    "Api-Key" : cabinetsInfo.My_Alcon.apiKey,
-    "Content-Type":"application/json",
-    "Retry-After": 2000
-}
-
-
-const sendRequestPost = async (url, body, header = null) => {
-    const customHeaders = headers
-
-    if(header) {
-        customHeaders["Client-Id"] = cabinetsInfo[header].id
-        customHeaders["Api-Key"] = cabinetsInfo[header].apiKey
-    }
-
-    return header
-        ? axios.post(url, body, {headers : customHeaders})
-        : axios.post(url, body, {headers})
-}
-const sendRequestGet = async (url) => {
-    return axios.get(url,{headers})
-}
+import {sendRequestPost} from "../../methods/requestServer";
 
 export const setLoading = () => ({
     type: 'SET_LOADING'
@@ -46,10 +21,10 @@ export const getCommissions = bodyRequest => async dispatch => {
 }
 
 export const testRequest = bodyRequest => async () => {
-    const url = "https://api-seller.ozon.ru/v2/product/import"
+    const url = "https://api-seller.ozon.ru/v1/warehouse/list"
     const headers = {
-        "Client-Id": cabinetsInfo.NeoVishen.id,
-        "Api-Key" : cabinetsInfo.NeoVishen.apiKey,
+        "Client-Id": cabinetsInfo.Lenses_Cooper.id,
+        "Api-Key" : cabinetsInfo.Lenses_Cooper.apiKey,
         "Content-Type":"application/json",
         "Retry-After": 2000
     }
@@ -64,17 +39,15 @@ export const importStocks = bodyRequest => async () => {
 
     for(const [index, element] of bodyRequest.entries()) {
         try{
-        if(index % 99 === 0 && index !== 0) {
-            console.log(arrResponseData)
-            const response = await sendRequestPost(url, arrResponseData)
-            arrResponseData.stocks = []
-            console.log(response.data)
-        }
+            if(index % 99 === 0 && index !== 0) {
+                await sendRequestPost(url, arrResponseData)
+                arrResponseData.stocks = []
+            }
 
-            arrResponseData.stocks.push(element)
-        }catch (e) {
-            console.log(element)
-        }
+                arrResponseData.stocks.push(element)
+            }catch (e) {
+                console.log(element)
+            }
     }
     if(arrResponseData.stocks.length === 0 ) return
     await sendRequestPost(url, arrResponseData).then(data => console.log(data.data))
@@ -83,41 +56,13 @@ export const importStocks = bodyRequest => async () => {
 export const importProduct = bodyRequest => async dispatch => {
     dispatch(setLoading())
 
-    let reqLog = []
-
-    const url = "https://api-seller.ozon.ru/v2/product/import"
-
-    const addError = (item) => {
-        reqLog.push(item)
-        console.log('Error!')
-    }
+    const url = "/api/product/import_product"
 
     for (const item of bodyRequest)  {
         try {
-            const response = await sendRequestPost(url, item.request)
-            console.log(response.data);
-
-            if (response.data.result.task_id === 0) {
-                addError(item)
-            }
-
+            await sendRequestPost(url, item.request)
         } catch (e) {
             console.log(e)
-        }
-    }
-    while(reqLog.length !== 0) {
-        for (const item of reqLog) {
-            try {
-                const response =  await sendRequestPost(url, item.request)
-
-                if (response.data.result.task_id === 0) {
-                    addError(item)
-                }
-                reqLog = reqLog.slice(1)
-
-            } catch (e) {
-                console.log(e)
-            }
         }
     }
     console.log("Ошибок нет")
